@@ -4,26 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>PokeMMO Loan Manager</title>
-  <!-- disable inspect / right click / shortcuts -->
-  <script>
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', e => {
-      if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'i' || e.key === 'I' || e.key === 'j' || e.key === 'J' || e.key === 'c' || e.key === 'C')) {
-        e.preventDefault();
-        return false;
-      }
-      if (e.key === 'F12') { e.preventDefault(); return false; }
-    });
-  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; }
     body { background: #0b0e14; color: #e6edf5; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0.5rem; }
-    .app { max-width: 480px; width: 100%; background: #141a24; border-radius: 2rem; padding: 1rem 1rem 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.7); border: 1px solid #2d3a4b; margin: 0 auto; }
+    .app { max-width: 480px; width: 100%; background: #141a24; border-radius: 2rem; padding: 1rem; box-shadow: 0 20px 40px rgba(0,0,0,0.7); border: 1px solid #2d3a4b; margin: 0 auto; }
     .text-gold { color: #f5c842; }
     .text-blue { color: #4a9eff; }
-    .btn-gold { background: #f5c842; color: #0b0e14; border: none; font-weight: 600; padding: 0.6rem 1.2rem; border-radius: 2rem; cursor: pointer; transition: 0.2s; width: 100%; font-size: 1rem; }
+    .btn-gold { background: #f5c842; color: #0b0e14; border: none; font-weight: 600; padding: 0.7rem 1.2rem; border-radius: 2rem; cursor: pointer; transition: 0.2s; width: 100%; font-size: 1rem; }
     .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-sm { padding: 0.4rem 0.8rem; font-size: 0.8rem; width: auto; }
     .btn-outline { background: transparent; border: 1px solid #f5c842; color: #f5c842; padding: 0.5rem 1rem; border-radius: 2rem; cursor: pointer; }
     .card { background: #1e2735; border-radius: 1.5rem; padding: 1.2rem; border: 1px solid #2c394b; margin-bottom: 1rem; }
     .flex { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
@@ -32,33 +22,41 @@
     .hidden { display: none !important; }
     input, select { background: #101824; border: 1px solid #2d3f55; color: #e6edf5; padding: 0.7rem 1rem; border-radius: 2rem; font-size: 0.95rem; width: 100%; margin-bottom: 0.6rem; }
     input:focus, select:focus { outline: 2px solid #f5c842; border-color: transparent; }
-    .badge { background: #2d4055; padding: 0.2rem 0.9rem; border-radius: 2rem; font-size: 0.7rem; font-weight: 600; }
+    .badge { background: #2d4055; padding: 0.2rem 0.9rem; border-radius: 2rem; font-size: 0.7rem; font-weight: 600; display: inline-block; }
     .badge-pending { background: #b8860b; color: #fff; }
     .badge-approved { background: #1f8b4c; }
     .badge-rejected { background: #b33c3c; }
     .badge-paid { background: #2a6b8a; }
     .badge-overdue { background: #a13d3d; }
-    /* bottom navigation */
-    .bottom-nav { display: flex; justify-content: space-around; background: #0f151e; border-radius: 3rem; padding: 0.5rem 0.2rem; margin-top: 1.2rem; border: 1px solid #2c3d55; position: sticky; bottom: 0; }
-    .bottom-nav a { color: #8899aa; text-decoration: none; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; padding: 0.3rem 0.8rem; border-radius: 2rem; transition: 0.2s; cursor: pointer; flex: 1; text-align: center; }
-    .bottom-nav a i { font-size: 1.4rem; margin-bottom: 0.2rem; }
+    .bottom-nav { display: flex; justify-content: space-around; background: #0f151e; border-radius: 3rem; padding: 0.4rem 0.2rem; margin-top: 1rem; border: 1px solid #2c3d55; position: sticky; bottom: 0; }
+    .bottom-nav a { color: #8899aa; text-decoration: none; font-size: 0.65rem; display: flex; flex-direction: column; align-items: center; padding: 0.3rem 0.5rem; border-radius: 2rem; transition: 0.2s; cursor: pointer; flex: 1; text-align: center; }
+    .bottom-nav a i { font-size: 1.3rem; margin-bottom: 0.1rem; }
     .bottom-nav a.active { color: #f5c842; background: #1e2a3a; }
     .bottom-nav a.admin-only { display: none; }
     .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.8rem; }
-    .stat-card { background: #1a232f; padding: 0.8rem; border-radius: 1.2rem; border-left: 3px solid #f5c842; }
-    .stat-card small { opacity: 0.7; font-size: 0.7rem; }
+    .stat-card { background: #1a232f; padding: 0.7rem; border-radius: 1.2rem; border-left: 3px solid #f5c842; }
+    .stat-card small { opacity: 0.7; font-size: 0.7rem; display: block; }
+    .stat-card strong { font-size: 1.2rem; }
     .loan-item { background: #101824; border-radius: 1rem; padding: 0.8rem; margin-bottom: 0.6rem; border-left: 3px solid #f5c842; }
-    .loan-item .row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.1rem 0; }
+    .loan-item .row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.15rem 0; }
     .mt-1 { margin-top: 0.8rem; }
     .mb-1 { margin-bottom: 0.6rem; }
     .text-center { text-align: center; }
-    .policy-text { background: #101824; padding: 0.6rem; border-radius: 1rem; font-size: 0.75rem; color: #b0c8e0; border: 1px solid #2d3f55; max-height: 80px; overflow-y: auto; }
-    .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
-    .checkbox-group input { width: 1.2rem; height: 1.2rem; accent-color: #f5c842; margin: 0; }
     .auth-box { max-width: 400px; margin: 0 auto; background: #141a24; padding: 1.5rem; border-radius: 2rem; border: 1px solid #2c3d55; }
     .tab-switch { display: flex; background: #0f151e; border-radius: 2rem; padding: 0.2rem; margin-bottom: 1rem; border: 1px solid #2c3d55; }
     .tab-switch button { flex: 1; background: transparent; border: none; color: #8899aa; padding: 0.5rem; border-radius: 2rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
     .tab-switch button.active { background: #f5c842; color: #0b0e14; }
+    .policy-text { background: #101824; padding: 0.6rem; border-radius: 1rem; font-size: 0.75rem; color: #b0c8e0; border: 1px solid #2d3f55; max-height: 80px; overflow-y: auto; }
+    .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
+    .checkbox-group input { width: 1.2rem; height: 1.2rem; accent-color: #f5c842; margin: 0; }
+    table { width: 100%; font-size: 0.75rem; border-collapse: collapse; }
+    th { text-align: left; padding: 0.4rem 0.2rem; color: #8899aa; border-bottom: 1px solid #2c3d55; }
+    td { padding: 0.4rem 0.2rem; border-bottom: 1px solid #1f2c3d; }
+    .action-btn { background: transparent; border: none; padding: 0.2rem 0.5rem; border-radius: 1rem; cursor: pointer; font-size: 0.8rem; }
+    .action-btn.approve { color: #1f8b4c; }
+    .action-btn.reject { color: #b33c3c; }
+    .action-btn.edit { color: #4a9eff; }
+    .action-btn.delete { color: #a13d3d; }
     @media (max-width: 400px) { .app { padding: 0.5rem; } .stat-row { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
@@ -100,17 +98,16 @@
       <div><span class="badge" id="userRoleBadge">User</span> <span id="userDisplayName" style="margin-left:0.4rem;font-size:0.9rem;"></span></div>
     </div>
 
-    <!-- main panels -->
+    <!-- panels -->
     <div id="panelDashboard" class="panel">
       <div class="flex-between"><h4>Dashboard</h4><span id="welcomeMsg" style="font-size:0.8rem;"></span></div>
       <div class="stat-row">
-        <div class="stat-card"><small>Balance</small><br><strong id="dashBalance">0</strong> <span style="font-size:0.7rem;">Yen</span></div>
-        <div class="stat-card"><small>Credit Score</small><br><strong id="dashCredit">100</strong></div>
-        <div class="stat-card"><small>Loan Status</small><br><strong id="dashLoanStatus">None</strong></div>
-        <div class="stat-card"><small>Interest</small><br><strong id="dashInterest">0%</strong></div>
+        <div class="stat-card"><small>Balance</small><strong id="dashBalance">0</strong> <span style="font-size:0.7rem;">Yen</span></div>
+        <div class="stat-card"><small>Credit Score</small><strong id="dashCredit">100</strong></div>
+        <div class="stat-card"><small>Loan Status</small><strong id="dashLoanStatus">None</strong></div>
+        <div class="stat-card"><small>Interest</small><strong id="dashInterest">0%</strong></div>
       </div>
       <div class="card"><h5>Active Loan</h5><p id="loanDetailText">No active loan.</p></div>
-      <!-- apply loan (user only) -->
       <div id="userLoanPanel" class="card">
         <h5>Apply for Loan</h5>
         <select id="loanAmountSelect"><option value="50000">50,000</option><option value="100000">100,000</option><option value="250000">250,000</option><option value="500000">500,000</option><option value="1000000">1,000,000</option><option value="2000000">2,000,000</option><option value="5000000">5,000,000</option></select>
@@ -118,7 +115,6 @@
         <button id="applyLoanBtn" class="btn-gold">Apply Loan</button>
         <p id="loanApplyMsg" style="color:#aad6a0; font-size:0.85rem; margin-top:0.3rem;"></p>
       </div>
-      <!-- loan history -->
       <div class="card"><h5>Loan History</h5><div id="loanHistoryContainer"><p style="font-size:0.8rem;">No loans yet.</p></div></div>
     </div>
 
@@ -126,7 +122,6 @@
       <h4>Loan Details & Payments</h4>
       <div id="activeLoanCard" class="card">
         <div id="activeLoanInfo"><p>No active loan</p></div>
-        <!-- payment section for user -->
         <div id="paymentSection" class="hidden mt-1">
           <input type="number" id="paymentAmount" placeholder="Payment amount (Yen)" min="1">
           <button id="makePaymentBtn" class="btn-gold">Make Payment</button>
@@ -150,20 +145,31 @@
     <!-- admin panels -->
     <div id="panelUsers" class="panel hidden admin-only">
       <h4>User Management</h4>
-      <div class="flex"><input id="userSearch" placeholder="Search..." style="flex:1;"><select id="userFilterRole" style="flex:0.7;"><option value="">All</option><option value="User">User</option><option value="Admin">Admin</option></select><button id="addUserBtn" class="btn-gold" style="width:auto;padding:0.5rem 1rem;"><i class="fas fa-plus"></i></button></div>
+      <div class="flex">
+        <input id="userSearch" placeholder="Search username..." style="flex:2;">
+        <select id="userFilterRole" style="flex:1;"><option value="">All Roles</option><option value="User">User</option><option value="Admin">Admin</option></select>
+        <button id="addUserBtn" class="btn-gold btn-sm" style="width:auto;"><i class="fas fa-plus"></i> Add</button>
+      </div>
       <div id="userTableContainer" class="mt-1"></div>
     </div>
+
     <div id="panelLoans" class="panel hidden admin-only">
       <h4>Loan Management</h4>
-      <div class="flex"><input id="loanSearch" placeholder="Search..." style="flex:1;"><select id="loanFilterStatus" style="flex:0.7;"><option value="">All</option><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="Paid">Paid</option><option value="Overdue">Overdue</option></select><button id="createLoanBtn" class="btn-gold" style="width:auto;padding:0.5rem 1rem;"><i class="fas fa-plus"></i></button></div>
+      <div class="flex">
+        <input id="loanSearch" placeholder="Search username or loan ID..." style="flex:2;">
+        <select id="loanFilterStatus" style="flex:1;"><option value="">All Status</option><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="Paid">Paid</option><option value="Overdue">Overdue</option></select>
+        <button id="createLoanBtn" class="btn-gold btn-sm" style="width:auto;"><i class="fas fa-plus"></i> New</button>
+      </div>
       <div id="loanTableContainer" class="mt-1"></div>
     </div>
+
     <div id="panelReports" class="panel hidden admin-only">
       <h4>Reports</h4>
       <div id="reportStats" class="stat-row"></div>
       <div class="card"><h5>Loan Volume</h5><div id="barChart" style="display:flex;gap:0.3rem;height:80px;align-items:flex-end;padding:0.5rem 0;"></div></div>
       <div class="card"><h5>Status Distribution</h5><div id="pieChart" style="display:flex;gap:0.2rem;height:20px;border-radius:1rem;overflow:hidden;"></div></div>
     </div>
+
     <div id="panelSettings" class="panel hidden admin-only">
       <h4>Settings</h4>
       <div class="card">
@@ -190,7 +196,7 @@
 </div>
 <script>
   (function(){
-    // ---------- DATA ----------
+    // Data storage
     const LS = {
       getUsers(){ return JSON.parse(localStorage.getItem('pokemmo_users')||'[]'); },
       setUsers(u){ localStorage.setItem('pokemmo_users',JSON.stringify(u)); },
@@ -203,19 +209,17 @@
       clearSession(){ localStorage.removeItem('pokemmo_currentUser'); }
     };
 
+    // Seed admin account
     function seedAdmin(){
       let users = LS.getUsers();
       if(!users.find(u=>u.username==='Admin')){
         users.push({ username:'Admin', password:'p@ssw0rd123', charName:'Admin', email:'admin@pokemmo.com', balance:0, creditScore:100, status:'Active', role:'Admin', loanStatus:'No Active Loan' });
         LS.setUsers(users);
-      } else {
-        let admin = users.find(u=>u.username==='Admin');
-        if(admin) admin.password = 'p@ssw0rd123';
-        LS.setUsers(users);
       }
     }
     seedAdmin();
 
+    // Helpers
     function getUser(username){ return LS.getUsers().find(u=>u.username===username); }
     function updateUser(updated){ let u=LS.getUsers(); let idx=u.findIndex(x=>x.username===updated.username); if(idx>-1){ u[idx]=updated; LS.setUsers(u); } }
     function getLoanById(id){ return LS.getLoans().find(l=>l.id===id); }
@@ -234,7 +238,7 @@
     const panels = { dashboard:$('panelDashboard'), loan:$('panelLoan'), profile:$('panelProfile'), users:$('panelUsers'), loans:$('panelLoans'), reports:$('panelReports'), settings:$('panelSettings') };
     const navLinks = document.querySelectorAll('.bottom-nav a[data-section]');
 
-    // ---------- RENDER ----------
+    // Render everything
     function renderAll(){
       if(!currentUser){ authScreen.classList.remove('hidden'); dashScreen.classList.add('hidden'); return; }
       authScreen.classList.add('hidden'); dashScreen.classList.remove('hidden');
@@ -252,6 +256,7 @@
       navLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===currentSection));
     }
 
+    // Dashboard
     function renderDashboard(){
       const u = currentUser;
       $('dashBalance').innerText = u.balance?.toLocaleString() || 0;
@@ -273,6 +278,7 @@
       $('userLoanPanel').classList.toggle('hidden', currentUser.role==='Admin');
     }
 
+    // Active loan details & payment
     function renderActiveLoanDetails(){
       const container = $('activeLoanInfo');
       const paymentSection = $('paymentSection');
@@ -280,18 +286,18 @@
       if(loan && loan.status!=='Paid' && loan.status!=='Rejected'){
         const remaining = loan.repayment - (loan.paidAmount || 0);
         container.innerHTML = `
-          <div class="loan-item"><div class="row"><span>Loan ID</span><span>${loan.id}</span></div>
-          <div class="row"><span>Amount</span><span>${loan.amount.toLocaleString()} Yen</span></div>
-          <div class="row"><span>Interest</span><span>${loan.interest}%</span></div>
-          <div class="row"><span>Total Repayment</span><span>${loan.repayment.toLocaleString()} Yen</span></div>
-          <div class="row"><span>Paid</span><span>${(loan.paidAmount||0).toLocaleString()} Yen</span></div>
-          <div class="row"><span>Remaining</span><span style="color:#f5c842;">${remaining.toLocaleString()} Yen</span></div>
-          <div class="row"><span>Due Date</span><span>${loan.dueDate||'N/A'}</span></div>
-          <div class="row"><span>Status</span><span class="badge badge-${loan.status?.toLowerCase()}">${loan.status}</span></div>
-        </div>`;
+          <div class="loan-item">
+            <div class="row"><span>Loan ID</span><span>${loan.id}</span></div>
+            <div class="row"><span>Amount</span><span>${loan.amount.toLocaleString()} Yen</span></div>
+            <div class="row"><span>Interest</span><span>${loan.interest}%</span></div>
+            <div class="row"><span>Total Repayment</span><span>${loan.repayment.toLocaleString()} Yen</span></div>
+            <div class="row"><span>Paid</span><span>${(loan.paidAmount||0).toLocaleString()} Yen</span></div>
+            <div class="row"><span>Remaining</span><span style="color:#f5c842;">${remaining.toLocaleString()} Yen</span></div>
+            <div class="row"><span>Due Date</span><span>${loan.dueDate||'N/A'}</span></div>
+            <div class="row"><span>Status</span><span class="badge badge-${loan.status?.toLowerCase()}">${loan.status}</span></div>
+          </div>`;
         paymentSection.classList.remove('hidden');
         $('paymentMsg').innerHTML = '';
-        // if remaining <= 0 auto mark paid
         if(remaining <= 0 && loan.status !== 'Paid'){
           loan.status = 'Paid';
           loan.paidAmount = loan.repayment;
@@ -304,6 +310,7 @@
       }
     }
 
+    // Loan history
     function renderLoanHistory(){
       const loans = LS.getLoans().filter(l=>l.username===currentUser.username);
       let html = loans.length? '' : '<p style="font-size:0.8rem;">No loans.</p>';
@@ -326,22 +333,24 @@
       $('profilePassword').value = '';
     }
 
-    // ---------- ADMIN CRUD ----------
+    // Admin: Users
     function renderUsers(){
       let users = LS.getUsers();
       const search = $('userSearch').value.toLowerCase();
       const filter = $('userFilterRole').value;
       if(search) users = users.filter(u=>u.username.toLowerCase().includes(search)||u.charName?.toLowerCase().includes(search));
       if(filter) users = users.filter(u=>u.role===filter);
-      let html = `<table style="width:100%;font-size:0.75rem;"><tr><th>User</th><th>Balance</th><th>Role</th><th>Action</th></tr>`;
+      let html = `<table><tr><th>User</th><th>Balance</th><th>Role</th><th>Actions</th></tr>`;
       users.forEach(u=>{
         html+=`<tr><td>${u.username}</td><td>${u.balance?.toLocaleString()}</td><td>${u.role}</td>
-        <td><button class="editUserBtn" data-uname="${u.username}" style="background:#2a6b8a;border:none;padding:0.2rem 0.6rem;border-radius:1rem;font-size:0.7rem;"><i class="fas fa-edit"></i></button>
-        <button class="delUserBtn" data-uname="${u.username}" style="background:#a13d3d;border:none;padding:0.2rem 0.6rem;border-radius:1rem;font-size:0.7rem;"><i class="fas fa-trash"></i></button></td></tr>`;
+        <td>
+          <button class="action-btn edit" data-uname="${u.username}"><i class="fas fa-edit"></i></button>
+          <button class="action-btn delete" data-uname="${u.username}"><i class="fas fa-trash"></i></button>
+        </td></tr>`;
       });
       html+='</table>';
       $('userTableContainer').innerHTML = html;
-      document.querySelectorAll('.editUserBtn').forEach(btn=>btn.addEventListener('click',function(){
+      document.querySelectorAll('.edit[data-uname]').forEach(btn=>btn.addEventListener('click',function(){
         const uname = this.dataset.uname; const u = getUser(uname); if(!u) return;
         const newChar = prompt('Character Name', u.charName); if(newChar!==null) u.charName = newChar;
         const newEmail = prompt('Email', u.email); if(newEmail!==null) u.email = newEmail;
@@ -351,31 +360,33 @@
         const newRole = prompt('Role (User/Admin)', u.role); if(newRole!==null && ['User','Admin'].includes(newRole)) u.role = newRole;
         updateUser(u); if(currentUser.username===u.username) currentUser = getUser(u.username); LS.setCurrentUser(currentUser); renderAll();
       }));
-      document.querySelectorAll('.delUserBtn').forEach(btn=>btn.addEventListener('click',function(){
+      document.querySelectorAll('.delete[data-uname]').forEach(btn=>btn.addEventListener('click',function(){
         const uname = this.dataset.uname; if(uname==='Admin') return alert('Cannot delete Admin');
         if(confirm(`Delete ${uname}?`)){ let users=LS.getUsers().filter(u=>u.username!==uname); LS.setUsers(users); if(currentUser.username===uname){ LS.clearSession(); currentUser=null; } renderAll(); }
       }));
     }
 
+    // Admin: Loans
     function renderLoans(){
       let loans = LS.getLoans();
       const search = $('loanSearch').value.toLowerCase();
       const filter = $('loanFilterStatus').value;
       if(search) loans = loans.filter(l=>l.id.toLowerCase().includes(search)||l.username.toLowerCase().includes(search));
       if(filter) loans = loans.filter(l=>l.status===filter);
-      let html = `<table style="width:100%;font-size:0.7rem;"><tr><th>User</th><th>Amount</th><th>Status</th><th>Action</th></tr>`;
+      let html = `<table><tr><th>User</th><th>Amount</th><th>Status</th><th>Actions</th></tr>`;
       loans.forEach(l=>{
         html+=`<tr><td>${l.username}</td><td>${l.amount.toLocaleString()}</td><td><span class="badge badge-${l.status?.toLowerCase()}">${l.status}</span></td>
         <td>
-          <button class="approveLoan" data-id="${l.id}" style="background:#1f8b4c;border:none;padding:0.2rem 0.5rem;border-radius:1rem;"><i class="fas fa-check"></i></button>
-          <button class="rejectLoan" data-id="${l.id}" style="background:#b33c3c;border:none;padding:0.2rem 0.5rem;border-radius:1rem;"><i class="fas fa-times"></i></button>
-          <button class="editLoan" data-id="${l.id}" style="background:#2a6b8a;border:none;padding:0.2rem 0.5rem;border-radius:1rem;"><i class="fas fa-edit"></i></button>
-          <button class="delLoan" data-id="${l.id}" style="background:#a13d3d;border:none;padding:0.2rem 0.5rem;border-radius:1rem;"><i class="fas fa-trash"></i></button>
+          ${l.status==='Pending' ? `<button class="action-btn approve" data-id="${l.id}"><i class="fas fa-check"></i></button><button class="action-btn reject" data-id="${l.id}"><i class="fas fa-times"></i></button>` : ''}
+          <button class="action-btn edit" data-id="${l.id}"><i class="fas fa-edit"></i></button>
+          <button class="action-btn delete" data-id="${l.id}"><i class="fas fa-trash"></i></button>
         </td></tr>`;
       });
       html+='</table>';
       $('loanTableContainer').innerHTML = html;
-      document.querySelectorAll('.approveLoan').forEach(btn=>btn.addEventListener('click',function(){
+      
+      // Approve
+      document.querySelectorAll('.approve[data-id]').forEach(btn=>btn.addEventListener('click',function(){
         const loan = getLoanById(this.dataset.id); if(!loan || loan.status!=='Pending') return alert('Only pending loans can be approved');
         const settings = LS.getSettings(); const user = getUser(loan.username); if(!user) return;
         loan.status = 'Approved'; loan.loanDate = new Date().toISOString().slice(0,10);
@@ -387,22 +398,26 @@
         if(currentUser.username===user.username) currentUser = getUser(user.username); LS.setCurrentUser(currentUser);
         renderAll();
       }));
-      document.querySelectorAll('.rejectLoan').forEach(btn=>btn.addEventListener('click',function(){
+      // Reject
+      document.querySelectorAll('.reject[data-id]').forEach(btn=>btn.addEventListener('click',function(){
         const loan = getLoanById(this.dataset.id); if(!loan) return; if(loan.status==='Approved'||loan.status==='Paid') return alert('Cannot reject approved/paid loan');
         loan.status = 'Rejected'; LS.setLoans(LS.getLoans().map(l=>l.id===loan.id?loan:l)); renderAll();
       }));
-      document.querySelectorAll('.editLoan').forEach(btn=>btn.addEventListener('click',function(){
+      // Edit
+      document.querySelectorAll('.edit[data-id]').forEach(btn=>btn.addEventListener('click',function(){
         const loan = getLoanById(this.dataset.id); if(!loan) return;
         const note = prompt('Admin Notes', loan.adminNotes||''); if(note!==null) loan.adminNotes = note;
         const amt = prompt('Amount', loan.amount); if(amt!==null && !isNaN(amt)) loan.amount = Number(amt);
         const int = prompt('Interest %', loan.interest); if(int!==null && !isNaN(int)) loan.interest = Number(int);
         LS.setLoans(LS.getLoans().map(l=>l.id===loan.id?loan:l)); renderAll();
       }));
-      document.querySelectorAll('.delLoan').forEach(btn=>btn.addEventListener('click',function(){
+      // Delete
+      document.querySelectorAll('.delete[data-id]').forEach(btn=>btn.addEventListener('click',function(){
         if(confirm('Delete loan record?')){ LS.setLoans(LS.getLoans().filter(l=>l.id!==this.dataset.id)); renderAll(); }
       }));
     }
 
+    // Reports
     function renderReports(){
       const loans = LS.getLoans(); const users = LS.getUsers();
       const totalUsers = users.length;
@@ -414,20 +429,20 @@
       const pending = loans.filter(l=>l.status==='Pending').length;
       const overdue = loans.filter(l=>l.status==='Overdue').length;
       $('reportStats').innerHTML = `
-        <div class="stat-card"><small>Users</small><br>${totalUsers}</div>
-        <div class="stat-card"><small>Loans</small><br>${totalLoans}</div>
-        <div class="stat-card"><small>Interest</small><br>${Math.round(totalInterest).toLocaleString()}</div>
-        <div class="stat-card"><small>Outstanding</small><br>${Math.round(outstanding).toLocaleString()}</div>
-        <div class="stat-card"><small>Paid</small><br>${paid}</div>
-        <div class="stat-card"><small>Rejected</small><br>${rejected}</div>
-        <div class="stat-card"><small>Pending</small><br>${pending}</div>
-        <div class="stat-card"><small>Overdue</small><br>${overdue}</div>
+        <div class="stat-card"><small>Users</small><strong>${totalUsers}</strong></div>
+        <div class="stat-card"><small>Loans</small><strong>${totalLoans}</strong></div>
+        <div class="stat-card"><small>Interest</small><strong>${Math.round(totalInterest).toLocaleString()}</strong></div>
+        <div class="stat-card"><small>Outstanding</small><strong>${Math.round(outstanding).toLocaleString()}</strong></div>
+        <div class="stat-card"><small>Paid</small><strong>${paid}</strong></div>
+        <div class="stat-card"><small>Rejected</small><strong>${rejected}</strong></div>
+        <div class="stat-card"><small>Pending</small><strong>${pending}</strong></div>
+        <div class="stat-card"><small>Overdue</small><strong>${overdue}</strong></div>
       `;
       function approvedCount(){ return loans.filter(l=>l.status==='Approved').length; }
       const barData = [pending, approvedCount(), rejected, paid, overdue];
       const max = Math.max(...barData,1);
       const colors = ['#b8860b','#f5c842','#b33c3c','#2a6b8a','#a13d3d'];
-      $('barChart').innerHTML = barData.map((v,i)=>`<div style="height:${(v/max)*70+10}px;background:${colors[i]};flex:1;border-radius:4px 4px 0 0;text-align:center;font-size:0.6rem;">${v}</div>`).join('');
+      $('barChart').innerHTML = barData.map((v,i)=>`<div style="height:${(v/max)*70+10}px;background:${colors[i]};flex:1;border-radius:4px 4px 0 0;text-align:center;font-size:0.6rem;color:#fff;">${v}</div>`).join('');
       const total = barData.reduce((a,b)=>a+b,0)||1;
       $('pieChart').innerHTML = barData.map((v,i)=>`<div style="width:${(v/total)*100}%;background:${colors[i]};height:100%;"></div>`).join('');
     }
@@ -486,7 +501,6 @@
       if(!amount || amount<=0) return alert('Enter valid amount');
       const remaining = loan.repayment - (loan.paidAmount||0);
       if(amount > remaining) return alert(`Amount exceeds remaining balance (${remaining.toLocaleString()})`);
-      // deduct from user balance
       const user = getUser(currentUser.username);
       if(!user) return;
       if(user.balance < amount) return alert('Insufficient balance');
