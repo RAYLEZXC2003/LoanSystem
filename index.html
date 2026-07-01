@@ -3,17 +3,14 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>PokeMMO Loan System</title>
+    <title>PokeMMO Loan System - Mobile</title>
 
-    <!-- Disable DevTools -->
     <script>
-        document.addEventListener('contextmenu', e => { e.preventDefault();
-            showToast('🔒 Right-click disabled', true); });
+        document.addEventListener('contextmenu', e => { e.preventDefault(); });
         document.addEventListener('keydown', function(e) {
             if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key ===
                     'j' || e.key === 'C' || e.key === 'c')) || (e.ctrlKey && (e.key === 'U' || e.key === 'u'))) {
                 e.preventDefault();
-                showToast('🔒 DevTools disabled', true);
                 return false;
             }
         });
@@ -68,9 +65,10 @@
             -moz-user-select: text;
             -ms-user-select: text;
             user-select: text;
+            font-size: 16px !important;
         }
         .container {
-            max-width: 1400px;
+            max-width: 480px;
             width: 100%;
             padding: 5px 0;
         }
@@ -112,13 +110,13 @@
         }
         .auth-tabs button {
             flex: 1;
-            padding: 8px;
+            padding: 10px 8px;
             border: none;
             border-radius: 8px;
             background: transparent;
             color: #8892b0;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -138,19 +136,19 @@
         .auth-form label {
             display: block;
             color: #a8b2d1;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             margin-bottom: 3px;
             margin-top: 12px;
         }
         .auth-form input {
             width: 100%;
-            padding: 10px 12px;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             background: rgba(255, 255, 255, 0.04);
             color: #fff;
-            font-size: 14px;
+            font-size: 16px;
             transition: 0.2s;
             outline: none;
         }
@@ -161,16 +159,16 @@
         .auth-form .checkbox-group {
             display: flex;
             align-items: flex-start;
-            gap: 8px;
+            gap: 10px;
             margin-top: 12px;
-            padding: 10px;
+            padding: 12px;
             background: rgba(255, 215, 0, 0.04);
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 215, 0, 0.06);
         }
         .auth-form .checkbox-group input {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             margin-top: 2px;
             accent-color: #ffd700;
             cursor: pointer;
@@ -179,7 +177,7 @@
         .auth-form .checkbox-group label {
             margin: 0;
             font-weight: 400;
-            font-size: 11px;
+            font-size: 12px;
             color: #a8b2d1;
             line-height: 1.4;
         }
@@ -188,13 +186,13 @@
         }
         .btn-auth {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             border: none;
-            border-radius: 10px;
+            border-radius: 12px;
             background: #ffd700;
             color: #0a0e1a;
             font-weight: 700;
-            font-size: 15px;
+            font-size: 16px;
             cursor: pointer;
             transition: 0.25s;
             margin-top: 16px;
@@ -211,20 +209,20 @@
         }
         .error-msg {
             color: #ff6b6b;
-            font-size: 12px;
+            font-size: 13px;
             margin-top: 8px;
             text-align: center;
         }
         .success-msg {
             color: #7bed9f;
-            font-size: 12px;
+            font-size: 13px;
             margin-top: 8px;
             text-align: center;
         }
         .auth-divider {
             text-align: center;
             color: #8892b0;
-            font-size: 11px;
+            font-size: 12px;
             margin: 12px 0;
             position: relative;
         }
@@ -273,7 +271,7 @@
         }
         .header-left p {
             color: #8892b0;
-            font-size: 11px;
+            font-size: 12px;
             margin-top: 2px;
         }
         .header-right {
@@ -286,7 +284,7 @@
         .user-badge {
             padding: 4px 12px;
             border-radius: 16px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
             background: rgba(123, 237, 159, 0.1);
             color: #7bed9f;
@@ -298,13 +296,13 @@
             border-color: rgba(255, 215, 0, 0.1);
         }
         .btn-logout {
-            padding: 6px 14px;
+            padding: 8px 16px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             background: rgba(255, 107, 107, 0.1);
             color: #ff6b6b;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
             transition: 0.2s;
             border: 1px solid rgba(255, 107, 107, 0.1);
@@ -318,28 +316,28 @@
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.04), rgba(255, 215, 0, 0.01));
             border: 1px solid rgba(255, 215, 0, 0.08);
             border-radius: 12px;
-            padding: 10px 14px;
+            padding: 12px 14px;
             margin-bottom: 14px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
         }
         .policy-box .policy-left {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
         .policy-box .policy-icon {
-            font-size: 18px;
+            font-size: 20px;
         }
         .policy-box .policy-title {
             color: #ffd700;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 13px;
         }
         .policy-box .policy-details {
             color: #a8b2d1;
-            font-size: 11px;
+            font-size: 12px;
         }
         .policy-box .policy-details strong {
             color: #fff;
@@ -349,7 +347,7 @@
             flex-wrap: wrap;
             gap: 6px 14px;
             color: #a8b2d1;
-            font-size: 10px;
+            font-size: 11px;
         }
         .policy-box .policy-rules span {
             display: flex;
@@ -376,13 +374,13 @@
         }
         .profile-section .profile-info .field {
             color: #a8b2d1;
-            font-size: 11px;
+            font-size: 12px;
             text-align: center;
         }
         .profile-section .profile-info .field strong {
             color: #fff;
             display: block;
-            font-size: 14px;
+            font-size: 15px;
             margin-top: 2px;
         }
         .profile-section .profile-actions {
@@ -392,11 +390,11 @@
             justify-content: center;
         }
         .btn-profile {
-            padding: 6px 14px;
+            padding: 8px 14px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 11px;
+            font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -444,10 +442,10 @@
         /* ===== HINT ===== */
         .quick-edit-hint {
             color: #8892b0;
-            font-size: 11px;
+            font-size: 12px;
             text-align: center;
             background: rgba(255, 215, 0, 0.04);
-            padding: 6px 10px;
+            padding: 8px 10px;
             border-radius: 8px;
             border: 1px solid rgba(255, 215, 0, 0.05);
             margin-bottom: 10px;
@@ -468,7 +466,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 700px;
+            min-width: 650px;
             font-size: 12px;
         }
         thead {
@@ -498,15 +496,15 @@
         /* ===== EDITABLE INPUTS ===== */
         td .editable-input {
             width: 100%;
-            padding: 4px 6px;
-            border-radius: 4px;
+            padding: 6px 8px;
+            border-radius: 6px;
             border: 2px solid transparent;
             background: rgba(255, 255, 255, 0.03);
             color: #fff;
-            font-size: 11px;
+            font-size: 12px;
             transition: all 0.25s ease;
             outline: none;
-            min-height: 28px;
+            min-height: 32px;
         }
         td .editable-input[type="number"] {
             -moz-appearance: textfield;
@@ -543,7 +541,7 @@
             display: block;
             min-height: 28px;
             font-weight: 600;
-            font-size: 11px;
+            font-size: 12px;
             word-break: break-word;
         }
         .readonly-cell.owed {
@@ -564,7 +562,7 @@
         .readonly-cell.note {
             color: #a8b2d1;
             font-weight: 400;
-            font-size: 9px;
+            font-size: 10px;
             background: rgba(255, 255, 255, 0.01);
             border: 1px solid rgba(255, 255, 255, 0.02);
             min-height: 28px;
@@ -574,15 +572,15 @@
         /* ===== ADMIN ACTIONS ===== */
         .admin-actions {
             display: flex;
-            gap: 3px;
+            gap: 4px;
             flex-wrap: wrap;
             justify-content: center;
         }
         .btn-sm {
-            padding: 2px 8px;
+            padding: 4px 10px;
             border: none;
-            border-radius: 4px;
-            font-size: 10px;
+            border-radius: 6px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.2s;
@@ -604,7 +602,7 @@
         /* ===== BUTTONS ===== */
         .btn-row {
             display: none;
-            gap: 6px;
+            gap: 8px;
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 14px;
@@ -613,11 +611,11 @@
             display: flex;
         }
         .btn {
-            padding: 8px 16px;
+            padding: 10px 18px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
             transition: 0.25s ease;
             display: inline-flex;
@@ -661,19 +659,19 @@
         }
         .stat-card {
             background: rgba(255, 255, 255, 0.01);
-            border-radius: 8px;
-            padding: 8px 10px;
+            border-radius: 10px;
+            padding: 10px 8px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.02);
         }
         .stat-card .stat-label {
-            font-size: 8px;
+            font-size: 9px;
             text-transform: uppercase;
             letter-spacing: 0.6px;
             color: #8892b0;
         }
         .stat-card .stat-value {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
             color: #ffd700;
             margin-top: 2px;
@@ -697,10 +695,10 @@
             background: rgba(255, 215, 0, 0.1);
             backdrop-filter: blur(12px);
             color: #ffd700;
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 12px 20px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 215, 0, 0.1);
-            font-size: 13px;
+            font-size: 14px;
             font-weight: 600;
             z-index: 9999;
             box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
@@ -762,7 +760,7 @@
         .modal label {
             display: block;
             color: #a8b2d1;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             margin-bottom: 3px;
             margin-top: 12px;
@@ -770,12 +768,12 @@
         .modal input,
         .modal select {
             width: 100%;
-            padding: 10px 12px;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             background: rgba(255, 255, 255, 0.04);
             color: #fff;
-            font-size: 14px;
+            font-size: 16px;
             outline: none;
             transition: 0.2s;
         }
@@ -790,11 +788,11 @@
         }
         .modal .modal-btns button {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -814,13 +812,13 @@
         }
         .modal .modal-error {
             color: #ff6b6b;
-            font-size: 12px;
+            font-size: 13px;
             margin-top: 8px;
             text-align: center;
         }
         .modal .modal-success {
             color: #7bed9f;
-            font-size: 12px;
+            font-size: 13px;
             margin-top: 8px;
             text-align: center;
         }
@@ -830,27 +828,27 @@
             display: flex;
             flex-direction: column;
             gap: 6px;
-            padding: 10px 12px;
+            padding: 12px 14px;
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
-            margin-bottom: 6px;
+            border-radius: 10px;
+            margin-bottom: 8px;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
         .user-list-item .user-info {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
         }
         .user-list-item .user-info .user-name {
             color: #fff;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
         }
         .user-list-item .user-info .user-role {
-            font-size: 10px;
-            padding: 1px 8px;
-            border-radius: 10px;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 12px;
             background: rgba(255, 215, 0, 0.1);
             color: #ffd700;
         }
@@ -867,33 +865,35 @@
             gap: 4px;
         }
         .user-list-item .user-actions .btn-sm {
-            padding: 3px 10px;
+            padding: 4px 12px;
         }
 
         /* ===== HISTORY ===== */
         .history-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
+            flex-direction: column;
+            gap: 4px;
+            padding: 10px 12px;
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 6px;
-            margin-bottom: 4px;
+            border-radius: 8px;
+            margin-bottom: 6px;
             border-left: 3px solid #ffd700;
             font-size: 12px;
+        }
+        .history-item .history-top {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             flex-wrap: wrap;
-            gap: 4px;
         }
         .history-item .history-time {
             color: #8892b0;
             font-size: 10px;
-            min-width: 100px;
         }
         .history-item .history-action {
             color: #e6e9f0;
             flex: 1;
-            padding: 0 10px;
-            min-width: 150px;
+            font-size: 12px;
         }
         .history-item .history-action .highlight {
             color: #ffd700;
@@ -910,8 +910,6 @@
         .history-item .history-user {
             color: #74b9ff;
             font-size: 10px;
-            min-width: 80px;
-            text-align: right;
         }
         .history-empty {
             text-align: center;
@@ -921,10 +919,9 @@
         }
         .history-type {
             font-size: 9px;
-            padding: 1px 8px;
-            border-radius: 10px;
+            padding: 2px 10px;
+            border-radius: 12px;
             font-weight: 600;
-            margin-right: 6px;
         }
         .history-type.create {
             background: rgba(123, 237, 159, 0.15);
@@ -954,14 +951,6 @@
             background: rgba(123, 237, 159, 0.1);
             color: #7bed9f;
         }
-        .history-type.reset {
-            background: rgba(255, 215, 0, 0.1);
-            color: #ffd700;
-        }
-        .history-type.save {
-            background: rgba(116, 185, 255, 0.1);
-            color: #74b9ff;
-        }
 
         /* ===== EMPTY ===== */
         .empty-state {
@@ -970,15 +959,15 @@
             color: #8892b0;
         }
         .empty-state .big-icon {
-            font-size: 32px;
+            font-size: 36px;
             margin-bottom: 8px;
         }
         .empty-state h3 {
             color: #e6e9f0;
-            font-size: 14px;
+            font-size: 15px;
         }
         .empty-state p {
-            font-size: 12px;
+            font-size: 13px;
         }
 
         /* ===== SCROLLBAR ===== */
@@ -994,12 +983,9 @@
             background: rgba(255, 215, 0, 0.15);
             border-radius: 10px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 215, 0, 0.25);
-        }
 
         /* ============================================================
-           RESPONSIVE
+           MOBILE RESPONSIVE
         ============================================================ */
         @media (max-width: 480px) {
             body {
@@ -1019,17 +1005,17 @@
                 gap: 6px 14px;
             }
             .profile-section .profile-info .field {
-                font-size: 10px;
+                font-size: 11px;
             }
             .profile-section .profile-info .field strong {
-                font-size: 12px;
+                font-size: 13px;
             }
             .btn-profile {
-                font-size: 10px;
-                padding: 5px 10px;
+                font-size: 11px;
+                padding: 6px 12px;
             }
             table {
-                min-width: 600px;
+                min-width: 550px;
                 font-size: 10px;
             }
             th {
@@ -1041,37 +1027,37 @@
             }
             td .editable-input {
                 font-size: 10px;
-                padding: 3px 4px;
-                min-height: 24px;
+                padding: 4px 5px;
+                min-height: 26px;
             }
             .readonly-cell {
                 font-size: 10px;
                 padding: 3px 4px;
-                min-height: 24px;
+                min-height: 26px;
             }
             .readonly-cell.note {
                 font-size: 8px;
                 min-height: 24px;
             }
             .btn {
-                font-size: 10px;
-                padding: 6px 12px;
+                font-size: 11px;
+                padding: 8px 14px;
             }
             .stat-card .stat-value {
-                font-size: 14px;
+                font-size: 15px;
             }
             .quick-edit-hint {
-                font-size: 9px;
-                padding: 4px 8px;
+                font-size: 10px;
+                padding: 6px 8px;
             }
             .policy-box .policy-title {
-                font-size: 11px;
+                font-size: 12px;
             }
             .policy-box .policy-details {
-                font-size: 10px;
+                font-size: 11px;
             }
             .policy-box .policy-rules {
-                font-size: 9px;
+                font-size: 10px;
             }
             .modal {
                 padding: 18px 14px;
@@ -1081,98 +1067,34 @@
             }
             .history-item {
                 font-size: 10px;
-                padding: 6px 8px;
+                padding: 8px 10px;
             }
             .history-item .history-time {
                 font-size: 9px;
-                min-width: 70px;
             }
-            .history-item .history-user {
+        }
+
+        @media (max-width: 380px) {
+            .profile-section .profile-info {
+                flex-direction: column;
+                gap: 4px;
+            }
+            table {
+                min-width: 480px;
                 font-size: 9px;
-                min-width: 60px;
-            }
-            .history-item .history-action {
-                min-width: 120px;
-                padding: 0 6px;
-            }
-        }
-
-        @media (min-width: 481px) and (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            .auth-screen {
-                padding: 24px 18px;
-            }
-            table {
-                min-width: 650px;
-                font-size: 11px;
             }
             td .editable-input {
-                font-size: 11px;
-                min-height: 26px;
+                font-size: 9px;
+                padding: 3px 4px;
+                min-height: 22px;
             }
             .readonly-cell {
-                font-size: 11px;
-                min-height: 26px;
+                font-size: 9px;
+                min-height: 22px;
             }
-        }
-
-        @media (max-width: 768px) and (orientation: landscape) {
-            .header {
-                flex-direction: row;
-                justify-content: space-between;
-                padding: 8px 0;
-            }
-            .header-left h1 {
-                font-size: 18px;
-            }
-            .profile-section {
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            .policy-box {
-                flex-direction: row;
-                flex-wrap: wrap;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .header {
-                flex-direction: row;
-                justify-content: space-between;
-                padding: 20px 0;
-            }
-            .header-left {
-                text-align: left;
-            }
-            .profile-section {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            .profile-section .profile-actions {
-                margin-left: auto;
-            }
-            .policy-box {
-                flex-direction: row;
-                align-items: center;
-            }
-            table {
-                min-width: 1000px;
-                font-size: 13px;
-            }
-            td .editable-input {
-                font-size: 13px;
-                min-height: 34px;
-            }
-            .readonly-cell {
-                font-size: 13px;
-                min-height: 34px;
-            }
-            .readonly-cell.note {
-                font-size: 11px;
-                min-height: 34px;
+            .btn {
+                font-size: 10px;
+                padding: 6px 10px;
             }
         }
 
@@ -1189,15 +1111,6 @@
                 transform: none;
             }
         }
-
-        .interest-auto-badge {
-            font-size: 8px;
-            color: #8892b0;
-            display: block;
-            text-align: center;
-            margin-top: 2px;
-            font-style: italic;
-        }
     </style>
 </head>
 <body>
@@ -1210,7 +1123,7 @@
         <div id="authScreen" class="auth-screen">
             <div class="logo">
                 <h1>⚡ PokeMMO <span>Loan</span></h1>
-                <p>Professional lending system</p>
+                <p>Mobile Lending System</p>
             </div>
 
             <div class="auth-tabs">
@@ -1287,7 +1200,7 @@
                     <div>
                         <div class="policy-title">🏛️ Loan Policy</div>
                         <div class="policy-details">
-                            <strong>₱50K</strong> min · <strong>₱5M</strong> max · Auto-interest based on loan
+                            <strong>₱50K</strong> min · <strong>₱5M</strong> max · Auto-interest
                         </div>
                     </div>
                 </div>
@@ -1295,7 +1208,6 @@
                     <span>• 1–12 weeks</span>
                     <span>• Compound interest</span>
                     <span>• Late fee: +5%</span>
-                    <span>• Collateral for ≥ ₱1M</span>
                 </div>
             </div>
 
@@ -1331,8 +1243,8 @@
                 <span style="color:#8892b0;font-size:10px;margin-left:4px;">(Admin only)</span>
             </div>
 
-            <!-- Interest Auto-Set Info -->
-            <div style="background:rgba(255,215,0,0.04);border-radius:8px;padding:6px 12px;margin-bottom:10px;text-align:center;border:1px solid rgba(255,215,0,0.06);">
+            <!-- Interest Info -->
+            <div style="background:rgba(255,215,0,0.04);border-radius:8px;padding:8px 12px;margin-bottom:10px;text-align:center;border:1px solid rgba(255,215,0,0.06);">
                 <span style="color:#8892b0;font-size:10px;">📊 Auto-Interest: </span>
                 <span style="color:#ffd700;font-size:10px;font-weight:600;">
                     ₱50K-99K = 8% &nbsp;|&nbsp; ₱100K-499K = 10% &nbsp;|&nbsp; ₱500K-999K = 12% &nbsp;|&nbsp; ₱1M+ = 15%
@@ -1361,12 +1273,17 @@
                 </table>
             </div>
 
-            <!-- Admin Buttons -->
+            <!-- Admin Buttons (visible only to admin) -->
             <div class="btn-row" id="adminButtonRow">
-                <button class="btn btn-gold" id="addRowBtn">➕ Add</button>
+                <button class="btn btn-gold" id="addRowBtn">➕ Add Loan</button>
                 <button class="btn btn-outline" id="resetBtn">🔄 Reset</button>
                 <button class="btn btn-danger" id="clearAllBtn">🗑️ Clear</button>
                 <button class="btn btn-outline" id="saveDataBtn">💾 Save</button>
+            </div>
+
+            <!-- User Action Buttons (visible only to users) -->
+            <div class="btn-row" id="userButtonRow" style="display:none;">
+                <button class="btn btn-gold" id="requestLoanBtn">📝 Request Loan</button>
             </div>
 
             <!-- Stats -->
@@ -1398,7 +1315,45 @@
         MODALS
         ============================================================ -->
 
-        <!-- Edit Profile -->
+        <!-- Request Loan Modal (User) -->
+        <div class="modal-overlay" id="requestLoanModal">
+            <div class="modal">
+                <h2>📝 Request Loan</h2>
+                <p>Fill in the details to request a loan. Admin will review and approve.</p>
+
+                <label>Loan Amount (₱)</label>
+                <input type="number" id="requestLoanAmount" placeholder="Enter amount (50,000 - 5,000,000)" min="50000" max="5000000" />
+
+                <label>Repayment Period (Weeks)</label>
+                <select id="requestLoanWeeks">
+                    <option value="1">1 Week</option>
+                    <option value="2">2 Weeks</option>
+                    <option value="3">3 Weeks</option>
+                    <option value="4" selected>4 Weeks</option>
+                    <option value="5">5 Weeks</option>
+                    <option value="6">6 Weeks</option>
+                    <option value="7">7 Weeks</option>
+                    <option value="8">8 Weeks</option>
+                    <option value="9">9 Weeks</option>
+                    <option value="10">10 Weeks</option>
+                    <option value="11">11 Weeks</option>
+                    <option value="12">12 Weeks</option>
+                </select>
+
+                <label>Purpose (Optional)</label>
+                <input type="text" id="requestLoanPurpose" placeholder="Why do you need this loan?" />
+
+                <div id="requestLoanError" class="modal-error"></div>
+                <div id="requestLoanSuccess" class="modal-success"></div>
+
+                <div class="modal-btns">
+                    <button class="btn-modal-cancel" id="requestLoanCancel">Cancel</button>
+                    <button class="btn-modal-save" id="requestLoanSubmit">Submit Request</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile Modal -->
         <div class="modal-overlay" id="editProfileModal">
             <div class="modal">
                 <h2>✏️ Edit Profile</h2>
@@ -1413,7 +1368,7 @@
             </div>
         </div>
 
-        <!-- Change Password -->
+        <!-- Change Password Modal -->
         <div class="modal-overlay" id="changePasswordModal">
             <div class="modal">
                 <h2>🔑 Change Password</h2>
@@ -1432,7 +1387,7 @@
             </div>
         </div>
 
-        <!-- History -->
+        <!-- History Modal -->
         <div class="modal-overlay" id="historyModal">
             <div class="modal" style="max-width:700px;">
                 <h2>📜 Transaction History</h2>
@@ -1447,7 +1402,7 @@
             </div>
         </div>
 
-        <!-- Manage Users -->
+        <!-- Manage Users Modal (Admin Only) -->
         <div class="modal-overlay" id="manageUsersModal">
             <div class="modal">
                 <h2>👥 Manage Users</h2>
@@ -1463,7 +1418,7 @@
             </div>
         </div>
 
-        <!-- Edit User -->
+        <!-- Edit User Modal (Admin Only) -->
         <div class="modal-overlay" id="editUserModal">
             <div class="modal">
                 <h2>✏️ Edit User</h2>
@@ -1509,28 +1464,24 @@
             interest: 0.10,
             weeks: 4,
             paid: 100000,
-            userId: null
+            userId: null,
+            status: 'Active'
         }, {
             borrower: 'Misty Waterflower',
             loan: 250000,
             interest: 0.10,
             weeks: 3,
             paid: 50000,
-            userId: null
+            userId: null,
+            status: 'Active'
         }, {
             borrower: 'Brock Slate',
             loan: 1200000,
             interest: 0.15,
             weeks: 6,
             paid: 200000,
-            userId: null
-        }, {
-            borrower: 'Gary Oak',
-            loan: 75000,
-            interest: 0.08,
-            weeks: 2,
-            paid: 0,
-            userId: null
+            userId: null,
+            status: 'Active'
         }, ];
 
         // ============================================================
@@ -1584,12 +1535,18 @@
                 const div = document.createElement('div');
                 div.className = 'history-item';
                 const typeMap = { 'create': 'create', 'update': 'update', 'delete': 'delete', 'payment': 'payment',
-                    'login': 'login', 'logout': 'logout', 'register': 'register', 'reset': 'reset', 'save': 'save' };
+                    'login': 'login', 'logout': 'logout', 'register': 'register', 'reset': 'reset', 'save': 'save',
+                    'request': 'create', 'approve': 'update'
+                };
                 div.innerHTML = `
-                    <span class="history-type ${typeMap[entry.action.toLowerCase()] || 'update'}">${entry.action.toUpperCase()}</span>
-                    <span class="history-action">${entry.details}</span>
-                    <span class="history-time">${entry.timestamp}</span>
-                    <span class="history-user">${entry.user}</span>
+                    <div class="history-top">
+                        <span class="history-type ${typeMap[entry.action.toLowerCase()] || 'update'}">${entry.action.toUpperCase()}</span>
+                        <span class="history-action">${entry.details}</span>
+                    </div>
+                    <div class="history-top">
+                        <span class="history-time">${entry.timestamp}</span>
+                        <span class="history-user">${entry.user}</span>
+                    </div>
                 `;
                 container.appendChild(div);
             });
@@ -1603,7 +1560,6 @@
             const savedUsers = localStorage.getItem('pokemmo_users');
             const savedLoans = localStorage.getItem('pokemmo_loans');
 
-            // Load users with proper admin account
             if (savedUsers) {
                 try { users = JSON.parse(savedUsers); } catch (e) { users = []; }
             } else {
@@ -1613,7 +1569,6 @@
             // Ensure admin account exists
             const adminExists = users.find(u => u.username === 'Adrayle' && u.isAdmin === true);
             if (!adminExists) {
-                // Remove any non-admin Adrayle
                 users = users.filter(u => u.username !== 'Adrayle');
                 users.push({
                     username: 'Adrayle',
@@ -1624,7 +1579,6 @@
                 console.log('✅ Admin account created: Adrayle / p@ssw0rd');
             }
 
-            // Load loans
             if (savedLoans) {
                 try { loanData = JSON.parse(savedLoans); } catch (e) { loanData = JSON.parse(JSON.stringify(
                         defaultLoans)); }
@@ -1659,8 +1613,7 @@
             else if (loan >= 500000) note = '🟡 MEDIUM · Standard terms · ';
             else if (loan >= 100000) note = '🟢 SMALL · Fast approval · ';
             else note = '⚪ MICRO · Quick release · ';
-            note += (weeks <= 2) ? 'Short-term (≤2w)' : (weeks <= 4) ? 'Standard term (3-4w)' : (weeks <= 8) ?
-                'Extended term (5-8w)' : '⚠️ Long-term (>8w)';
+            note += (weeks <= 2) ? 'Short-term' : (weeks <= 4) ? 'Standard' : (weeks <= 8) ? 'Extended' : '⚠️ Long-term';
             if (loan >= 1000000) note += ' · 💎 Collateral';
             if (weeks > 6) note += ' · ⏰ Late fee +5%';
             return note;
@@ -1753,7 +1706,16 @@
             const isAdminUser = isAdmin;
             document.getElementById('adminColHead').style.display = isAdminUser ? '' : 'none';
             const adminButtonRow = document.getElementById('adminButtonRow');
-            isAdminUser ? adminButtonRow.classList.add('admin-visible') : adminButtonRow.classList.remove('admin-visible');
+            const userButtonRow = document.getElementById('userButtonRow');
+
+            if (isAdminUser) {
+                adminButtonRow.style.display = 'flex';
+                userButtonRow.style.display = 'none';
+            } else {
+                adminButtonRow.style.display = 'none';
+                userButtonRow.style.display = 'flex';
+            }
+
             const manageUsersBtn = document.getElementById('manageUsersBtn');
             manageUsersBtn.style.display = isAdminUser ? '' : 'none';
             if (isAdminUser) updateUserCountBadge();
@@ -1766,7 +1728,7 @@
             const displayLoans = getLoansForUser(currentUser);
             if (displayLoans.length === 0) {
                 tbody.innerHTML =
-                    `<tr><td colspan="9" style="text-align:center;padding:30px 10px;"><div class="empty-state"><div class="big-icon">📭</div><h3>No Loans Found</h3><p>${isAdmin ? 'Tap "Add" to create a loan' : 'You don\'t have any loans yet'}</p></div></td></tr>`;
+                    `<tr><td colspan="9" style="text-align:center;padding:30px 10px;"><div class="empty-state"><div class="big-icon">📭</div><h3>No Loans Found</h3><p>${isAdmin ? 'Tap "Add Loan" to create a loan' : 'You don\'t have any loans yet. Tap "Request Loan" to apply.'}</p></div></td></tr>`;
                 updateStats();
                 return;
             }
@@ -2070,6 +2032,113 @@
         }
 
         // ============================================================
+        //  USER LOAN REQUEST SYSTEM
+        // ============================================================
+
+        function submitLoanRequest(username, amount, weeks, purpose) {
+            // Validate amount
+            if (amount < 50000) {
+                showToast('❌ Minimum loan amount is ₱50,000', true);
+                return false;
+            }
+            if (amount > 5000000) {
+                showToast('❌ Maximum loan amount is ₱5,000,000', true);
+                return false;
+            }
+
+            // Check if user already has active loan
+            const existingLoans = loanData.filter(l => l.userId === username && l.status !== 'Paid');
+            if (existingLoans.length > 0) {
+                showToast('❌ You already have an active loan. Please pay it off first.', true);
+                return false;
+            }
+
+            // Calculate interest
+            const interest = getAutoInterest(amount);
+            const totalOwed = Math.round(amount * Math.pow(1 + interest, weeks));
+
+            // Create loan request as PENDING (status: Pending)
+            const newLoan = {
+                borrower: username,
+                loan: amount,
+                interest: interest,
+                weeks: weeks,
+                paid: 0,
+                userId: username,
+                status: 'Pending',
+                purpose: purpose || 'Not specified',
+                requestedDate: getTimestamp()
+            };
+
+            loanData.push(newLoan);
+            saveLoans();
+
+            addTransaction('REQUEST',
+                `Loan requested by <span class="highlight">${username}</span> | Amount: <span class="highlight-green">${formatCurrency(amount)}</span> | Weeks: ${weeks} | Purpose: ${purpose || 'Not specified'}`,
+                username
+            );
+
+            showToast('✅ Loan request submitted! Admin will review it shortly.');
+            renderApp();
+            return true;
+        }
+
+        function approveLoanRequest(index) {
+            if (!isAdmin) {
+                showToast('⚠️ Only admins can approve loans', true);
+                return;
+            }
+
+            const loan = loanData[index];
+            if (!loan) return;
+
+            if (loan.status !== 'Pending') {
+                showToast('⚠️ This loan is not pending approval', true);
+                return;
+            }
+
+            // Update loan status
+            loan.status = 'Active';
+            const totalOwed = calculateTotalOwed(loan.loan, loan.interest, loan.weeks);
+
+            addTransaction('APPROVE',
+                `Loan approved for <span class="highlight">${loan.borrower}</span> | Amount: <span class="highlight-green">${formatCurrency(loan.loan)}</span> | Total Owed: <span class="highlight">${formatCurrency(totalOwed)}</span>`,
+                currentUser
+            );
+
+            showToast(`✅ Loan for ${loan.borrower} approved successfully!`);
+            saveLoans();
+            renderApp();
+        }
+
+        function rejectLoanRequest(index) {
+            if (!isAdmin) {
+                showToast('⚠️ Only admins can reject loans', true);
+                return;
+            }
+
+            const loan = loanData[index];
+            if (!loan) return;
+
+            if (loan.status !== 'Pending') {
+                showToast('⚠️ This loan is not pending approval', true);
+                return;
+            }
+
+            // Remove the loan request
+            loanData.splice(index, 1);
+            saveLoans();
+
+            addTransaction('REJECT',
+                `Loan request rejected for <span class="highlight-red">${loan.borrower}</span> | Amount: <span class="highlight-red">${formatCurrency(loan.loan)}</span>`,
+                currentUser
+            );
+
+            showToast(`❌ Loan for ${loan.borrower} rejected.`);
+            renderApp();
+        }
+
+        // ============================================================
         //  EVENT LISTENERS
         // ============================================================
 
@@ -2138,52 +2207,305 @@
             showToast('👋 Logged out');
         });
 
-        // Admin Buttons
-        document.getElementById('addRowBtn').addEventListener('click', function() {
-            if (!isAdmin) { showToast('⚠️ Admin only', true); return; }
-            loanData.push({ borrower: 'New Trainer', loan: 100000, interest: 0.10, weeks: 3, paid: 0, userId: null });
-            renderTable();
-            saveLoans();
-            addTransaction('CREATE',
-                `New loan created for <span class="highlight">New Trainer</span> | Amount: <span class="highlight-green">${formatCurrency(100000)}</span> | Interest: 10% | Weeks: 3`,
-                currentUser);
-            showToast('✏️ New loan added! Tap to edit.');
-            setTimeout(() => { const inputs = document.querySelectorAll('.editable-input'); if (inputs.length > 0) inputs[
-                    inputs.length - 4].focus(); }, 200);
+        // ============================================================
+        //  USER REQUEST LOAN
+        // ============================================================
+
+        document.getElementById('requestLoanBtn').addEventListener('click', function() {
+            document.getElementById('requestLoanAmount').value = '';
+            document.getElementById('requestLoanWeeks').value = '4';
+            document.getElementById('requestLoanPurpose').value = '';
+            document.getElementById('requestLoanError').textContent = '';
+            document.getElementById('requestLoanSuccess').textContent = '';
+            document.getElementById('requestLoanModal').classList.add('active');
         });
 
-        document.getElementById('resetBtn').addEventListener('click', function() {
-            if (!isAdmin) { showToast('⚠️ Admin only', true); return; }
-            if (confirm('Reset to example data? This will clear all current loans.')) {
-                loanData = JSON.parse(JSON.stringify(defaultLoans));
-                addTransaction('RESET', 'All loans reset to example data', currentUser);
-                renderTable();
-                saveLoans();
-                showToast('🔄 Reset to examples');
+        document.getElementById('requestLoanCancel').addEventListener('click', function() {
+            document.getElementById('requestLoanModal').classList.remove('active');
+        });
+
+        document.getElementById('requestLoanSubmit').addEventListener('click', function() {
+            const amount = parseInt(document.getElementById('requestLoanAmount').value);
+            const weeks = parseInt(document.getElementById('requestLoanWeeks').value);
+            const purpose = document.getElementById('requestLoanPurpose').value.trim();
+
+            if (!amount || amount < 50000) {
+                document.getElementById('requestLoanError').textContent = 'Please enter a valid amount (₱50,000 minimum)';
+                return;
+            }
+            if (amount > 5000000) {
+                document.getElementById('requestLoanError').textContent = 'Maximum loan amount is ₱5,000,000';
+                return;
+            }
+
+            document.getElementById('requestLoanModal').classList.remove('active');
+
+            if (submitLoanRequest(currentUser, amount, weeks, purpose)) {
+                document.getElementById('requestLoanSuccess').textContent = '✅ Request submitted!';
+                setTimeout(() => {
+                    document.getElementById('requestLoanSuccess').textContent = '';
+                }, 3000);
             }
         });
 
-        document.getElementById('clearAllBtn').addEventListener('click', function() {
-            if (!isAdmin) { showToast('⚠️ Admin only', true); return; }
-            if (loanData.length === 0) return;
-            if (confirm('⚠️ Delete ALL loans? This cannot be undone.')) {
-                const count = loanData.length;
-                loanData = [];
-                addTransaction('DELETE', `All ${count} loans cleared by admin`, currentUser);
-                renderTable();
-                saveLoans();
-                showToast('🗑️ All loans cleared');
+        // ============================================================
+        //  ADMIN LOAN APPROVAL
+        // ============================================================
+
+        // We add approve/reject buttons to pending loans
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+            const displayLoans = getLoansForUser(currentUser);
+            if (displayLoans.length === 0) {
+                tbody.innerHTML =
+                    `<tr><td colspan="9" style="text-align:center;padding:30px 10px;"><div class="empty-state"><div class="big-icon">📭</div><h3>No Loans Found</h3><p>${isAdmin ? 'Tap "Add Loan" to create a loan' : 'You don\'t have any loans yet. Tap "Request Loan" to apply.'}</p></div></td></tr>`;
+                updateStats();
+                return;
             }
-        });
+            displayLoans.forEach((item, displayIndex) => {
+                const realIndex = isAdmin ? loanData.indexOf(item) : -1;
+                const autoInterest = getAutoInterest(item.loan);
+                if (isAdmin && realIndex !== -1 && Math.abs(item.interest - autoInterest) > 0.001) {
+                    loanData[realIndex].interest = autoInterest;
+                }
+                const totalOwed = calculateTotalOwed(item.loan, item.interest, item.weeks);
+                const balance = totalOwed - item.paid;
+                const note = generateLoanNote(item.loan, item.weeks);
+                const tr = document.createElement('tr');
 
-        document.getElementById('saveDataBtn').addEventListener('click', function() {
-            if (!isAdmin) { showToast('⚠️ Admin only', true); return; }
-            saveAll();
-            addTransaction('SAVE', 'Data manually saved', currentUser);
-            showToast('💾 All data saved!');
-        });
+                // Status badge for pending loans
+                const isPending = item.status === 'Pending';
 
-        // Profile
+                // Borrower
+                const td1 = document.createElement('td');
+                const inp1 = document.createElement('input');
+                inp1.type = 'text';
+                inp1.className = 'editable-input';
+                inp1.value = item.borrower + (isPending ? ' ⏳' : '');
+                inp1.placeholder = 'Name';
+                inp1.disabled = !isAdmin || isPending;
+                if (isPending) {
+                    inp1.style.borderColor = 'rgba(255,215,0,0.3)';
+                }
+                inp1.addEventListener('input', function() {
+                    if (isAdmin && realIndex !== -1 && !isPending) {
+                        const old = loanData[realIndex].borrower;
+                        loanData[realIndex].borrower = this.value.replace(' ⏳', '');
+                        saveLoans();
+                        updateStats();
+                        if (old !== this.value) addTransaction('UPDATE',
+                            `Borrower changed from <span class="highlight">${old}</span> to <span class="highlight">${this.value}</span>`,
+                            currentUser);
+                    }
+                });
+                td1.appendChild(inp1);
+                tr.appendChild(td1);
+
+                // Loan
+                const td2 = document.createElement('td');
+                const inp2 = document.createElement('input');
+                inp2.type = 'number';
+                inp2.className = 'editable-input';
+                inp2.value = item.loan;
+                inp2.placeholder = '50K-5M';
+                inp2.min = '50000';
+                inp2.max = '5000000';
+                inp2.disabled = !isAdmin || isPending;
+                inp2.addEventListener('input', function() {
+                    if (isAdmin && realIndex !== -1 && !isPending) {
+                        const old = loanData[realIndex].loan;
+                        let val = parseFloat(this.value) || 50000;
+                        if (val < 50000) val = 50000;
+                        if (val > 5000000) val = 5000000;
+                        loanData[realIndex].loan = val;
+                        const newInterest = getAutoInterest(val);
+                        loanData[realIndex].interest = newInterest;
+                        renderTable();
+                        saveLoans();
+                        if (old !== val) addTransaction('UPDATE',
+                            `Loan amount changed from <span class="highlight-green">${formatCurrency(old)}</span> to <span class="highlight-green">${formatCurrency(val)}</span> | Interest auto-set to ${(newInterest * 100)}%`,
+                            currentUser);
+                        showToast('💰 Interest auto-set to ' + getInterestDisplay(val));
+                    }
+                });
+                td2.appendChild(inp2);
+                tr.appendChild(td2);
+
+                // Interest
+                const td3 = document.createElement('td');
+                const span3 = document.createElement('span');
+                span3.className = 'readonly-cell';
+                span3.style.cssText =
+                    'color:#ffd700;background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.05);border-radius:4px;padding:4px 6px;display:block;font-weight:600;font-size:11px;text-align:center;';
+                span3.textContent = (item.interest * 100) + '%';
+                td3.appendChild(span3);
+                tr.appendChild(td3);
+
+                // Weeks
+                const td4 = document.createElement('td');
+                const inp4 = document.createElement('input');
+                inp4.type = 'number';
+                inp4.className = 'editable-input';
+                inp4.value = item.weeks;
+                inp4.placeholder = '1-12';
+                inp4.min = '1';
+                inp4.max = '12';
+                inp4.step = '1';
+                inp4.disabled = !isAdmin || isPending;
+                inp4.addEventListener('input', function() {
+                    if (isAdmin && realIndex !== -1 && !isPending) {
+                        const old = loanData[realIndex].weeks;
+                        let val = parseInt(this.value) || 1;
+                        if (val < 1) val = 1;
+                        if (val > 12) val = 12;
+                        loanData[realIndex].weeks = val;
+                        renderTable();
+                        saveLoans();
+                        if (old !== val) addTransaction('UPDATE',
+                            `Weeks changed from <span class="highlight">${old}</span> to <span class="highlight">${val}</span> for ${item.borrower}`,
+                            currentUser);
+                    }
+                });
+                td4.appendChild(inp4);
+                tr.appendChild(td4);
+
+                // Note
+                const td5 = document.createElement('td');
+                const span5 = document.createElement('span');
+                span5.className = 'readonly-cell note';
+                if (isPending) {
+                    span5.textContent = `⏳ Pending Approval | Purpose: ${item.purpose || 'Not specified'}`;
+                    span5.style.borderColor = 'rgba(255,215,0,0.3)';
+                    span5.style.color = '#ffd700';
+                } else {
+                    span5.textContent = note;
+                }
+                td5.appendChild(span5);
+                tr.appendChild(td5);
+
+                // Owed
+                const td6 = document.createElement('td');
+                const span6 = document.createElement('span');
+                span6.className = 'readonly-cell owed';
+                if (isPending) {
+                    span6.textContent = formatCurrency(totalOwed) + ' ⏳';
+                    span6.style.opacity = '0.7';
+                } else {
+                    span6.textContent = formatCurrency(totalOwed);
+                }
+                td6.appendChild(span6);
+                tr.appendChild(td6);
+
+                // Paid
+                const td7 = document.createElement('td');
+                const inp7 = document.createElement('input');
+                inp7.type = 'number';
+                inp7.className = 'editable-input';
+                inp7.value = item.paid;
+                inp7.placeholder = '0';
+                inp7.min = '0';
+                inp7.disabled = !isAdmin || isPending;
+                inp7.addEventListener('input', function() {
+                    if (isAdmin && realIndex !== -1 && !isPending) {
+                        const old = loanData[realIndex].paid;
+                        loanData[realIndex].paid = parseFloat(this.value) || 0;
+                        renderTable();
+                        saveLoans();
+                        if (old !== parseFloat(this.value)) addTransaction('PAYMENT',
+                            `Payment recorded for <span class="highlight">${item.borrower}</span> | Paid: <span class="highlight-green">${formatCurrency(parseFloat(this.value) || 0)}</span> | Remaining Balance: <span class="highlight">${formatCurrency(calculateTotalOwed(item.loan, item.interest, item.weeks) - (parseFloat(this.value) || 0))}</span>`,
+                            currentUser);
+                    }
+                });
+                td7.appendChild(inp7);
+                tr.appendChild(td7);
+
+                // Balance
+                const td8 = document.createElement('td');
+                const span8 = document.createElement('span');
+                span8.className = 'readonly-cell balance' + (balance < 0 ? ' negative' : '');
+                if (isPending) {
+                    span8.textContent = '⏳ Pending';
+                    span8.style.opacity = '0.7';
+                } else {
+                    span8.textContent = formatCurrency(balance);
+                }
+                td8.appendChild(span8);
+                tr.appendChild(td8);
+
+                // Actions
+                const td9 = document.createElement('td');
+
+                if (isAdmin && realIndex !== -1) {
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'admin-actions';
+
+                    if (isPending) {
+                        // Approve button
+                        const approveBtn = document.createElement('button');
+                        approveBtn.className = 'btn-sm edit';
+                        approveBtn.textContent = '✅ Approve';
+                        approveBtn.style.background = 'rgba(123, 237, 159, 0.15)';
+                        approveBtn.style.color = '#7bed9f';
+                        approveBtn.style.border = '1px solid rgba(123, 237, 159, 0.2)';
+                        approveBtn.addEventListener('click', () => {
+                            if (confirm(`Approve loan for ${item.borrower}?`)) {
+                                approveLoanRequest(realIndex);
+                            }
+                        });
+                        actionsDiv.appendChild(approveBtn);
+
+                        // Reject button
+                        const rejectBtn = document.createElement('button');
+                        rejectBtn.className = 'btn-sm delete';
+                        rejectBtn.textContent = '❌ Reject';
+                        rejectBtn.addEventListener('click', () => {
+                            if (confirm(`Reject loan for ${item.borrower}?`)) {
+                                rejectLoanRequest(realIndex);
+                            }
+                        });
+                        actionsDiv.appendChild(rejectBtn);
+                    } else {
+                        // Delete button for active loans
+                        const delBtn = document.createElement('button');
+                        delBtn.className = 'btn-sm delete';
+                        delBtn.textContent = '🗑️';
+                        delBtn.addEventListener('click', () => {
+                            if (confirm(`Delete ${item.borrower}'s loan?`)) {
+                                const name = item.borrower,
+                                    amt = item.loan;
+                                loanData.splice(realIndex, 1);
+                                addTransaction('DELETE',
+                                    `Loan deleted for <span class="highlight-red">${name}</span> | Amount: <span class="highlight-red">${formatCurrency(amt)}</span>`,
+                                    currentUser);
+                                renderTable();
+                                saveLoans();
+                                showToast(`🗑️ ${name}'s loan deleted`);
+                            }
+                        });
+                        actionsDiv.appendChild(delBtn);
+                    }
+
+                    td9.appendChild(actionsDiv);
+                } else {
+                    // For non-admin users, show status
+                    const statusSpan = document.createElement('span');
+                    statusSpan.style.fontSize = '10px';
+                    statusSpan.style.color = item.status === 'Pending' ? '#ffd700' : '#7bed9f';
+                    statusSpan.textContent = item.status === 'Pending' ? '⏳ Pending' : '✅ Active';
+                    td9.appendChild(statusSpan);
+                }
+
+                tr.appendChild(td9);
+                tbody.appendChild(tr);
+            });
+            updateStats();
+        }
+
+        // ============================================================
+        //  PROFILE & SETTINGS
+        // ============================================================
+
         document.getElementById('editProfileBtn').addEventListener('click', function() {
             document.getElementById('editProfileInput').value = currentUser;
             document.getElementById('editProfileError').textContent = '';
@@ -2294,6 +2616,57 @@
             if (e.key === 'Enter') saveUserEdit();
         });
 
+        // Admin Buttons
+        document.getElementById('addRowBtn').addEventListener('click', function() {
+            if (!isAdmin) { showToast('⚠️ Admin only', true); return; }
+            loanData.push({
+                borrower: 'New Trainer',
+                loan: 100000,
+                interest: 0.10,
+                weeks: 3,
+                paid: 0,
+                userId: null,
+                status: 'Active'
+            });
+            renderTable();
+            saveLoans();
+            addTransaction('CREATE',
+                `New loan created for <span class="highlight">New Trainer</span> | Amount: <span class="highlight-green">${formatCurrency(100000)}</span> | Interest: 10% | Weeks: 3`,
+                currentUser);
+            showToast('✏️ New loan added! Tap to edit.');
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (!isAdmin) { showToast('⚠️ Admin only', true); return; }
+            if (confirm('Reset to example data? This will clear all current loans.')) {
+                loanData = JSON.parse(JSON.stringify(defaultLoans));
+                addTransaction('RESET', 'All loans reset to example data', currentUser);
+                renderTable();
+                saveLoans();
+                showToast('🔄 Reset to examples');
+            }
+        });
+
+        document.getElementById('clearAllBtn').addEventListener('click', function() {
+            if (!isAdmin) { showToast('⚠️ Admin only', true); return; }
+            if (loanData.length === 0) return;
+            if (confirm('⚠️ Delete ALL loans? This cannot be undone.')) {
+                const count = loanData.length;
+                loanData = [];
+                addTransaction('DELETE', `All ${count} loans cleared by admin`, currentUser);
+                renderTable();
+                saveLoans();
+                showToast('🗑️ All loans cleared');
+            }
+        });
+
+        document.getElementById('saveDataBtn').addEventListener('click', function() {
+            if (!isAdmin) { showToast('⚠️ Admin only', true); return; }
+            saveAll();
+            addTransaction('SAVE', 'Data manually saved', currentUser);
+            showToast('💾 All data saved!');
+        });
+
         // Close modals on overlay click
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.addEventListener('click', function(e) {
@@ -2321,15 +2694,15 @@
         showAuthScreen();
         updateUserCountBadge();
 
-        console.log('⚡ PokeMMO Loan System loaded!');
+        console.log('⚡ PokeMMO Loan System (Mobile) loaded!');
         console.log('👤 ' + users.length + ' users registered');
         console.log('📊 ' + loanData.length + ' loans loaded');
         console.log('📜 ' + transactionHistory.length + ' transactions recorded');
-        console.log('👑 Default Admin: Adrayle / p@ssw0rd');
+        console.log('👑 Admin: Adrayle / p@ssw0rd');
         console.log('📊 Auto-Interest: 8% (50K-99K) | 10% (100K-499K) | 12% (500K-999K) | 15% (1M+)');
-        console.log('✏️ Tap any field to edit instantly!');
-        console.log('📜 Transaction history tracks ALL actions');
-        console.log('📱 Fully responsive for mobile!');
+        console.log('📱 Optimized for mobile devices!');
+        console.log('📝 Users can now request loans with "Request Loan" button');
+        console.log('👑 Admins can approve/reject pending requests');
     </script>
 
 </body>
