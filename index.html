@@ -554,6 +554,16 @@
             background: rgba(255, 107, 107, 0.15);
         }
 
+        .btn-profile.history {
+            background: rgba(123, 237, 159, 0.08);
+            color: #7bed9f;
+            border: 1px solid rgba(123, 237, 159, 0.08);
+        }
+
+        .btn-profile.history:hover {
+            background: rgba(123, 237, 159, 0.15);
+        }
+
         .user-count-badge {
             background: rgba(255, 215, 0, 0.15);
             color: #ffd700;
@@ -640,7 +650,6 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* Scrollable inputs on mobile */
         td .editable-input[type="number"] {
             -moz-appearance: textfield;
             appearance: textfield;
@@ -753,13 +762,17 @@
             border: 1px solid rgba(116, 185, 255, 0.1);
         }
 
-        /* ===== BUTTONS ===== */
+        /* ===== BUTTONS - Admin Only ===== */
         .btn-row {
-            display: flex;
+            display: none;
             gap: 6px;
             justify-content: center;
             flex-wrap: wrap;
             margin-top: 14px;
+        }
+
+        .btn-row.admin-visible {
+            display: flex;
         }
 
         .btn {
@@ -907,7 +920,7 @@
             background: #1a1a2e;
             border-radius: 16px;
             padding: 24px 20px;
-            max-width: 440px;
+            max-width: 600px;
             width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
@@ -1055,6 +1068,88 @@
             padding: 3px 10px;
         }
 
+        /* ===== TRANSACTION HISTORY ===== */
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            margin-bottom: 4px;
+            border-left: 3px solid #ffd700;
+            font-size: 12px;
+        }
+
+        .history-item .history-time {
+            color: #8892b0;
+            font-size: 10px;
+            min-width: 100px;
+        }
+
+        .history-item .history-action {
+            color: #e6e9f0;
+            flex: 1;
+            padding: 0 10px;
+        }
+
+        .history-item .history-action .highlight {
+            color: #ffd700;
+            font-weight: 600;
+        }
+
+        .history-item .history-action .highlight-green {
+            color: #7bed9f;
+            font-weight: 600;
+        }
+
+        .history-item .history-action .highlight-red {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        .history-item .history-user {
+            color: #74b9ff;
+            font-size: 10px;
+            min-width: 80px;
+            text-align: right;
+        }
+
+        .history-empty {
+            text-align: center;
+            color: #8892b0;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        .history-type {
+            font-size: 9px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+        .history-type.create {
+            background: rgba(123, 237, 159, 0.15);
+            color: #7bed9f;
+        }
+
+        .history-type.update {
+            background: rgba(116, 185, 255, 0.15);
+            color: #74b9ff;
+        }
+
+        .history-type.delete {
+            background: rgba(255, 107, 107, 0.15);
+            color: #ff6b6b;
+        }
+
+        .history-type.payment {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+        }
+
         /* ===== EMPTY STATE ===== */
         .empty-state {
             text-align: center;
@@ -1094,25 +1189,20 @@
            MOBILE RESPONSIVE STYLES
         ============================================================ */
 
-        /* Small phones */
         @media (max-width: 480px) {
             body {
                 padding: 5px;
             }
-
             .auth-screen {
                 padding: 20px 14px;
                 margin: 10px auto;
             }
-
             .auth-screen .logo h1 {
                 font-size: 24px;
             }
-
             .header-left h1 {
                 font-size: 18px;
             }
-
             .profile-section .profile-info {
                 gap: 6px 14px;
             }
@@ -1122,32 +1212,26 @@
             .profile-section .profile-info .field strong {
                 font-size: 12px;
             }
-
             .btn-profile {
                 font-size: 10px;
                 padding: 5px 10px;
             }
-
             table {
                 min-width: 600px;
                 font-size: 10px;
             }
-
             th {
                 font-size: 8px;
                 padding: 5px 3px;
             }
-
             td {
                 padding: 2px 3px;
             }
-
             td .editable-input {
                 font-size: 10px;
                 padding: 3px 4px;
                 min-height: 24px;
             }
-
             .readonly-cell {
                 font-size: 10px;
                 padding: 3px 4px;
@@ -1157,21 +1241,17 @@
                 font-size: 8px;
                 min-height: 24px;
             }
-
             .btn {
                 font-size: 10px;
                 padding: 6px 12px;
             }
-
             .stat-card .stat-value {
                 font-size: 14px;
             }
-
             .quick-edit-hint {
                 font-size: 9px;
                 padding: 4px 8px;
             }
-
             .policy-box .policy-title {
                 font-size: 11px;
             }
@@ -1181,42 +1261,49 @@
             .policy-box .policy-rules {
                 font-size: 9px;
             }
-
             .modal {
                 padding: 18px 14px;
             }
             .modal h2 {
                 font-size: 18px;
             }
+            .history-item {
+                font-size: 10px;
+                padding: 6px 8px;
+                flex-wrap: wrap;
+                gap: 4px;
+            }
+            .history-item .history-time {
+                font-size: 9px;
+                min-width: 70px;
+            }
+            .history-item .history-user {
+                font-size: 9px;
+                min-width: 60px;
+            }
         }
 
-        /* Tablets and medium screens */
         @media (min-width: 481px) and (max-width: 768px) {
             body {
                 padding: 10px;
             }
-
             .auth-screen {
                 padding: 24px 18px;
             }
-
             table {
                 min-width: 650px;
                 font-size: 11px;
             }
-
             td .editable-input {
                 font-size: 11px;
                 min-height: 26px;
             }
-
             .readonly-cell {
                 font-size: 11px;
                 min-height: 26px;
             }
         }
 
-        /* Landscape phones */
         @media (max-width: 768px) and (orientation: landscape) {
             .header {
                 flex-direction: row;
@@ -1240,42 +1327,34 @@
             }
         }
 
-        /* Large screens */
         @media (min-width: 769px) {
             .header {
                 flex-direction: row;
                 justify-content: space-between;
                 padding: 20px 0;
             }
-
             .header-left {
                 text-align: left;
             }
-
             .profile-section {
                 flex-direction: row;
                 justify-content: space-between;
             }
-
             .profile-section .profile-actions {
                 margin-left: auto;
             }
-
             .policy-box {
                 flex-direction: row;
                 align-items: center;
             }
-
             table {
                 min-width: 1000px;
                 font-size: 13px;
             }
-
             td .editable-input {
                 font-size: 13px;
                 min-height: 34px;
             }
-
             .readonly-cell {
                 font-size: 13px;
                 min-height: 34px;
@@ -1286,24 +1365,20 @@
             }
         }
 
-        /* Touch device improvements */
         @media (hover: none) {
             td .editable-input:hover {
                 background: rgba(255, 255, 255, 0.03);
                 border-color: transparent;
             }
-
             td .editable-input:focus {
                 border-color: #ffd700;
                 background: rgba(255, 215, 0, 0.06);
             }
-
             .btn:hover {
                 transform: none;
             }
         }
 
-        /* ===== INTEREST AUTO-SET INDICATOR ===== */
         .interest-auto-badge {
             font-size: 8px;
             color: #8892b0;
@@ -1432,6 +1507,7 @@
                 <div class="profile-actions">
                     <button class="btn-profile edit" id="editProfileBtn">✏️ Edit</button>
                     <button class="btn-profile password" id="changePasswordBtn">🔑 Password</button>
+                    <button class="btn-profile history" id="historyBtn">📜 History</button>
                     <button class="btn-profile users" id="manageUsersBtn" style="display:none;">
                         👥 Users <span class="user-count-badge" id="userCountBadge">0</span>
                     </button>
@@ -1474,8 +1550,8 @@
                 </table>
             </div>
 
-            <!-- Buttons -->
-            <div class="btn-row">
+            <!-- Admin Buttons (hidden for users) -->
+            <div class="btn-row" id="adminButtonRow">
                 <button class="btn btn-gold" id="addRowBtn">➕ Add</button>
                 <button class="btn btn-outline" id="resetBtn">🔄 Reset</button>
                 <button class="btn btn-danger" id="clearAllBtn">🗑️ Clear</button>
@@ -1545,6 +1621,21 @@
             </div>
         </div>
 
+        <!-- Transaction History Modal -->
+        <div class="modal-overlay" id="historyModal">
+            <div class="modal" style="max-width:700px;">
+                <h2>📜 Transaction History</h2>
+                <p>All loan activities with timestamps</p>
+                <div id="historyList">
+                    <!-- History items rendered by JavaScript -->
+                </div>
+                <div class="modal-btns">
+                    <button class="btn-modal-cancel" id="historyClose">Close</button>
+                    <button class="btn-modal-save" id="historyClearBtn" style="background:rgba(255,107,107,0.15);color:#ff6b6b;">🗑️ Clear All</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Manage Users Modal (Admin Only) -->
         <div class="modal-overlay" id="manageUsersModal">
             <div class="modal">
@@ -1596,6 +1687,7 @@
 
         let users = [];
         let loanData = [];
+        let transactionHistory = [];
         let currentUser = null;
         let isAdmin = false;
         let editingUser = null;
@@ -1636,21 +1728,135 @@
 
         function getAutoInterest(loanAmount) {
             if (loanAmount >= 1000000) {
-                return 0.15; // 15% for ₱1M+
+                return 0.15;
             } else if (loanAmount >= 500000) {
-                return 0.12; // 12% for ₱500K - ₱999K
+                return 0.12;
             } else if (loanAmount >= 100000) {
-                return 0.10; // 10% for ₱100K - ₱499K
+                return 0.10;
             } else if (loanAmount >= 50000) {
-                return 0.08; // 8% for ₱50K - ₱99K
+                return 0.08;
             } else {
-                return 0.08; // Default 8%
+                return 0.08;
             }
         }
 
         function getInterestDisplay(loanAmount) {
             const rate = getAutoInterest(loanAmount);
             return (rate * 100) + '%';
+        }
+
+        // ============================================================
+        //  TRANSACTION HISTORY FUNCTIONS
+        // ============================================================
+
+        function getTimestamp() {
+            const now = new Date();
+            const date = now.toLocaleDateString('en-US', {
+                month: 'short',
+                day: '2-digit',
+                year: 'numeric'
+            });
+            const time = now.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+            return `${date} ${time}`;
+        }
+
+        function addTransaction(action, details, user = currentUser || 'System') {
+            const entry = {
+                id: Date.now(),
+                timestamp: getTimestamp(),
+                action: action,
+                details: details,
+                user: user
+            };
+            transactionHistory.unshift(entry);
+            saveHistory();
+            return entry;
+        }
+
+        function saveHistory() {
+            localStorage.setItem('pokemmo_history', JSON.stringify(transactionHistory));
+        }
+
+        function loadHistory() {
+            const saved = localStorage.getItem('pokemmo_history');
+            if (saved) {
+                try {
+                    transactionHistory = JSON.parse(saved);
+                } catch (e) {
+                    transactionHistory = [];
+                }
+            } else {
+                transactionHistory = [];
+                // Add initial transactions for default loans
+                setTimeout(() => {
+                    if (loanData.length > 0) {
+                        loanData.forEach(loan => {
+                            addTransaction('CREATE',
+                                `Loan created for <span class="highlight">${loan.borrower}</span> | Amount: <span class="highlight-green">${formatCurrency(loan.loan)}</span> | Interest: ${(loan.interest * 100)}% | Weeks: ${loan.weeks}`,
+                                'System'
+                            );
+                        });
+                    }
+                }, 100);
+            }
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('historyList');
+            container.innerHTML = '';
+
+            const displayHistory = isAdmin ? transactionHistory : transactionHistory.filter(h => h.user === currentUser ||
+                h.user === 'System');
+
+            if (displayHistory.length === 0) {
+                container.innerHTML = `
+                    <div class="history-empty">
+                        📭 No transactions found
+                    </div>
+                `;
+                return;
+            }
+
+            displayHistory.forEach(entry => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+
+                const typeClass = entry.action.toLowerCase();
+                const typeColors = {
+                    'create': 'create',
+                    'update': 'update',
+                    'delete': 'delete',
+                    'payment': 'payment'
+                };
+
+                const typeSpan = document.createElement('span');
+                typeSpan.className = `history-type ${typeColors[entry.action.toLowerCase()] || 'update'}`;
+                typeSpan.textContent = entry.action.toUpperCase();
+
+                const actionSpan = document.createElement('span');
+                actionSpan.className = 'history-action';
+                actionSpan.innerHTML = entry.details;
+
+                const timeSpan = document.createElement('span');
+                timeSpan.className = 'history-time';
+                timeSpan.textContent = entry.timestamp;
+
+                const userSpan = document.createElement('span');
+                userSpan.className = 'history-user';
+                userSpan.textContent = entry.user;
+
+                div.appendChild(typeSpan);
+                div.appendChild(actionSpan);
+                div.appendChild(timeSpan);
+                div.appendChild(userSpan);
+
+                container.appendChild(div);
+            });
         }
 
         // ============================================================
@@ -1679,6 +1885,8 @@
                 loanData = JSON.parse(JSON.stringify(defaultLoans));
                 saveLoans();
             }
+
+            loadHistory();
         }
 
         function saveUsers() {
@@ -1693,6 +1901,7 @@
         function saveAll() {
             saveUsers();
             saveLoans();
+            saveHistory();
         }
 
         // ============================================================
@@ -1807,6 +2016,8 @@
             isAdmin = user.isAdmin || admin;
             showAppScreen();
             renderApp();
+            addTransaction('LOGIN', `User <span class="highlight">${username}</span> logged in${isAdmin ? ' as Admin' : ''}`,
+                username);
             showToast(`👋 Welcome${isAdmin ? ' Admin' : ''}, ${username}!`);
             return true;
         }
@@ -1831,6 +2042,7 @@
                 isAdmin: false
             });
             saveUsers();
+            addTransaction('REGISTER', `New user registered: <span class="highlight">${username}</span>`, 'System');
             showToast('✅ Registration successful! Please login.');
             return true;
         }
@@ -1859,9 +2071,14 @@
 
             const isAdminUser = isAdmin;
             document.getElementById('adminColHead').style.display = isAdminUser ? '' : 'none';
-            document.getElementById('addRowBtn').style.display = isAdminUser ? '' : 'none';
-            document.getElementById('resetBtn').style.display = isAdminUser ? '' : 'none';
-            document.getElementById('clearAllBtn').style.display = isAdminUser ? '' : 'none';
+
+            // Show/hide admin buttons
+            const adminButtonRow = document.getElementById('adminButtonRow');
+            if (isAdminUser) {
+                adminButtonRow.classList.add('admin-visible');
+            } else {
+                adminButtonRow.classList.remove('admin-visible');
+            }
 
             const manageUsersBtn = document.getElementById('manageUsersBtn');
             manageUsersBtn.style.display = isAdminUser ? '' : 'none';
@@ -1899,10 +2116,11 @@
 
                 // Auto-set interest based on loan amount
                 const autoInterest = getAutoInterest(item.loan);
+                let interestChanged = false;
                 if (isAdmin && realIndex !== -1) {
-                    // Only update if admin and interest is different
                     if (Math.abs(item.interest - autoInterest) > 0.001) {
                         loanData[realIndex].interest = autoInterest;
+                        interestChanged = true;
                     }
                 }
 
@@ -1923,9 +2141,16 @@
                 inp1.title = isAdmin ? 'Tap to edit' : 'Read-only';
                 inp1.addEventListener('input', function(e) {
                     if (isAdmin && realIndex !== -1) {
+                        const oldVal = loanData[realIndex].borrower;
                         loanData[realIndex].borrower = this.value;
                         saveLoans();
                         updateStats();
+                        if (oldVal !== this.value) {
+                            addTransaction('UPDATE',
+                                `Borrower changed from <span class="highlight">${oldVal}</span> to <span class="highlight">${this.value}</span>`,
+                                currentUser
+                            );
+                        }
                     }
                 });
                 inp1.addEventListener('focus', function() {
@@ -1947,14 +2172,21 @@
                 inp2.title = isAdmin ? 'Tap to edit - auto-sets interest' : 'Read-only';
                 inp2.addEventListener('input', function(e) {
                     if (isAdmin && realIndex !== -1) {
+                        const oldVal = loanData[realIndex].loan;
                         let val = parseFloat(this.value) || 50000;
                         if (val < 50000) val = 50000;
                         if (val > 5000000) val = 5000000;
                         loanData[realIndex].loan = val;
-                        // Auto-set interest
-                        loanData[realIndex].interest = getAutoInterest(val);
+                        const newInterest = getAutoInterest(val);
+                        loanData[realIndex].interest = newInterest;
                         renderTable();
                         saveLoans();
+                        if (oldVal !== val) {
+                            addTransaction('UPDATE',
+                                `Loan amount changed from <span class="highlight-green">${formatCurrency(oldVal)}</span> to <span class="highlight-green">${formatCurrency(val)}</span> | Interest auto-set to ${(newInterest * 100)}%`,
+                                currentUser
+                            );
+                        }
                         showToast('💰 Interest auto-set to ' + getInterestDisplay(val));
                     }
                 });
@@ -1989,12 +2221,19 @@
                 inp4.title = isAdmin ? 'Tap to edit weeks' : 'Read-only';
                 inp4.addEventListener('input', function(e) {
                     if (isAdmin && realIndex !== -1) {
+                        const oldVal = loanData[realIndex].weeks;
                         let val = parseInt(this.value) || 1;
                         if (val < 1) val = 1;
                         if (val > 12) val = 12;
                         loanData[realIndex].weeks = val;
                         renderTable();
                         saveLoans();
+                        if (oldVal !== val) {
+                            addTransaction('UPDATE',
+                                `Weeks changed from <span class="highlight">${oldVal}</span> to <span class="highlight">${val}</span> for ${item.borrower}`,
+                                currentUser
+                            );
+                        }
                     }
                 });
                 inp4.addEventListener('focus', function() {
@@ -2031,9 +2270,16 @@
                 inp7.title = isAdmin ? 'Tap to edit paid amount' : 'Read-only';
                 inp7.addEventListener('input', function(e) {
                     if (isAdmin && realIndex !== -1) {
+                        const oldVal = loanData[realIndex].paid;
                         loanData[realIndex].paid = parseFloat(this.value) || 0;
                         renderTable();
                         saveLoans();
+                        if (oldVal !== parseFloat(this.value)) {
+                            addTransaction('PAYMENT',
+                                `Payment recorded for <span class="highlight">${item.borrower}</span> | Paid: <span class="highlight-green">${formatCurrency(parseFloat(this.value) || 0)}</span> | Remaining Balance: <span class="highlight">${formatCurrency(calculateTotalOwed(item.loan, item.interest, item.weeks) - (parseFloat(this.value) || 0))}</span>`,
+                                currentUser
+                            );
+                        }
                     }
                 });
                 inp7.addEventListener('focus', function() {
@@ -2065,10 +2311,16 @@
                     delBtn.title = 'Delete this loan';
                     delBtn.addEventListener('click', () => {
                         if (confirm(`Delete ${item.borrower}'s loan?`)) {
+                            const borrowerName = item.borrower;
+                            const loanAmount = item.loan;
                             loanData.splice(realIndex, 1);
+                            addTransaction('DELETE',
+                                `Loan deleted for <span class="highlight-red">${borrowerName}</span> | Amount: <span class="highlight-red">${formatCurrency(loanAmount)}</span>`,
+                                currentUser
+                            );
                             renderTable();
                             saveLoans();
-                            showToast(`🗑️ ${item.borrower}'s loan deleted`);
+                            showToast(`🗑️ ${borrowerName}'s loan deleted`);
                         }
                     });
                     actionsDiv.appendChild(delBtn);
@@ -2181,10 +2433,13 @@
                         return;
                     }
                     if (confirm(`Delete user "${user.username}"?`)) {
+                        const userName = user.username;
                         users.splice(index, 1);
                         saveUsers();
                         renderUserList();
-                        showToast(`🗑️ User "${user.username}" deleted`);
+                        addTransaction('DELETE', `User <span class="highlight-red">${userName}</span> deleted by admin`,
+                            currentUser);
+                        showToast(`🗑️ User "${userName}" deleted`);
                         updateUserCountBadge();
                     }
                 });
@@ -2237,6 +2492,7 @@
             }
 
             const oldUsername = user.username;
+            const oldRole = user.isAdmin ? 'admin' : 'user';
             user.username = newUsername;
             user.isAdmin = newRole === 'admin';
 
@@ -2255,6 +2511,9 @@
             }
 
             saveAll();
+            addTransaction('UPDATE',
+                `User <span class="highlight">${oldUsername}</span> updated | New username: <span class="highlight">${newUsername}</span> | Role: ${newRole === 'admin' ? '👑 Admin' : '👤 User'}`,
+                currentUser);
             document.getElementById('editUserModal').classList.remove('active');
             editingUser = null;
             renderUserList();
@@ -2342,12 +2601,14 @@
         });
 
         document.getElementById('logoutBtn').addEventListener('click', function() {
+            addTransaction('LOGOUT', `User <span class="highlight">${currentUser}</span> logged out`, currentUser);
             currentUser = null;
             isAdmin = false;
             showAuthScreen();
             showToast('👋 Logged out');
         });
 
+        // --- Admin Buttons ---
         document.getElementById('addRowBtn').addEventListener('click', function() {
             if (!isAdmin) {
                 showToast('⚠️ Admin only', true);
@@ -2364,6 +2625,9 @@
             loanData.push(newLoan);
             renderTable();
             saveLoans();
+            addTransaction('CREATE',
+                `New loan created for <span class="highlight">New Trainer</span> | Amount: <span class="highlight-green">${formatCurrency(100000)}</span> | Interest: 10% | Weeks: 3`,
+                currentUser);
             showToast('✏️ New loan added! Tap to edit.');
             setTimeout(() => {
                 const inputs = document.querySelectorAll('.editable-input');
@@ -2378,8 +2642,9 @@
                 showToast('⚠️ Admin only', true);
                 return;
             }
-            if (confirm('Reset to example data?')) {
+            if (confirm('Reset to example data? This will clear all current loans.')) {
                 loanData = JSON.parse(JSON.stringify(defaultLoans));
+                addTransaction('RESET', 'All loans reset to example data', currentUser);
                 renderTable();
                 saveLoans();
                 showToast('🔄 Reset to examples');
@@ -2392,8 +2657,10 @@
                 return;
             }
             if (loanData.length === 0) return;
-            if (confirm('⚠️ Delete ALL loans?')) {
+            if (confirm('⚠️ Delete ALL loans? This cannot be undone.')) {
+                const count = loanData.length;
                 loanData = [];
+                addTransaction('DELETE', `All ${count} loans cleared by admin`, currentUser);
                 renderTable();
                 saveLoans();
                 showToast('🗑️ All loans cleared');
@@ -2402,9 +2669,11 @@
 
         document.getElementById('saveDataBtn').addEventListener('click', function() {
             saveAll();
+            addTransaction('SAVE', 'Data manually saved', currentUser);
             showToast('💾 All data saved!');
         });
 
+        // --- Profile ---
         document.getElementById('editProfileBtn').addEventListener('click', function() {
             document.getElementById('editProfileInput').value = currentUser;
             document.getElementById('editProfileError').textContent = '';
@@ -2433,13 +2702,16 @@
 
             const user = users.find(u => u.username === currentUser);
             if (user) {
+                const oldUsername = currentUser;
                 user.username = newUsername;
                 loanData.forEach(l => {
                     if (l.userId === currentUser) l.userId = newUsername;
                 });
-                const oldUsername = currentUser;
                 currentUser = newUsername;
                 saveAll();
+                addTransaction('UPDATE',
+                    `User <span class="highlight">${oldUsername}</span> changed username to <span class="highlight">${newUsername}</span>`,
+                    newUsername);
                 document.getElementById('editProfileModal').classList.remove('active');
                 renderApp();
                 showToast(`✅ Username changed from "${oldUsername}" to "${newUsername}"`);
@@ -2483,10 +2755,36 @@
 
             user.password = newPass;
             saveUsers();
+            addTransaction('UPDATE', `User <span class="highlight">${currentUser}</span> changed password`, currentUser);
             document.getElementById('changePasswordModal').classList.remove('active');
             showToast('✅ Password changed successfully!');
         });
 
+        // --- Transaction History ---
+        document.getElementById('historyBtn').addEventListener('click', function() {
+            renderHistory();
+            document.getElementById('historyModal').classList.add('active');
+        });
+
+        document.getElementById('historyClose').addEventListener('click', function() {
+            document.getElementById('historyModal').classList.remove('active');
+        });
+
+        document.getElementById('historyClearBtn').addEventListener('click', function() {
+            if (!isAdmin) {
+                showToast('⚠️ Admin only', true);
+                return;
+            }
+            if (transactionHistory.length === 0) return;
+            if (confirm('⚠️ Clear ALL transaction history? This cannot be undone.')) {
+                transactionHistory = [];
+                saveHistory();
+                renderHistory();
+                showToast('🗑️ History cleared');
+            }
+        });
+
+        // --- Manage Users ---
         document.getElementById('manageUsersBtn').addEventListener('click', function() {
             if (!isAdmin) {
                 showToast('⚠️ Admin only', true);
@@ -2513,6 +2811,7 @@
             if (e.key === 'Enter') saveUserEdit();
         });
 
+        // --- Close modals on overlay click ---
         document.querySelectorAll('.modal-overlay').forEach(modal => {
             modal.addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -2521,6 +2820,7 @@
             });
         });
 
+        // --- Keyboard shortcuts ---
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
@@ -2528,14 +2828,10 @@
             if ((e.ctrlKey || e.metaKey) && e.key === 's') {
                 e.preventDefault();
                 saveAll();
+                addTransaction('SAVE', 'Data saved via keyboard shortcut', currentUser);
                 showToast('💾 All data saved!');
             }
         });
-
-        // Touch event handling for mobile
-        document.addEventListener('touchstart', function() {
-            // Small delay to prevent double-tap zoom on inputs
-        }, { passive: true });
 
         // ============================================================
         //  INIT
@@ -2548,9 +2844,11 @@
         console.log('⚡ PokeMMO Loan System loaded!');
         console.log('👤 ' + users.length + ' users registered');
         console.log('📊 ' + loanData.length + ' loans loaded');
+        console.log('📜 ' + transactionHistory.length + ' transactions recorded');
         console.log('👑 Default Admin: Adrayle / p@ssw0rd');
         console.log('📊 Auto-Interest: 8% (50K-99K) | 10% (100K-499K) | 12% (500K-999K) | 15% (1M+)');
         console.log('✏️ Tap any field to edit instantly!');
+        console.log('📜 Transaction history tracks ALL actions');
         console.log('💡 Press Ctrl+S to save | ESC to cancel');
         console.log('📱 Fully responsive for mobile!');
     </script>
