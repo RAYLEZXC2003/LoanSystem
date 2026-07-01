@@ -1,0 +1,2343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PokeMMO Loan System</title>
+
+    <!-- Disable DevTools detection script (runs first) -->
+    <script>
+        // ============================================================
+        //  ANTI-INSPECT / ANTI-DEVTOOLS
+        //  Note: This is a deterrent, not 100% secure
+        // ============================================================
+
+        // 1. Disable right-click
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showToast('🔒 Right-click disabled for security', true);
+            return false;
+        });
+
+        // 2. Disable keyboard shortcuts for DevTools
+        document.addEventListener('keydown', function(e) {
+            // F12
+            if (e.key === 'F12') {
+                e.preventDefault();
+                showToast('🔒 DevTools disabled', true);
+                return false;
+            }
+            // Ctrl+Shift+I (Inspect)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
+                e.preventDefault();
+                showToast('🔒 Inspect disabled', true);
+                return false;
+            }
+            // Ctrl+Shift+J (Console)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) {
+                e.preventDefault();
+                showToast('🔒 Console disabled', true);
+                return false;
+            }
+            // Ctrl+U (View Source)
+            if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
+                e.preventDefault();
+                showToast('🔒 View source disabled', true);
+                return false;
+            }
+            // Ctrl+Shift+C (Inspect Element)
+            if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
+                e.preventDefault();
+                showToast('🔒 Inspect disabled', true);
+                return false;
+            }
+        });
+
+        // 3. Detect DevTools opening (F12 / right-click inspect)
+        let devtoolsOpen = false;
+        const devtoolsCheck = new Date();
+
+        function checkDevTools() {
+            const threshold = 160;
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+
+            if (widthThreshold || heightThreshold) {
+                if (!devtoolsOpen) {
+                    devtoolsOpen = true;
+                    showToast('🔒 DevTools detected!', true);
+                }
+            } else {
+                devtoolsOpen = false;
+            }
+        }
+
+        setInterval(checkDevTools, 2000);
+
+        // 4. Override console methods to prevent logging sensitive data
+        const originalConsole = {
+            log: console.log,
+            warn: console.warn,
+            error: console.error,
+            info: console.info,
+            debug: console.debug
+        };
+
+        console.log = function() {
+            const args = Array.from(arguments);
+            const msg = args.join(' ');
+            if (msg.includes('password') || msg.includes('token') || msg.includes('secret')) {
+                return;
+            }
+            originalConsole.log.apply(console, args);
+        };
+
+        // 5. Prevent selection and copy (basic deterrent)
+        document.addEventListener('selectstart', function(e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+            e.preventDefault();
+        });
+
+        // Toast function for security messages
+        function showToast(msg, isError = false) {
+            if (typeof window.showToast === 'function') {
+                window.showToast(msg, isError);
+            } else {
+                alert(msg);
+            }
+        }
+
+        // 6. Disable source map loading
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('script[src*=".map"]').forEach(el => el.remove());
+            document.querySelectorAll('link[href*=".map"]').forEach(el => el.remove());
+        });
+
+        console.log('🔒 Security measures active');
+    </script>
+
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background: #0a0e1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        input,
+        textarea,
+        select {
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        .container {
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        /* ===== AUTH SCREENS ===== */
+        .auth-screen {
+            max-width: 480px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 24px;
+            padding: 40px 36px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .auth-screen .logo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .auth-screen .logo h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        .auth-screen .logo h1 span {
+            color: #fff;
+        }
+
+        .auth-screen .logo p {
+            color: #8892b0;
+            font-size: 14px;
+            margin-top: 4px;
+        }
+
+        .auth-screen .auth-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 4px;
+        }
+
+        .auth-screen .auth-tabs button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            background: transparent;
+            color: #8892b0;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .auth-screen .auth-tabs button.active {
+            background: rgba(255, 215, 0, 0.12);
+            color: #ffd700;
+        }
+
+        .auth-screen .auth-tabs button:hover {
+            color: #fff;
+        }
+
+        .auth-form {
+            display: none;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .auth-form label {
+            display: block;
+            color: #a8b2d1;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            margin-top: 14px;
+        }
+
+        .auth-form input[type="text"],
+        .auth-form input[type="password"],
+        .auth-form input[type="number"] {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 14px;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        .auth-form input:focus {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.04);
+        }
+
+        .auth-form .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-top: 16px;
+            padding: 12px;
+            background: rgba(255, 215, 0, 0.04);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.06);
+        }
+
+        .auth-form .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            accent-color: #ffd700;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .auth-form .checkbox-group label {
+            margin: 0;
+            font-weight: 400;
+            font-size: 12px;
+            color: #a8b2d1;
+            line-height: 1.5;
+        }
+
+        .auth-form .checkbox-group label strong {
+            color: #ffd700;
+        }
+
+        .auth-form .btn-auth {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #ffd700;
+            color: #0a0e1a;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.25s;
+            margin-top: 20px;
+        }
+
+        .auth-form .btn-auth:hover {
+            background: #ffed4a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .auth-form .btn-auth:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .auth-form .error-msg {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .auth-form .success-msg {
+            color: #7bed9f;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .auth-divider {
+            text-align: center;
+            color: #8892b0;
+            font-size: 12px;
+            margin: 16px 0;
+            position: relative;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 30%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .auth-divider::before {
+            left: 0;
+        }
+        .auth-divider::after {
+            right: 0;
+        }
+
+        /* ===== MAIN APP ===== */
+        .app-screen {
+            display: none;
+        }
+
+        .app-screen.active {
+            display: block;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(255, 215, 0, 0.1);
+            margin-bottom: 24px;
+        }
+
+        .header-left h1 {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ffd700;
+        }
+
+        .header-left h1 span {
+            color: #fff;
+        }
+
+        .header-left p {
+            color: #8892b0;
+            font-size: 13px;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .user-badge {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            background: rgba(123, 237, 159, 0.1);
+            color: #7bed9f;
+            border: 1px solid rgba(123, 237, 159, 0.1);
+        }
+
+        .user-badge.admin {
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+            border-color: rgba(255, 215, 0, 0.1);
+        }
+
+        .btn-logout {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .btn-logout:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        /* ===== POLICY BOX ===== */
+        .policy-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.04), rgba(255, 215, 0, 0.01));
+            border: 1px solid rgba(255, 215, 0, 0.08);
+            border-radius: 14px;
+            padding: 14px 20px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .policy-box .policy-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .policy-box .policy-icon {
+            font-size: 22px;
+        }
+
+        .policy-box .policy-title {
+            color: #ffd700;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .policy-box .policy-details {
+            color: #a8b2d1;
+            font-size: 12px;
+        }
+
+        .policy-box .policy-details strong {
+            color: #fff;
+        }
+
+        .policy-box .policy-rules {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+            color: #a8b2d1;
+            font-size: 11px;
+        }
+
+        .policy-box .policy-rules span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ===== TABLE ===== */
+        .table-wrapper {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            overflow-x: auto;
+            padding: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+            font-size: 13px;
+        }
+
+        thead {
+            background: rgba(255, 215, 0, 0.05);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.06);
+        }
+
+        th {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            padding: 10px 8px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 6px 8px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #e6e9f0;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ===== INPUTS ===== */
+        td input,
+        td select {
+            width: 100%;
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            font-size: 12px;
+            transition: 0.2s;
+            outline: none;
+        }
+
+        td input:focus,
+        td select:focus {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.04);
+        }
+
+        td input:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        td input::placeholder {
+            color: rgba(255, 255, 255, 0.12);
+        }
+
+        td select option {
+            background: #1a1a2e;
+            color: #fff;
+        }
+
+        /* ===== READONLY CELLS ===== */
+        .readonly-cell {
+            padding: 5px 8px;
+            border-radius: 6px;
+            display: block;
+            min-height: 30px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .readonly-cell.owed {
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.05);
+        }
+
+        .readonly-cell.balance {
+            color: #7bed9f;
+            background: rgba(123, 237, 159, 0.04);
+            border: 1px solid rgba(123, 237, 159, 0.05);
+        }
+
+        .readonly-cell.balance.negative {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.1);
+            background: rgba(255, 107, 107, 0.04);
+        }
+
+        .readonly-cell.note {
+            color: #a8b2d1;
+            font-weight: 400;
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            min-height: 30px;
+            word-break: break-word;
+            line-height: 1.3;
+        }
+
+        /* ===== ADMIN ACTIONS ===== */
+        .admin-actions {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .btn-sm {
+            padding: 3px 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-sm.edit {
+            background: rgba(116, 185, 255, 0.1);
+            color: #74b9ff;
+            border: 1px solid rgba(116, 185, 255, 0.1);
+        }
+
+        .btn-sm.edit:hover {
+            background: rgba(116, 185, 255, 0.2);
+        }
+
+        .btn-sm.delete {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .btn-sm.delete:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .btn-sm.save {
+            background: rgba(123, 237, 159, 0.1);
+            color: #7bed9f;
+            border: 1px solid rgba(123, 237, 159, 0.1);
+        }
+
+        .btn-sm.save:hover {
+            background: rgba(123, 237, 159, 0.2);
+        }
+
+        .btn-sm.cancel {
+            background: rgba(255, 255, 255, 0.04);
+            color: #8892b0;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .btn-sm.cancel:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-gold {
+            background: #ffd700;
+            color: #0a0e1a;
+        }
+
+        .btn-gold:hover {
+            background: #ffed4a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #a8b2d1;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .btn-danger {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .btn-gold:disabled,
+        .btn-outline:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ===== PROFILE SECTION ===== */
+        .profile-section {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 40px;
+            align-items: center;
+        }
+
+        .profile-section .profile-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 30px;
+        }
+
+        .profile-section .profile-info .field {
+            color: #a8b2d1;
+            font-size: 13px;
+        }
+
+        .profile-section .profile-info .field strong {
+            color: #fff;
+            display: block;
+            font-size: 15px;
+            margin-top: 2px;
+        }
+
+        .profile-section .profile-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-left: auto;
+        }
+
+        .btn-profile {
+            padding: 8px 18px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-profile.edit {
+            background: rgba(116, 185, 255, 0.1);
+            color: #74b9ff;
+            border: 1px solid rgba(116, 185, 255, 0.1);
+        }
+
+        .btn-profile.edit:hover {
+            background: rgba(116, 185, 255, 0.2);
+        }
+
+        .btn-profile.password {
+            background: rgba(255, 215, 0, 0.08);
+            color: #ffd700;
+            border: 1px solid rgba(255, 215, 0, 0.08);
+        }
+
+        .btn-profile.password:hover {
+            background: rgba(255, 215, 0, 0.15);
+        }
+
+        .btn-profile.users {
+            background: rgba(255, 107, 107, 0.08);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.08);
+        }
+
+        .btn-profile.users:hover {
+            background: rgba(255, 107, 107, 0.15);
+        }
+
+        /* ===== MODALS ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: #1a1a2e;
+            border-radius: 20px;
+            padding: 36px 32px;
+            max-width: 500px;
+            width: 90%;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal h2 {
+            color: #ffd700;
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .modal p {
+            color: #8892b0;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .modal label {
+            display: block;
+            color: #a8b2d1;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            margin-top: 14px;
+        }
+
+        .modal input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .modal input:focus {
+            border-color: #ffd700;
+        }
+
+        .modal .modal-btns {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal .modal-btns button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal .modal-btns .btn-modal-save {
+            background: #ffd700;
+            color: #0a0e1a;
+        }
+
+        .modal .modal-btns .btn-modal-save:hover {
+            background: #ffed4a;
+        }
+
+        .modal .modal-btns .btn-modal-cancel {
+            background: rgba(255, 255, 255, 0.05);
+            color: #8892b0;
+        }
+
+        .modal .modal-btns .btn-modal-cancel:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .modal .modal-error {
+            color: #ff6b6b;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .modal .modal-success {
+            color: #7bed9f;
+            font-size: 13px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .user-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .user-list-item .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-list-item .user-info .user-name {
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-list-item .user-info .user-role {
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 12px;
+            background: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+        }
+
+        .user-list-item .user-info .user-role.admin {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+        }
+
+        .user-list-item .user-info .user-role.user {
+            background: rgba(123, 237, 159, 0.1);
+            color: #7bed9f;
+        }
+
+        .user-list-item .user-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .user-list-item .user-actions .btn-sm {
+            padding: 4px 12px;
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 10px;
+            padding: 12px 14px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .stat-card .stat-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #8892b0;
+        }
+
+        .stat-card .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffd700;
+            margin-top: 2px;
+        }
+
+        .stat-card .stat-value.green {
+            color: #7bed9f;
+        }
+        .stat-card .stat-value.red {
+            color: #ff6b6b;
+        }
+        .stat-card .stat-value.blue {
+            color: #74b9ff;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 215, 0, 0.1);
+            backdrop-filter: blur(12px);
+            color: #ffd700;
+            padding: 12px 28px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.error {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.15);
+            background: rgba(255, 107, 107, 0.08);
+        }
+
+        .toast.security {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.2);
+            background: rgba(255, 0, 0, 0.1);
+            font-weight: 700;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .auth-screen {
+                padding: 28px 20px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+            .header-left h1 {
+                font-size: 22px;
+            }
+            .header-right {
+                justify-content: center;
+            }
+            .profile-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .profile-section .profile-actions {
+                margin-left: 0;
+                justify-content: center;
+            }
+            .policy-box {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .policy-box .policy-rules {
+                flex-direction: column;
+                gap: 4px;
+            }
+            th,
+            td {
+                font-size: 10px;
+                padding: 4px 4px;
+            }
+            td input,
+            td select {
+                font-size: 10px;
+                padding: 3px 4px;
+            }
+            .btn {
+                padding: 8px 14px;
+                font-size: 11px;
+            }
+            .stat-card .stat-value {
+                font-size: 16px;
+            }
+            .modal {
+                padding: 24px 18px;
+            }
+            .user-list-item {
+                flex-direction: column;
+                gap: 8px;
+                align-items: stretch;
+            }
+            .user-list-item .user-actions {
+                justify-content: center;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            height: 5px;
+            width: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 215, 0, 0.15);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 215, 0, 0.25);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8892b0;
+        }
+        .empty-state .big-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        .empty-state h3 {
+            color: #e6e9f0;
+            font-size: 16px;
+        }
+        .empty-state p {
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ============================================================
+        AUTH SCREEN
+        ============================================================ -->
+        <div id="authScreen" class="auth-screen">
+            <div class="logo">
+                <h1>⚡ PokeMMO <span>Loan</span></h1>
+                <p>Professional lending system</p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="active" data-tab="login">🔑 Login</button>
+                <button data-tab="register">📝 Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="auth-form active">
+                <label>Username</label>
+                <input type="text" id="loginUsername" placeholder="Enter your username" />
+
+                <label>Password</label>
+                <input type="password" id="loginPassword" placeholder="Enter your password" />
+
+                <div id="loginError" class="error-msg"></div>
+
+                <button class="btn-auth" id="loginBtn">🔑 Login</button>
+
+                <div class="auth-divider">or</div>
+
+                <button class="btn-auth" id="adminLoginBtn" style="background:rgba(255,215,0,0.08);color:#ffd700;border:1px solid rgba(255,215,0,0.1);">
+                    👑 Admin Login
+                </button>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="auth-form">
+                <label>Username</label>
+                <input type="text" id="regUsername" placeholder="Choose a username" />
+
+                <label>Password</label>
+                <input type="password" id="regPassword" placeholder="Choose a password" />
+
+                <label>Confirm Password</label>
+                <input type="password" id="regConfirmPassword" placeholder="Confirm your password" />
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="regPolicy" />
+                    <label for="regPolicy">
+                        I agree to the <strong>Loan Policy</strong>: Minimum loan ₱50,000 · Maximum ₱5,000,000 ·
+                        Weekly compound interest at 10% · Late fee +5% after due date · Collateral required for loans ≥ ₱1,000,000
+                    </label>
+                </div>
+
+                <div id="regError" class="error-msg"></div>
+                <div id="regSuccess" class="success-msg"></div>
+
+                <button class="btn-auth" id="registerBtn" disabled>📝 Register</button>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        APP SCREEN
+        ============================================================ -->
+        <div id="appScreen" class="app-screen">
+
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h1>⚡ PokeMMO <span>Loan System</span></h1>
+                    <p id="welcomeMsg">Welcome back!</p>
+                </div>
+                <div class="header-right">
+                    <span class="user-badge" id="userBadge">👤 User</span>
+                    <button class="btn-logout" id="logoutBtn">🚪 Logout</button>
+                </div>
+            </div>
+
+            <!-- Policy -->
+            <div class="policy-box">
+                <div class="policy-left">
+                    <span class="policy-icon">📜</span>
+                    <div>
+                        <div class="policy-title">🏛️ Loan Policy</div>
+                        <div class="policy-details">
+                            <strong>₱50,000</strong> min · <strong>₱5,000,000</strong> max · <strong>10%</strong> base weekly interest
+                        </div>
+                    </div>
+                </div>
+                <div class="policy-rules">
+                    <span>• 1–12 weeks</span>
+                    <span>• Compound interest</span>
+                    <span>• Late fee: +5%</span>
+                    <span>• Collateral for ≥ ₱1M</span>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div class="profile-section" id="profileSection">
+                <div class="profile-info">
+                    <div class="field">
+                        👤 Username
+                        <strong id="profileUsername">-</strong>
+                    </div>
+                    <div class="field">
+                        📊 My Loans
+                        <strong id="profileLoanCount">0</strong>
+                    </div>
+                    <div class="field">
+                        💰 My Balance
+                        <strong id="profileBalance">₱0</strong>
+                    </div>
+                </div>
+                <div class="profile-actions">
+                    <button class="btn-profile edit" id="editProfileBtn">✏️ Edit Profile</button>
+                    <button class="btn-profile password" id="changePasswordBtn">🔑 Change Password</button>
+                    <button class="btn-profile users" id="manageUsersBtn" style="display:none;">👥 Manage Users</button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrapper">
+                <table id="loanTable">
+                    <thead>
+                        <tr>
+                            <th style="min-width:90px;">Borrower</th>
+                            <th style="min-width:90px;">Loan (₱)</th>
+                            <th style="min-width:70px;">Interest %</th>
+                            <th style="min-width:60px;">Weeks</th>
+                            <th style="min-width:140px;">📝 Loan Note</th>
+                            <th style="min-width:90px;">Total Owed</th>
+                            <th style="min-width:80px;">Paid (₱)</th>
+                            <th style="min-width:90px;">Balance</th>
+                            <th style="min-width:100px;" id="adminColHead">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Rows inserted by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Buttons -->
+            <div class="btn-row">
+                <button class="btn btn-gold" id="addRowBtn">➕ Add Borrower</button>
+                <button class="btn btn-outline" id="resetBtn">🔄 Reset Examples</button>
+                <button class="btn btn-danger" id="clearAllBtn">🗑️ Clear All</button>
+                <button class="btn btn-outline" id="saveDataBtn">💾 Save Data</button>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">💰 Total Lent</div>
+                    <div class="stat-value" id="totalLent">₱0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">📈 Total Owed</div>
+                    <div class="stat-value" id="totalOwed">₱0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">✅ Total Paid</div>
+                    <div class="stat-value green" id="totalPaid">₱0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">⚖️ Total Balance</div>
+                    <div class="stat-value" id="totalBalance">₱0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">📊 Active Loans</div>
+                    <div class="stat-value blue" id="activeLoans">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================
+        MODALS
+        ============================================================ -->
+
+        <!-- Edit Profile Modal -->
+        <div class="modal-overlay" id="editProfileModal">
+            <div class="modal">
+                <h2>✏️ Edit Profile</h2>
+                <p>Change your username</p>
+                <label>New Username</label>
+                <input type="text" id="editProfileInput" placeholder="Enter new username" />
+                <div id="editProfileError" class="modal-error"></div>
+                <div class="modal-btns">
+                    <button class="btn-modal-cancel" id="editProfileCancel">Cancel</button>
+                    <button class="btn-modal-save" id="editProfileSave">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password Modal -->
+        <div class="modal-overlay" id="changePasswordModal">
+            <div class="modal">
+                <h2>🔑 Change Password</h2>
+                <p>Enter your current and new password</p>
+                <label>Current Password</label>
+                <input type="password" id="cpCurrent" placeholder="Enter current password" />
+                <label>New Password</label>
+                <input type="password" id="cpNew" placeholder="Enter new password" />
+                <label>Confirm New Password</label>
+                <input type="password" id="cpConfirm" placeholder="Confirm new password" />
+                <div id="cpError" class="modal-error"></div>
+                <div class="modal-btns">
+                    <button class="btn-modal-cancel" id="cpCancel">Cancel</button>
+                    <button class="btn-modal-save" id="cpSave">Save</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manage Users Modal (Admin Only) -->
+        <div class="modal-overlay" id="manageUsersModal">
+            <div class="modal">
+                <h2>👥 Manage Users</h2>
+                <p>View, edit, or delete user accounts</p>
+                <div id="userListContainer">
+                    <!-- User list rendered by JavaScript -->
+                </div>
+                <div id="manageUsersError" class="modal-error"></div>
+                <div id="manageUsersSuccess" class="modal-success"></div>
+                <div class="modal-btns">
+                    <button class="btn-modal-cancel" id="manageUsersClose">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit User Modal (Admin Only) -->
+        <div class="modal-overlay" id="editUserModal">
+            <div class="modal">
+                <h2>✏️ Edit User</h2>
+                <p id="editUserInfo">Editing: <strong id="editUserNameDisplay"></strong></p>
+                <label>New Username</label>
+                <input type="text" id="editUserUsername" placeholder="Enter new username" />
+                <label>New Password (leave blank to keep current)</label>
+                <input type="password" id="editUserPassword" placeholder="Enter new password" />
+                <label>Role</label>
+                <select id="editUserRole">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <div id="editUserError" class="modal-error"></div>
+                <div class="modal-btns">
+                    <button class="btn-modal-cancel" id="editUserCancel">Cancel</button>
+                    <button class="btn-modal-save" id="editUserSave">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        //  MAIN APPLICATION SCRIPT
+        // ============================================================
+
+        // ============================================================
+        //  DATA LAYER
+        // ============================================================
+
+        let users = [];
+        let loanData = [];
+        let currentUser = null;
+        let isAdmin = false;
+        let editingRow = null;
+        let editingUser = null;
+
+        const defaultLoans = [{
+            borrower: 'Ash Ketchum',
+            loan: 500000,
+            interest: 0.10,
+            weeks: 4,
+            paid: 100000,
+            userId: null
+        }, {
+            borrower: 'Misty Waterflower',
+            loan: 250000,
+            interest: 0.10,
+            weeks: 3,
+            paid: 50000,
+            userId: null
+        }, {
+            borrower: 'Brock Slate',
+            loan: 1200000,
+            interest: 0.12,
+            weeks: 6,
+            paid: 200000,
+            userId: null
+        }, {
+            borrower: 'Gary Oak',
+            loan: 75000,
+            interest: 0.10,
+            weeks: 2,
+            paid: 0,
+            userId: null
+        }, ];
+
+        // ============================================================
+        //  STORAGE
+        // ============================================================
+
+        function loadData() {
+            const savedUsers = localStorage.getItem('pokemmo_users');
+            const savedLoans = localStorage.getItem('pokemmo_loans');
+
+            if (savedUsers) {
+                try { users = JSON.parse(savedUsers); } catch (e) { users = []; }
+            } else {
+                // Create default admin account: Adrayle / p@ssw0rd
+                users = [{
+                    username: 'Adrayle',
+                    password: 'p@ssw0rd',
+                    isAdmin: true
+                }];
+                saveUsers();
+            }
+
+            if (savedLoans) {
+                try { loanData = JSON.parse(savedLoans); } catch (e) { loanData = JSON.parse(JSON.stringify(
+                    defaultLoans)); }
+            } else {
+                loanData = JSON.parse(JSON.stringify(defaultLoans));
+                saveLoans();
+            }
+        }
+
+        function saveUsers() {
+            localStorage.setItem('pokemmo_users', JSON.stringify(users));
+        }
+
+        function saveLoans() {
+            localStorage.setItem('pokemmo_loans', JSON.stringify(loanData));
+        }
+
+        function saveAll() {
+            saveUsers();
+            saveLoans();
+        }
+
+        // ============================================================
+        //  HELPERS
+        // ============================================================
+
+        function calculateTotalOwed(loan, interest, weeks) {
+            return loan * Math.pow(1 + interest, weeks);
+        }
+
+        function formatCurrency(amount) {
+            return '₱' + Math.round(amount).toLocaleString();
+        }
+
+        function generateLoanNote(loan, weeks) {
+            let note = '';
+            if (loan >= 1000000) {
+                note = '🔴 HIGH-VALUE · Collateral required · ';
+            } else if (loan >= 500000) {
+                note = '🟡 MEDIUM · Standard terms · ';
+            } else if (loan >= 100000) {
+                note = '🟢 SMALL · Fast approval · ';
+            } else {
+                note = '⚪ MICRO · Quick release · ';
+            }
+            if (weeks <= 2) {
+                note += 'Short-term (≤2w) · Higher risk';
+            } else if (weeks <= 4) {
+                note += 'Standard term (3-4w) · Balanced';
+            } else if (weeks <= 8) {
+                note += 'Extended term (5-8w) · Interest accrues';
+            } else {
+                note += '⚠️ Long-term (>8w) · Significant interest';
+            }
+            if (loan >= 1000000) {
+                note += ' · 💎 Collateral: Required';
+            }
+            if (weeks > 6) {
+                note += ' · ⏰ Late fee: +5% after due';
+            }
+            return note;
+        }
+
+        function showToast(msg, isError = false, isSecurity = false) {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = msg;
+
+            if (isError) {
+                toast.classList.add('error');
+            }
+            if (isSecurity) {
+                toast.classList.add('security');
+            }
+
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        window.showToast = showToast;
+
+        function getLoansForUser(username) {
+            if (isAdmin) return loanData;
+            return loanData.filter(l => l.userId === username);
+        }
+
+        // ============================================================
+        //  AUTH
+        // ============================================================
+
+        function showAuthScreen() {
+            document.getElementById('authScreen').style.display = 'block';
+            document.getElementById('appScreen').classList.remove('active');
+        }
+
+        function showAppScreen() {
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('appScreen').classList.add('active');
+        }
+
+        function loginUser(username, password, admin = false) {
+            const user = users.find(u => u.username === username);
+            if (!user) {
+                showToast('❌ User not found', true);
+                return false;
+            }
+            if (user.password !== password) {
+                showToast('❌ Incorrect password', true);
+                return false;
+            }
+            if (admin && !user.isAdmin) {
+                showToast('❌ Not an admin account', true);
+                return false;
+            }
+
+            currentUser = username;
+            isAdmin = user.isAdmin || admin;
+            showAppScreen();
+            renderApp();
+            showToast(`👋 Welcome${isAdmin ? ' Admin' : ''}, ${username}!`);
+            return true;
+        }
+
+        function registerUser(username, password, confirm) {
+            if (password !== confirm) {
+                showToast('❌ Passwords do not match', true);
+                return false;
+            }
+            if (password.length < 4) {
+                showToast('❌ Password must be at least 4 characters', true);
+                return false;
+            }
+            if (users.find(u => u.username === username)) {
+                showToast('❌ Username already exists', true);
+                return false;
+            }
+
+            users.push({
+                username: username,
+                password: password,
+                isAdmin: false
+            });
+            saveUsers();
+            showToast('✅ Registration successful! Please login.');
+            return true;
+        }
+
+        // ============================================================
+        //  RENDER
+        // ============================================================
+
+        function renderApp() {
+            document.getElementById('welcomeMsg').textContent =
+                `Welcome${isAdmin ? ' Admin' : ''}, ${currentUser}! ${isAdmin ? '🔑 Full control enabled' : '👤 View your loans'}`;
+
+            const badge = document.getElementById('userBadge');
+            badge.textContent = isAdmin ? '👑 Admin' : '👤 User';
+            badge.className = 'user-badge' + (isAdmin ? ' admin' : '');
+
+            document.getElementById('profileUsername').textContent = currentUser;
+            const userLoans = getLoansForUser(currentUser);
+            document.getElementById('profileLoanCount').textContent = userLoans.length;
+
+            let totalBalance = 0;
+            userLoans.forEach(l => {
+                totalBalance += calculateTotalOwed(l.loan, l.interest, l.weeks) - l.paid;
+            });
+            document.getElementById('profileBalance').textContent = formatCurrency(totalBalance);
+
+            const isAdminUser = isAdmin;
+            document.getElementById('adminColHead').style.display = isAdminUser ? '' : 'none';
+            document.getElementById('addRowBtn').style.display = isAdminUser ? '' : 'none';
+            document.getElementById('resetBtn').style.display = isAdminUser ? '' : 'none';
+            document.getElementById('clearAllBtn').style.display = isAdminUser ? '' : 'none';
+            document.getElementById('manageUsersBtn').style.display = isAdminUser ? '' : 'none';
+
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            const displayLoans = getLoansForUser(currentUser);
+
+            if (displayLoans.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="9" style="text-align:center;padding:40px 20px;">
+                            <div class="empty-state">
+                                <div class="big-icon">📭</div>
+                                <h3>No Loans Found</h3>
+                                <p>${isAdmin ? 'Click "Add Borrower" to create a loan' : 'You don\'t have any loans yet'}</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                updateStats();
+                return;
+            }
+
+            displayLoans.forEach((item, displayIndex) => {
+                const realIndex = isAdmin ? loanData.indexOf(item) : -1;
+
+                const totalOwed = calculateTotalOwed(item.loan, item.interest, item.weeks);
+                const balance = totalOwed - item.paid;
+                const note = generateLoanNote(item.loan, item.weeks);
+                const isEditing = isAdmin && editingRow === realIndex;
+
+                const tr = document.createElement('tr');
+
+                const td1 = document.createElement('td');
+                const inp1 = document.createElement('input');
+                inp1.type = 'text';
+                inp1.value = item.borrower;
+                inp1.placeholder = 'Trainer name';
+                inp1.disabled = !isAdmin || !isEditing;
+                inp1.addEventListener('input', (e) => {
+                    if (isAdmin && isEditing && realIndex !== -1) {
+                        loanData[realIndex].borrower = e.target.value;
+                    }
+                });
+                td1.appendChild(inp1);
+                tr.appendChild(td1);
+
+                const td2 = document.createElement('td');
+                const inp2 = document.createElement('input');
+                inp2.type = 'number';
+                inp2.value = item.loan;
+                inp2.placeholder = '50,000 - 5M';
+                inp2.min = '50000';
+                inp2.max = '5000000';
+                inp2.disabled = !isAdmin || !isEditing;
+                inp2.addEventListener('input', (e) => {
+                    if (isAdmin && isEditing && realIndex !== -1) {
+                        let val = parseFloat(e.target.value) || 50000;
+                        if (val < 50000) val = 50000;
+                        if (val > 5000000) val = 5000000;
+                        loanData[realIndex].loan = val;
+                        renderTable();
+                        editingRow = realIndex;
+                    }
+                });
+                td2.appendChild(inp2);
+                tr.appendChild(td2);
+
+                const td3 = document.createElement('td');
+                const inp3 = document.createElement('input');
+                inp3.type = 'number';
+                inp3.value = item.interest * 100;
+                inp3.placeholder = '%';
+                inp3.step = '0.5';
+                inp3.min = '0';
+                inp3.max = '50';
+                inp3.disabled = !isAdmin || !isEditing;
+                inp3.addEventListener('input', (e) => {
+                    if (isAdmin && isEditing && realIndex !== -1) {
+                        loanData[realIndex].interest = (parseFloat(e.target.value) || 0) / 100;
+                        renderTable();
+                        editingRow = realIndex;
+                    }
+                });
+                td3.appendChild(inp3);
+                tr.appendChild(td3);
+
+                const td4 = document.createElement('td');
+                const inp4 = document.createElement('input');
+                inp4.type = 'number';
+                inp4.value = item.weeks;
+                inp4.placeholder = '1-12';
+                inp4.min = '1';
+                inp4.max = '12';
+                inp4.step = '1';
+                inp4.disabled = !isAdmin || !isEditing;
+                inp4.addEventListener('input', (e) => {
+                    if (isAdmin && isEditing && realIndex !== -1) {
+                        let val = parseInt(e.target.value) || 1;
+                        if (val < 1) val = 1;
+                        if (val > 12) val = 12;
+                        loanData[realIndex].weeks = val;
+                        renderTable();
+                        editingRow = realIndex;
+                    }
+                });
+                td4.appendChild(inp4);
+                tr.appendChild(td4);
+
+                const td5 = document.createElement('td');
+                const span5 = document.createElement('span');
+                span5.className = 'readonly-cell note';
+                span5.textContent = note;
+                td5.appendChild(span5);
+                tr.appendChild(td5);
+
+                const td6 = document.createElement('td');
+                const span6 = document.createElement('span');
+                span6.className = 'readonly-cell owed';
+                span6.textContent = formatCurrency(totalOwed);
+                td6.appendChild(span6);
+                tr.appendChild(td6);
+
+                const td7 = document.createElement('td');
+                const inp7 = document.createElement('input');
+                inp7.type = 'number';
+                inp7.value = item.paid;
+                inp7.placeholder = '0';
+                inp7.min = '0';
+                inp7.disabled = !isAdmin || !isEditing;
+                inp7.addEventListener('input', (e) => {
+                    if (isAdmin && isEditing && realIndex !== -1) {
+                        loanData[realIndex].paid = parseFloat(e.target.value) || 0;
+                        renderTable();
+                        editingRow = realIndex;
+                    }
+                });
+                td7.appendChild(inp7);
+                tr.appendChild(td7);
+
+                const td8 = document.createElement('td');
+                const span8 = document.createElement('span');
+                span8.className = 'readonly-cell balance';
+                if (balance < 0) span8.classList.add('negative');
+                span8.textContent = formatCurrency(balance);
+                td8.appendChild(span8);
+                tr.appendChild(td8);
+
+                const td9 = document.createElement('td');
+                td9.style.display = isAdmin ? '' : 'none';
+
+                if (isAdmin && realIndex !== -1) {
+                    const actionsDiv = document.createElement('div');
+                    actionsDiv.className = 'admin-actions';
+
+                    if (isEditing) {
+                        const saveBtn = document.createElement('button');
+                        saveBtn.className = 'btn-sm save';
+                        saveBtn.textContent = '💾 Save';
+                        saveBtn.addEventListener('click', () => {
+                            editingRow = null;
+                            renderTable();
+                            saveLoans();
+                            showToast('✅ Changes saved!');
+                        });
+                        actionsDiv.appendChild(saveBtn);
+
+                        const cancelBtn = document.createElement('button');
+                        cancelBtn.className = 'btn-sm cancel';
+                        cancelBtn.textContent = '✕ Cancel';
+                        cancelBtn.addEventListener('click', () => {
+                            loadData();
+                            editingRow = null;
+                            renderTable();
+                            showToast('↩️ Changes discarded');
+                        });
+                        actionsDiv.appendChild(cancelBtn);
+                    } else {
+                        const editBtn = document.createElement('button');
+                        editBtn.className = 'btn-sm edit';
+                        editBtn.textContent = '✏️ Edit';
+                        editBtn.addEventListener('click', () => {
+                            editingRow = realIndex;
+                            renderTable();
+                        });
+                        actionsDiv.appendChild(editBtn);
+
+                        const delBtn = document.createElement('button');
+                        delBtn.className = 'btn-sm delete';
+                        delBtn.textContent = '🗑️';
+                        delBtn.addEventListener('click', () => {
+                            if (confirm(`Delete ${item.borrower}'s loan?`)) {
+                                loanData.splice(realIndex, 1);
+                                editingRow = null;
+                                renderTable();
+                                saveLoans();
+                                showToast(`🗑️ ${item.borrower}'s loan deleted`);
+                            }
+                        });
+                        actionsDiv.appendChild(delBtn);
+                    }
+
+                    td9.appendChild(actionsDiv);
+                }
+
+                tr.appendChild(td9);
+                tbody.appendChild(tr);
+            });
+
+            updateStats();
+            updateButtons();
+        }
+
+        function updateStats() {
+            const displayLoans = getLoansForUser(currentUser);
+            let totalLent = 0,
+                totalOwed = 0,
+                totalPaid = 0,
+                totalBalance = 0;
+
+            displayLoans.forEach(item => {
+                const owed = calculateTotalOwed(item.loan, item.interest, item.weeks);
+                const bal = owed - item.paid;
+                totalLent += item.loan;
+                totalOwed += owed;
+                totalPaid += item.paid;
+                totalBalance += bal;
+            });
+
+            document.getElementById('totalLent').textContent = formatCurrency(totalLent);
+            document.getElementById('totalOwed').textContent = formatCurrency(totalOwed);
+            document.getElementById('totalPaid').textContent = formatCurrency(totalPaid);
+
+            const balEl = document.getElementById('totalBalance');
+            balEl.textContent = formatCurrency(totalBalance);
+            balEl.className = 'stat-value' + (totalBalance < 0 ? ' red' : '');
+
+            document.getElementById('activeLoans').textContent = displayLoans.length;
+        }
+
+        function updateButtons() {
+            const isEditingAny = editingRow !== null;
+            document.getElementById('addRowBtn').disabled = isEditingAny;
+            document.getElementById('resetBtn').disabled = isEditingAny;
+            document.getElementById('clearAllBtn').disabled = isEditingAny;
+            document.getElementById('saveDataBtn').disabled = isEditingAny;
+        }
+
+        // ============================================================
+        //  ADMIN USER MANAGEMENT
+        // ============================================================
+
+        function renderUserList() {
+            const container = document.getElementById('userListContainer');
+            container.innerHTML = '';
+
+            users.forEach((user, index) => {
+                const div = document.createElement('div');
+                div.className = 'user-list-item';
+
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'user-info';
+
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'user-name';
+                nameSpan.textContent = user.username;
+                infoDiv.appendChild(nameSpan);
+
+                const roleSpan = document.createElement('span');
+                roleSpan.className = 'user-role ' + (user.isAdmin ? 'admin' : 'user');
+                roleSpan.textContent = user.isAdmin ? '👑 Admin' : '👤 User';
+                infoDiv.appendChild(roleSpan);
+
+                div.appendChild(infoDiv);
+
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'user-actions';
+
+                const editBtn = document.createElement('button');
+                editBtn.className = 'btn-sm edit';
+                editBtn.textContent = '✏️ Edit';
+                editBtn.addEventListener('click', () => {
+                    openEditUserModal(index);
+                });
+                actionsDiv.appendChild(editBtn);
+
+                const delBtn = document.createElement('button');
+                delBtn.className = 'btn-sm delete';
+                delBtn.textContent = '🗑️';
+                const isSelf = user.username === currentUser;
+                const isLastAdmin = user.isAdmin && users.filter(u => u.isAdmin).length === 1;
+
+                if (isSelf || isLastAdmin) {
+                    delBtn.disabled = true;
+                    delBtn.style.opacity = '0.3';
+                    delBtn.title = isSelf ? 'Cannot delete yourself' : 'Cannot delete last admin';
+                }
+
+                delBtn.addEventListener('click', () => {
+                    if (isSelf) {
+                        showToast('❌ You cannot delete your own account', true);
+                        return;
+                    }
+                    if (isLastAdmin) {
+                        showToast('❌ Cannot delete the last admin account', true);
+                        return;
+                    }
+                    if (confirm(`Delete user "${user.username}"?`)) {
+                        users.splice(index, 1);
+                        saveUsers();
+                        renderUserList();
+                        showToast(`🗑️ User "${user.username}" deleted`);
+                    }
+                });
+                actionsDiv.appendChild(delBtn);
+
+                div.appendChild(actionsDiv);
+                container.appendChild(div);
+            });
+
+            if (users.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center;padding:20px;color:#8892b0;">
+                        <p>No users found</p>
+                    </div>
+                `;
+            }
+        }
+
+        function openEditUserModal(index) {
+            const user = users[index];
+            if (!user) return;
+
+            editingUser = index;
+            document.getElementById('editUserNameDisplay').textContent = user.username;
+            document.getElementById('editUserUsername').value = user.username;
+            document.getElementById('editUserPassword').value = '';
+            document.getElementById('editUserRole').value = user.isAdmin ? 'admin' : 'user';
+            document.getElementById('editUserError').textContent = '';
+            document.getElementById('editUserModal').classList.add('active');
+        }
+
+        function saveUserEdit() {
+            if (editingUser === null) return;
+
+            const user = users[editingUser];
+            if (!user) return;
+
+            const newUsername = document.getElementById('editUserUsername').value.trim();
+            const newPassword = document.getElementById('editUserPassword').value;
+            const newRole = document.getElementById('editUserRole').value;
+
+            if (!newUsername) {
+                document.getElementById('editUserError').textContent = 'Username cannot be empty';
+                return;
+            }
+
+            if (newUsername !== user.username && users.find(u => u.username === newUsername)) {
+                document.getElementById('editUserError').textContent = 'Username already taken';
+                return;
+            }
+
+            if (user.isAdmin && newRole !== 'admin') {
+                const adminCount = users.filter(u => u.isAdmin).length;
+                if (adminCount === 1) {
+                    document.getElementById('editUserError').textContent = 'Cannot remove admin role from the last admin';
+                    return;
+                }
+            }
+
+            const oldUsername = user.username;
+            user.username = newUsername;
+            user.isAdmin = newRole === 'admin';
+
+            if (newPassword && newPassword.length >= 4) {
+                user.password = newPassword;
+            }
+
+            if (oldUsername !== newUsername) {
+                loanData.forEach(l => {
+                    if (l.userId === oldUsername) l.userId = newUsername;
+                });
+            }
+
+            if (oldUsername === currentUser) {
+                currentUser = newUsername;
+            }
+
+            saveAll();
+            document.getElementById('editUserModal').classList.remove('active');
+            editingUser = null;
+            renderUserList();
+            renderApp();
+            showToast(`✅ User "${newUsername}" updated successfully!`);
+        }
+
+        // ============================================================
+        //  EVENT LISTENERS
+        // ============================================================
+
+        document.querySelectorAll('.auth-tabs button').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.auth-tabs button').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                const tab = this.dataset.tab;
+                document.getElementById('loginForm').classList.toggle('active', tab === 'login');
+                document.getElementById('registerForm').classList.toggle('active', tab === 'register');
+
+                document.getElementById('loginError').textContent = '';
+                document.getElementById('regError').textContent = '';
+                document.getElementById('regSuccess').textContent = '';
+            });
+        });
+
+        document.getElementById('regPolicy').addEventListener('change', function() {
+            document.getElementById('registerBtn').disabled = !this.checked;
+        });
+
+        document.getElementById('registerBtn').addEventListener('click', function() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirmPassword').value;
+
+            if (!username || !password || !confirm) {
+                showToast('❌ Please fill in all fields', true);
+                return;
+            }
+
+            if (registerUser(username, password, confirm)) {
+                document.getElementById('regUsername').value = '';
+                document.getElementById('regPassword').value = '';
+                document.getElementById('regConfirmPassword').value = '';
+                document.getElementById('regPolicy').checked = false;
+                document.getElementById('registerBtn').disabled = true;
+                document.querySelector('[data-tab="login"]').click();
+            }
+        });
+
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showToast('❌ Please enter username and password', true);
+                return;
+            }
+
+            loginUser(username, password, false);
+        });
+
+        document.getElementById('adminLoginBtn').addEventListener('click', function() {
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value;
+
+            if (!username || !password) {
+                showToast('❌ Please enter username and password', true);
+                return;
+            }
+
+            loginUser(username, password, true);
+        });
+
+        document.getElementById('loginPassword').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('loginBtn').click();
+        });
+        document.getElementById('loginUsername').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('loginBtn').click();
+        });
+
+        document.getElementById('regConfirmPassword').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') document.getElementById('registerBtn').click();
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', function() {
+            currentUser = null;
+            isAdmin = false;
+            editingRow = null;
+            showAuthScreen();
+            showToast('👋 Logged out');
+        });
+
+        document.getElementById('addRowBtn').addEventListener('click', function() {
+            if (!isAdmin) {
+                showToast('⚠️ Admin only', true);
+                return;
+            }
+            if (editingRow !== null) {
+                showToast('⚠️ Save or cancel current edit first', true);
+                return;
+            }
+            loanData.push({
+                borrower: 'New Trainer',
+                loan: 100000,
+                interest: 0.10,
+                weeks: 3,
+                paid: 0,
+                userId: null
+            });
+            renderTable();
+            saveLoans();
+            editingRow = loanData.length - 1;
+            renderTable();
+            showToast('✏️ Edit the new loan');
+        });
+
+        document.getElementById('resetBtn').addEventListener('click', function() {
+            if (!isAdmin) {
+                showToast('⚠️ Admin only', true);
+                return;
+            }
+            if (editingRow !== null) {
+                showToast('⚠️ Save or cancel current edit first', true);
+                return;
+            }
+            if (confirm('Reset to example data?')) {
+                loanData = JSON.parse(JSON.stringify(defaultLoans));
+                editingRow = null;
+                renderTable();
+                saveLoans();
+                showToast('🔄 Reset to examples');
+            }
+        });
+
+        document.getElementById('clearAllBtn').addEventListener('click', function() {
+            if (!isAdmin) {
+                showToast('⚠️ Admin only', true);
+                return;
+            }
+            if (editingRow !== null) {
+                showToast('⚠️ Save or cancel current edit first', true);
+                return;
+            }
+            if (loanData.length === 0) return;
+            if (confirm('⚠️ Delete ALL loans?')) {
+                loanData = [];
+                editingRow = null;
+                renderTable();
+                saveLoans();
+                showToast('🗑️ All loans cleared');
+            }
+        });
+
+        document.getElementById('saveDataBtn').addEventListener('click', function() {
+            saveAll();
+            showToast('💾 All data saved!');
+        });
+
+        document.getElementById('editProfileBtn').addEventListener('click', function() {
+            document.getElementById('editProfileInput').value = currentUser;
+            document.getElementById('editProfileError').textContent = '';
+            document.getElementById('editProfileModal').classList.add('active');
+        });
+
+        document.getElementById('editProfileCancel').addEventListener('click', function() {
+            document.getElementById('editProfileModal').classList.remove('active');
+        });
+
+        document.getElementById('editProfileSave').addEventListener('click', function() {
+            const newUsername = document.getElementById('editProfileInput').value.trim();
+            if (!newUsername) {
+                document.getElementById('editProfileError').textContent = 'Username cannot be empty';
+                return;
+            }
+            if (newUsername === currentUser) {
+                document.getElementById('editProfileModal').classList.remove('active');
+                showToast('No changes made');
+                return;
+            }
+            if (users.find(u => u.username === newUsername && u.username !== currentUser)) {
+                document.getElementById('editProfileError').textContent = 'Username already taken';
+                return;
+            }
+
+            const user = users.find(u => u.username === currentUser);
+            if (user) {
+                user.username = newUsername;
+                loanData.forEach(l => {
+                    if (l.userId === currentUser) l.userId = newUsername;
+                });
+                const oldUsername = currentUser;
+                currentUser = newUsername;
+                saveAll();
+                document.getElementById('editProfileModal').classList.remove('active');
+                renderApp();
+                showToast(`✅ Username changed from "${oldUsername}" to "${newUsername}"`);
+            }
+        });
+
+        document.getElementById('changePasswordBtn').addEventListener('click', function() {
+            document.getElementById('cpCurrent').value = '';
+            document.getElementById('cpNew').value = '';
+            document.getElementById('cpConfirm').value = '';
+            document.getElementById('cpError').textContent = '';
+            document.getElementById('changePasswordModal').classList.add('active');
+        });
+
+        document.getElementById('cpCancel').addEventListener('click', function() {
+            document.getElementById('changePasswordModal').classList.remove('active');
+        });
+
+        document.getElementById('cpSave').addEventListener('click', function() {
+            const current = document.getElementById('cpCurrent').value;
+            const newPass = document.getElementById('cpNew').value;
+            const confirm = document.getElementById('cpConfirm').value;
+
+            const user = users.find(u => u.username === currentUser);
+            if (!user) {
+                document.getElementById('cpError').textContent = 'User not found';
+                return;
+            }
+            if (user.password !== current) {
+                document.getElementById('cpError').textContent = 'Current password is incorrect';
+                return;
+            }
+            if (newPass.length < 4) {
+                document.getElementById('cpError').textContent = 'New password must be at least 4 characters';
+                return;
+            }
+            if (newPass !== confirm) {
+                document.getElementById('cpError').textContent = 'Passwords do not match';
+                return;
+            }
+
+            user.password = newPass;
+            saveUsers();
+            document.getElementById('changePasswordModal').classList.remove('active');
+            showToast('✅ Password changed successfully!');
+        });
+
+        document.getElementById('manageUsersBtn').addEventListener('click', function() {
+            if (!isAdmin) {
+                showToast('⚠️ Admin only', true);
+                return;
+            }
+            renderUserList();
+            document.getElementById('manageUsersError').textContent = '';
+            document.getElementById('manageUsersSuccess').textContent = '';
+            document.getElementById('manageUsersModal').classList.add('active');
+        });
+
+        document.getElementById('manageUsersClose').addEventListener('click', function() {
+            document.getElementById('manageUsersModal').classList.remove('active');
+        });
+
+        document.getElementById('editUserCancel').addEventListener('click', function() {
+            document.getElementById('editUserModal').classList.remove('active');
+            editingUser = null;
+        });
+
+        document.getElementById('editUserSave').addEventListener('click', saveUserEdit);
+
+        document.getElementById('editUserPassword').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') saveUserEdit();
+        });
+
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+                if (editingRow !== null) {
+                    loadData();
+                    editingRow = null;
+                    renderTable();
+                    showToast('↩️ Changes discarded');
+                }
+            }
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                if (editingRow !== null) {
+                    editingRow = null;
+                    renderTable();
+                    saveLoans();
+                    showToast('✅ Changes saved!');
+                } else {
+                    saveAll();
+                    showToast('💾 All data saved!');
+                }
+            }
+        });
+
+        // ============================================================
+        //  INIT
+        // ============================================================
+
+        loadData();
+        showAuthScreen();
+
+        console.log('⚡ PokeMMO Loan System loaded!');
+        console.log('👤 ' + users.length + ' users registered');
+        console.log('📊 ' + loanData.length + ' loans loaded');
+        console.log('👑 Default Admin: Adrayle / p@ssw0rd');
+        console.log('🔒 Security measures active');
+        console.log('💡 Press Ctrl+S to save | ESC to cancel');
+    </script>
+
+</body>
+</html>
