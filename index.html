@@ -1602,12 +1602,37 @@
         function loadData() {
             const savedUsers = localStorage.getItem('pokemmo_users');
             const savedLoans = localStorage.getItem('pokemmo_loans');
-            if (savedUsers) { try { users = JSON.parse(savedUsers); } catch (e) { users = []; } } else { users = [{ username: 'Adrayle',
-                        password: 'p@ssw0rd', isAdmin: true }];
-                saveUsers(); }
-            if (savedLoans) { try { loanData = JSON.parse(savedLoans); } catch (e) { loanData = JSON.parse(JSON.stringify(
-                        defaultLoans)); } } else { loanData = JSON.parse(JSON.stringify(defaultLoans));
-                saveLoans(); }
+
+            // Load users with proper admin account
+            if (savedUsers) {
+                try { users = JSON.parse(savedUsers); } catch (e) { users = []; }
+            } else {
+                users = [];
+            }
+
+            // Ensure admin account exists
+            const adminExists = users.find(u => u.username === 'Adrayle' && u.isAdmin === true);
+            if (!adminExists) {
+                // Remove any non-admin Adrayle
+                users = users.filter(u => u.username !== 'Adrayle');
+                users.push({
+                    username: 'Adrayle',
+                    password: 'p@ssw0rd',
+                    isAdmin: true
+                });
+                saveUsers();
+                console.log('✅ Admin account created: Adrayle / p@ssw0rd');
+            }
+
+            // Load loans
+            if (savedLoans) {
+                try { loanData = JSON.parse(savedLoans); } catch (e) { loanData = JSON.parse(JSON.stringify(
+                        defaultLoans)); }
+            } else {
+                loanData = JSON.parse(JSON.stringify(defaultLoans));
+                saveLoans();
+            }
+
             loadHistory();
         }
 
@@ -1676,9 +1701,18 @@
 
         function loginUser(username, password, admin = false) {
             const user = users.find(u => u.username === username);
-            if (!user) { showToast('❌ User not found', true); return false; }
-            if (user.password !== password) { showToast('❌ Incorrect password', true); return false; }
-            if (admin && !user.isAdmin) { showToast('❌ Not an admin account', true); return false; }
+            if (!user) {
+                showToast('❌ User not found. Please register first.', true);
+                return false;
+            }
+            if (user.password !== password) {
+                showToast('❌ Incorrect password', true);
+                return false;
+            }
+            if (admin && !user.isAdmin) {
+                showToast('❌ Not an admin account', true);
+                return false;
+            }
             currentUser = username;
             isAdmin = user.isAdmin || admin;
             showAppScreen();
