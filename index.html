@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>PokeMMO Loan System</title>
 
     <!-- Disable DevTools detection script (runs first) -->
@@ -118,6 +118,10 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        html {
+            font-size: 16px;
+        }
+
         body {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -127,8 +131,8 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 20px;
+            align-items: flex-start;
+            padding: 10px;
         }
 
         input,
@@ -143,26 +147,27 @@
         .container {
             max-width: 1400px;
             width: 100%;
+            padding: 5px 0;
         }
 
         /* ===== AUTH SCREENS ===== */
         .auth-screen {
-            max-width: 480px;
-            margin: 0 auto;
+            max-width: 440px;
+            margin: 20px auto;
             background: rgba(255, 255, 255, 0.04);
-            border-radius: 24px;
-            padding: 40px 36px;
+            border-radius: 20px;
+            padding: 28px 20px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
 
         .auth-screen .logo {
             text-align: center;
-            margin-bottom: 28px;
+            margin-bottom: 20px;
         }
 
         .auth-screen .logo h1 {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 800;
             color: #ffd700;
         }
@@ -173,28 +178,28 @@
 
         .auth-screen .logo p {
             color: #8892b0;
-            font-size: 14px;
-            margin-top: 4px;
+            font-size: 13px;
+            margin-top: 2px;
         }
 
         .auth-screen .auth-tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
+            gap: 6px;
+            margin-bottom: 20px;
             background: rgba(255, 255, 255, 0.04);
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 4px;
         }
 
         .auth-screen .auth-tabs button {
             flex: 1;
-            padding: 10px;
+            padding: 8px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             background: transparent;
             color: #8892b0;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -219,18 +224,18 @@
         .auth-form label {
             display: block;
             color: #a8b2d1;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 4px;
-            margin-top: 14px;
+            margin-bottom: 3px;
+            margin-top: 12px;
         }
 
         .auth-form input[type="text"],
         .auth-form input[type="password"],
         .auth-form input[type="number"] {
             width: 100%;
-            padding: 12px 14px;
-            border-radius: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             background: rgba(255, 255, 255, 0.04);
             color: #fff;
@@ -247,17 +252,17 @@
         .auth-form .checkbox-group {
             display: flex;
             align-items: flex-start;
-            gap: 10px;
-            margin-top: 16px;
-            padding: 12px;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 10px;
             background: rgba(255, 215, 0, 0.04);
-            border-radius: 10px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 215, 0, 0.06);
         }
 
         .auth-form .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             margin-top: 2px;
             accent-color: #ffd700;
             cursor: pointer;
@@ -267,9 +272,9 @@
         .auth-form .checkbox-group label {
             margin: 0;
             font-weight: 400;
-            font-size: 12px;
+            font-size: 11px;
             color: #a8b2d1;
-            line-height: 1.5;
+            line-height: 1.4;
         }
 
         .auth-form .checkbox-group label strong {
@@ -278,16 +283,16 @@
 
         .auth-form .btn-auth {
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             background: #ffd700;
             color: #0a0e1a;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
             transition: 0.25s;
-            margin-top: 20px;
+            margin-top: 16px;
         }
 
         .auth-form .btn-auth:hover {
@@ -304,23 +309,23 @@
 
         .auth-form .error-msg {
             color: #ff6b6b;
-            font-size: 13px;
-            margin-top: 10px;
+            font-size: 12px;
+            margin-top: 8px;
             text-align: center;
         }
 
         .auth-form .success-msg {
             color: #7bed9f;
-            font-size: 13px;
-            margin-top: 10px;
+            font-size: 12px;
+            margin-top: 8px;
             text-align: center;
         }
 
         .auth-divider {
             text-align: center;
             color: #8892b0;
-            font-size: 12px;
-            margin: 16px 0;
+            font-size: 11px;
+            margin: 12px 0;
             position: relative;
         }
 
@@ -353,17 +358,17 @@
         /* ===== HEADER ===== */
         .header {
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            padding: 20px 0;
+            gap: 10px;
+            padding: 12px 0;
             border-bottom: 2px solid rgba(255, 215, 0, 0.1);
-            margin-bottom: 24px;
+            margin-bottom: 16px;
+            text-align: center;
         }
 
         .header-left h1 {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 800;
             color: #ffd700;
         }
@@ -374,20 +379,22 @@
 
         .header-left p {
             color: #8892b0;
-            font-size: 13px;
+            font-size: 11px;
+            margin-top: 2px;
         }
 
         .header-right {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             align-items: center;
             flex-wrap: wrap;
+            justify-content: center;
         }
 
         .user-badge {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 11px;
             font-weight: 600;
             background: rgba(123, 237, 159, 0.1);
             color: #7bed9f;
@@ -401,13 +408,13 @@
         }
 
         .btn-logout {
-            padding: 8px 20px;
+            padding: 6px 14px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             background: rgba(255, 107, 107, 0.1);
             color: #ff6b6b;
             font-weight: 600;
-            font-size: 13px;
+            font-size: 12px;
             cursor: pointer;
             transition: 0.2s;
             border: 1px solid rgba(255, 107, 107, 0.1);
@@ -421,35 +428,33 @@
         .policy-box {
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.04), rgba(255, 215, 0, 0.01));
             border: 1px solid rgba(255, 215, 0, 0.08);
-            border-radius: 14px;
-            padding: 14px 20px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
+            flex-direction: column;
+            gap: 6px;
         }
 
         .policy-box .policy-left {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .policy-box .policy-icon {
-            font-size: 22px;
+            font-size: 18px;
         }
 
         .policy-box .policy-title {
             color: #ffd700;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .policy-box .policy-details {
             color: #a8b2d1;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .policy-box .policy-details strong {
@@ -459,313 +464,62 @@
         .policy-box .policy-rules {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px 20px;
+            gap: 6px 14px;
             color: #a8b2d1;
-            font-size: 11px;
+            font-size: 10px;
         }
 
         .policy-box .policy-rules span {
             display: flex;
             align-items: center;
-            gap: 4px;
-        }
-
-        /* ===== TABLE ===== */
-        .table-wrapper {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            overflow-x: auto;
-            padding: 4px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1000px;
-            font-size: 13px;
-        }
-
-        thead {
-            background: rgba(255, 215, 0, 0.05);
-            border-bottom: 2px solid rgba(255, 215, 0, 0.06);
-        }
-
-        th {
-            color: #ffd700;
-            font-weight: 600;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            padding: 10px 8px;
-            text-align: left;
-            white-space: nowrap;
-        }
-
-        td {
-            padding: 4px 6px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-            color: #e6e9f0;
-            vertical-align: middle;
-        }
-
-        tr:hover td {
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        /* ===== EDITABLE CELLS - IMPROVED ===== */
-        td .editable-input {
-            width: 100%;
-            padding: 6px 8px;
-            border-radius: 6px;
-            border: 2px solid transparent;
-            background: rgba(255, 255, 255, 0.03);
-            color: #fff;
-            font-size: 13px;
-            transition: all 0.25s ease;
-            outline: none;
-            min-height: 34px;
-        }
-
-        td .editable-input:hover {
-            background: rgba(255, 215, 0, 0.05);
-            border-color: rgba(255, 215, 0, 0.15);
-        }
-
-        td .editable-input:focus {
-            border-color: #ffd700;
-            background: rgba(255, 215, 0, 0.06);
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.08);
-        }
-
-        td .editable-input:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        td .editable-input:disabled:hover {
-            border-color: transparent;
-            background: rgba(255, 255, 255, 0.02);
-        }
-
-        td .editable-input::placeholder {
-            color: rgba(255, 255, 255, 0.15);
-        }
-
-        /* Editable indicator - subtle hint */
-        td .editable-input:not(:disabled)::after {
-            content: '✏️';
-            position: absolute;
-            right: 8px;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        td .editable-input:not(:disabled):hover::after {
-            opacity: 0.5;
-        }
-
-        /* ===== READONLY CELLS ===== */
-        .readonly-cell {
-            padding: 6px 8px;
-            border-radius: 6px;
-            display: block;
-            min-height: 34px;
-            font-weight: 600;
-            font-size: 13px;
-        }
-
-        .readonly-cell.owed {
-            color: #ffd700;
-            background: rgba(255, 215, 0, 0.04);
-            border: 1px solid rgba(255, 215, 0, 0.06);
-        }
-
-        .readonly-cell.balance {
-            color: #7bed9f;
-            background: rgba(123, 237, 159, 0.04);
-            border: 1px solid rgba(123, 237, 159, 0.06);
-        }
-
-        .readonly-cell.balance.negative {
-            color: #ff6b6b;
-            border-color: rgba(255, 107, 107, 0.12);
-            background: rgba(255, 107, 107, 0.04);
-        }
-
-        .readonly-cell.note {
-            color: #a8b2d1;
-            font-weight: 400;
-            font-size: 11px;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.03);
-            min-height: 34px;
-            word-break: break-word;
-            line-height: 1.4;
-        }
-
-        /* ===== ADMIN ACTIONS ===== */
-        .admin-actions {
-            display: flex;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-
-        .btn-sm {
-            padding: 3px 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 11px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-sm.edit {
-            background: rgba(116, 185, 255, 0.1);
-            color: #74b9ff;
-            border: 1px solid rgba(116, 185, 255, 0.1);
-        }
-
-        .btn-sm.edit:hover {
-            background: rgba(116, 185, 255, 0.2);
-        }
-
-        .btn-sm.delete {
-            background: rgba(255, 107, 107, 0.1);
-            color: #ff6b6b;
-            border: 1px solid rgba(255, 107, 107, 0.1);
-        }
-
-        .btn-sm.delete:hover {
-            background: rgba(255, 107, 107, 0.2);
-        }
-
-        .btn-sm.save {
-            background: rgba(123, 237, 159, 0.1);
-            color: #7bed9f;
-            border: 1px solid rgba(123, 237, 159, 0.1);
-        }
-
-        .btn-sm.save:hover {
-            background: rgba(123, 237, 159, 0.2);
-        }
-
-        .btn-sm.cancel {
-            background: rgba(255, 255, 255, 0.04);
-            color: #8892b0;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .btn-sm.cancel:hover {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        /* ===== BUTTONS ===== */
-        .btn-row {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        .btn {
-            padding: 10px 24px;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: 0.25s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .btn-gold {
-            background: #ffd700;
-            color: #0a0e1a;
-        }
-
-        .btn-gold:hover {
-            background: #ffed4a;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.15);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: #a8b2d1;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.04);
-        }
-
-        .btn-danger {
-            background: rgba(255, 107, 107, 0.1);
-            color: #ff6b6b;
-            border: 1px solid rgba(255, 107, 107, 0.1);
-        }
-
-        .btn-danger:hover {
-            background: rgba(255, 107, 107, 0.2);
-        }
-
-        .btn-gold:disabled,
-        .btn-outline:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-            transform: none !important;
+            gap: 3px;
         }
 
         /* ===== PROFILE SECTION ===== */
         .profile-section {
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 14px;
+            border-radius: 12px;
             border: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 20px 24px;
-            margin-bottom: 20px;
+            padding: 14px 16px;
+            margin-bottom: 14px;
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px 40px;
-            align-items: center;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .profile-section .profile-info {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px 30px;
+            gap: 8px 20px;
+            justify-content: center;
         }
 
         .profile-section .profile-info .field {
             color: #a8b2d1;
-            font-size: 13px;
+            font-size: 11px;
+            text-align: center;
         }
 
         .profile-section .profile-info .field strong {
             color: #fff;
             display: block;
-            font-size: 15px;
+            font-size: 14px;
             margin-top: 2px;
         }
 
         .profile-section .profile-actions {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             flex-wrap: wrap;
-            margin-left: auto;
+            justify-content: center;
         }
 
         .btn-profile {
-            padding: 8px 18px;
+            padding: 6px 14px;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: 600;
-            font-size: 12px;
+            font-size: 11px;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -803,10 +557,330 @@
         .user-count-badge {
             background: rgba(255, 215, 0, 0.15);
             color: #ffd700;
-            padding: 2px 10px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+
+        /* ===== QUICK EDIT HINT ===== */
+        .quick-edit-hint {
+            color: #8892b0;
+            font-size: 11px;
+            text-align: center;
+            background: rgba(255, 215, 0, 0.04);
+            padding: 6px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.05);
+            margin-bottom: 10px;
+        }
+
+        .quick-edit-hint strong {
+            color: #ffd700;
+        }
+
+        /* ===== TABLE - FULLY RESPONSIVE ===== */
+        .table-wrapper {
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            overflow-x: auto;
+            padding: 2px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
             font-size: 12px;
-            margin-left: 6px;
+        }
+
+        thead {
+            background: rgba(255, 215, 0, 0.05);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.06);
+        }
+
+        th {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 8px 4px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 3px 4px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #e6e9f0;
+            vertical-align: middle;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* ===== EDITABLE INPUTS ===== */
+        td .editable-input {
+            width: 100%;
+            padding: 4px 6px;
+            border-radius: 4px;
+            border: 2px solid transparent;
+            background: rgba(255, 255, 255, 0.03);
+            color: #fff;
+            font-size: 11px;
+            transition: all 0.25s ease;
+            outline: none;
+            min-height: 28px;
+            max-height: 32px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Scrollable inputs on mobile */
+        td .editable-input[type="number"] {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+
+        td .editable-input[type="number"]::-webkit-inner-spin-button,
+        td .editable-input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        td .editable-input:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: rgba(255, 215, 0, 0.15);
+        }
+
+        td .editable-input:focus {
+            border-color: #ffd700;
+            background: rgba(255, 215, 0, 0.06);
+            box-shadow: 0 0 16px rgba(255, 215, 0, 0.06);
+            min-height: 32px;
+        }
+
+        td .editable-input:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td .editable-input:disabled:hover {
+            border-color: transparent;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        td .editable-input::placeholder {
+            color: rgba(255, 255, 255, 0.12);
+            font-size: 10px;
+        }
+
+        /* ===== READONLY CELLS ===== */
+        .readonly-cell {
+            padding: 4px 6px;
+            border-radius: 4px;
+            display: block;
+            min-height: 28px;
+            font-weight: 600;
+            font-size: 11px;
+            word-break: break-word;
+        }
+
+        .readonly-cell.owed {
+            color: #ffd700;
+            background: rgba(255, 215, 0, 0.04);
+            border: 1px solid rgba(255, 215, 0, 0.05);
+        }
+
+        .readonly-cell.balance {
+            color: #7bed9f;
+            background: rgba(123, 237, 159, 0.04);
+            border: 1px solid rgba(123, 237, 159, 0.05);
+        }
+
+        .readonly-cell.balance.negative {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.1);
+            background: rgba(255, 107, 107, 0.04);
+        }
+
+        .readonly-cell.note {
+            color: #a8b2d1;
+            font-weight: 400;
+            font-size: 9px;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            min-height: 28px;
+            line-height: 1.3;
+        }
+
+        /* ===== ADMIN ACTIONS ===== */
+        .admin-actions {
+            display: flex;
+            gap: 3px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn-sm {
+            padding: 2px 8px;
+            border: none;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn-sm.delete {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .btn-sm.delete:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        .btn-sm.edit {
+            background: rgba(116, 185, 255, 0.1);
+            color: #74b9ff;
+            border: 1px solid rgba(116, 185, 255, 0.1);
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-row {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 14px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-gold {
+            background: #ffd700;
+            color: #0a0e1a;
+        }
+
+        .btn-gold:hover {
+            background: #ffed4a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.15);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #a8b2d1;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .btn-danger {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .btn-danger:hover {
+            background: rgba(255, 107, 107, 0.2);
+        }
+
+        /* ===== STATS ===== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.01);
+            border-radius: 8px;
+            padding: 8px 10px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .stat-card .stat-label {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #8892b0;
+        }
+
+        .stat-card .stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffd700;
+            margin-top: 2px;
+        }
+
+        .stat-card .stat-value.green {
+            color: #7bed9f;
+        }
+        .stat-card .stat-value.red {
+            color: #ff6b6b;
+        }
+        .stat-card .stat-value.blue {
+            color: #74b9ff;
+        }
+
+        /* ===== TOAST ===== */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 215, 0, 0.1);
+            backdrop-filter: blur(12px);
+            color: #ffd700;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            transition: opacity 0.3s;
+            font-family: 'Segoe UI', sans-serif;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .toast.error {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.15);
+            background: rgba(255, 107, 107, 0.08);
+        }
+
+        .toast.security {
+            color: #ff6b6b;
+            border-color: rgba(255, 107, 107, 0.2);
+            background: rgba(255, 0, 0, 0.1);
+            font-weight: 700;
         }
 
         /* ===== MODALS ===== */
@@ -822,6 +896,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 10px;
         }
 
         .modal-overlay.active {
@@ -830,10 +905,10 @@
 
         .modal {
             background: #1a1a2e;
-            border-radius: 20px;
-            padding: 36px 32px;
-            max-width: 500px;
-            width: 90%;
+            border-radius: 16px;
+            padding: 24px 20px;
+            max-width: 440px;
+            width: 100%;
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
             max-height: 90vh;
@@ -842,29 +917,30 @@
 
         .modal h2 {
             color: #ffd700;
-            font-size: 22px;
-            margin-bottom: 6px;
+            font-size: 20px;
+            margin-bottom: 4px;
         }
 
         .modal p {
             color: #8892b0;
-            font-size: 14px;
-            margin-bottom: 20px;
+            font-size: 13px;
+            margin-bottom: 16px;
         }
 
         .modal label {
             display: block;
             color: #a8b2d1;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 4px;
-            margin-top: 14px;
+            margin-bottom: 3px;
+            margin-top: 12px;
         }
 
-        .modal input {
+        .modal input,
+        .modal select {
             width: 100%;
-            padding: 12px 14px;
-            border-radius: 10px;
+            padding: 10px 12px;
+            border-radius: 8px;
             border: 1px solid rgba(255, 255, 255, 0.06);
             background: rgba(255, 255, 255, 0.04);
             color: #fff;
@@ -873,23 +949,24 @@
             transition: 0.2s;
         }
 
-        .modal input:focus {
+        .modal input:focus,
+        .modal select:focus {
             border-color: #ffd700;
         }
 
         .modal .modal-btns {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 8px;
+            margin-top: 16px;
         }
 
         .modal .modal-btns button {
             flex: 1;
-            padding: 12px;
+            padding: 10px;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
             cursor: pointer;
             transition: 0.2s;
         }
@@ -914,45 +991,47 @@
 
         .modal .modal-error {
             color: #ff6b6b;
-            font-size: 13px;
-            margin-top: 10px;
+            font-size: 12px;
+            margin-top: 8px;
             text-align: center;
         }
 
         .modal .modal-success {
             color: #7bed9f;
-            font-size: 13px;
-            margin-top: 10px;
+            font-size: 12px;
+            margin-top: 8px;
             text-align: center;
         }
 
+        /* ===== USER LIST ===== */
         .user-list-item {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-direction: column;
+            gap: 6px;
             padding: 10px 12px;
             background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             border: 1px solid rgba(255, 255, 255, 0.04);
         }
 
         .user-list-item .user-info {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            flex-wrap: wrap;
         }
 
         .user-list-item .user-info .user-name {
             color: #fff;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .user-list-item .user-info .user-role {
-            font-size: 11px;
-            padding: 2px 10px;
-            border-radius: 12px;
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 10px;
             background: rgba(255, 215, 0, 0.1);
             color: #ffd700;
         }
@@ -969,160 +1048,35 @@
 
         .user-list-item .user-actions {
             display: flex;
-            gap: 6px;
+            gap: 4px;
         }
 
         .user-list-item .user-actions .btn-sm {
-            padding: 4px 12px;
+            padding: 3px 10px;
         }
 
-        /* ===== STATS ===== */
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
-            margin-top: 20px;
-            padding-top: 18px;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .stat-card {
-            background: rgba(255, 255, 255, 0.01);
-            border-radius: 10px;
-            padding: 12px 14px;
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.02);
-        }
-
-        .stat-card .stat-label {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
+            padding: 30px 20px;
             color: #8892b0;
         }
-
-        .stat-card .stat-value {
-            font-size: 20px;
-            font-weight: 700;
-            color: #ffd700;
-            margin-top: 2px;
+        .empty-state .big-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
         }
-
-        .stat-card .stat-value.green {
-            color: #7bed9f;
-        }
-        .stat-card .stat-value.red {
-            color: #ff6b6b;
-        }
-        .stat-card .stat-value.blue {
-            color: #74b9ff;
-        }
-
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 215, 0, 0.1);
-            backdrop-filter: blur(12px);
-            color: #ffd700;
-            padding: 12px 28px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 215, 0, 0.1);
+        .empty-state h3 {
+            color: #e6e9f0;
             font-size: 14px;
-            font-weight: 600;
-            z-index: 9999;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
-            transition: opacity 0.3s;
-            font-family: 'Segoe UI', sans-serif;
-            max-width: 90%;
-            text-align: center;
+        }
+        .empty-state p {
+            font-size: 12px;
         }
 
-        .toast.error {
-            color: #ff6b6b;
-            border-color: rgba(255, 107, 107, 0.15);
-            background: rgba(255, 107, 107, 0.08);
-        }
-
-        .toast.security {
-            color: #ff6b6b;
-            border-color: rgba(255, 107, 107, 0.2);
-            background: rgba(255, 0, 0, 0.1);
-            font-weight: 700;
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .auth-screen {
-                padding: 28px 20px;
-            }
-            .header {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-            .header-left h1 {
-                font-size: 22px;
-            }
-            .header-right {
-                justify-content: center;
-            }
-            .profile-section {
-                flex-direction: column;
-                text-align: center;
-            }
-            .profile-section .profile-actions {
-                margin-left: 0;
-                justify-content: center;
-            }
-            .policy-box {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            .policy-box .policy-rules {
-                flex-direction: column;
-                gap: 4px;
-            }
-            th,
-            td {
-                font-size: 10px;
-                padding: 3px 4px;
-            }
-            td .editable-input {
-                font-size: 10px;
-                padding: 4px 6px;
-                min-height: 28px;
-            }
-            .readonly-cell {
-                font-size: 10px;
-                padding: 4px 6px;
-                min-height: 28px;
-            }
-            .btn {
-                padding: 8px 14px;
-                font-size: 11px;
-            }
-            .stat-card .stat-value {
-                font-size: 16px;
-            }
-            .modal {
-                padding: 24px 18px;
-            }
-            .user-list-item {
-                flex-direction: column;
-                gap: 8px;
-                align-items: stretch;
-            }
-            .user-list-item .user-actions {
-                justify-content: center;
-            }
-        }
-
+        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar {
-            height: 5px;
-            width: 5px;
+            height: 4px;
+            width: 4px;
         }
         ::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.01);
@@ -1136,36 +1090,227 @@
             background: rgba(255, 215, 0, 0.25);
         }
 
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
+        /* ============================================================
+           MOBILE RESPONSIVE STYLES
+        ============================================================ */
+
+        /* Small phones */
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .auth-screen {
+                padding: 20px 14px;
+                margin: 10px auto;
+            }
+
+            .auth-screen .logo h1 {
+                font-size: 24px;
+            }
+
+            .header-left h1 {
+                font-size: 18px;
+            }
+
+            .profile-section .profile-info {
+                gap: 6px 14px;
+            }
+            .profile-section .profile-info .field {
+                font-size: 10px;
+            }
+            .profile-section .profile-info .field strong {
+                font-size: 12px;
+            }
+
+            .btn-profile {
+                font-size: 10px;
+                padding: 5px 10px;
+            }
+
+            table {
+                min-width: 600px;
+                font-size: 10px;
+            }
+
+            th {
+                font-size: 8px;
+                padding: 5px 3px;
+            }
+
+            td {
+                padding: 2px 3px;
+            }
+
+            td .editable-input {
+                font-size: 10px;
+                padding: 3px 4px;
+                min-height: 24px;
+            }
+
+            .readonly-cell {
+                font-size: 10px;
+                padding: 3px 4px;
+                min-height: 24px;
+            }
+            .readonly-cell.note {
+                font-size: 8px;
+                min-height: 24px;
+            }
+
+            .btn {
+                font-size: 10px;
+                padding: 6px 12px;
+            }
+
+            .stat-card .stat-value {
+                font-size: 14px;
+            }
+
+            .quick-edit-hint {
+                font-size: 9px;
+                padding: 4px 8px;
+            }
+
+            .policy-box .policy-title {
+                font-size: 11px;
+            }
+            .policy-box .policy-details {
+                font-size: 10px;
+            }
+            .policy-box .policy-rules {
+                font-size: 9px;
+            }
+
+            .modal {
+                padding: 18px 14px;
+            }
+            .modal h2 {
+                font-size: 18px;
+            }
+        }
+
+        /* Tablets and medium screens */
+        @media (min-width: 481px) and (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .auth-screen {
+                padding: 24px 18px;
+            }
+
+            table {
+                min-width: 650px;
+                font-size: 11px;
+            }
+
+            td .editable-input {
+                font-size: 11px;
+                min-height: 26px;
+            }
+
+            .readonly-cell {
+                font-size: 11px;
+                min-height: 26px;
+            }
+        }
+
+        /* Landscape phones */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .header {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 8px 0;
+            }
+            .header-left h1 {
+                font-size: 18px;
+            }
+            .profile-section {
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .profile-section .profile-actions {
+                margin-left: 0;
+            }
+            .policy-box {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Large screens */
+        @media (min-width: 769px) {
+            .header {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 20px 0;
+            }
+
+            .header-left {
+                text-align: left;
+            }
+
+            .profile-section {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .profile-section .profile-actions {
+                margin-left: auto;
+            }
+
+            .policy-box {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            table {
+                min-width: 1000px;
+                font-size: 13px;
+            }
+
+            td .editable-input {
+                font-size: 13px;
+                min-height: 34px;
+            }
+
+            .readonly-cell {
+                font-size: 13px;
+                min-height: 34px;
+            }
+            .readonly-cell.note {
+                font-size: 11px;
+                min-height: 34px;
+            }
+        }
+
+        /* Touch device improvements */
+        @media (hover: none) {
+            td .editable-input:hover {
+                background: rgba(255, 255, 255, 0.03);
+                border-color: transparent;
+            }
+
+            td .editable-input:focus {
+                border-color: #ffd700;
+                background: rgba(255, 215, 0, 0.06);
+            }
+
+            .btn:hover {
+                transform: none;
+            }
+        }
+
+        /* ===== INTEREST AUTO-SET INDICATOR ===== */
+        .interest-auto-badge {
+            font-size: 8px;
             color: #8892b0;
-        }
-        .empty-state .big-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-        }
-        .empty-state h3 {
-            color: #e6e9f0;
-            font-size: 16px;
-        }
-        .empty-state p {
-            font-size: 13px;
-        }
-
-        /* ===== EDITING HIGHLIGHT ===== */
-        .editing-highlight {
-            background: rgba(255, 215, 0, 0.08) !important;
-            border-radius: 6px;
-            padding: 2px 4px;
-        }
-
-        /* Quick edit tooltip */
-        .edit-hint {
-            color: rgba(255, 215, 0, 0.3);
-            font-size: 10px;
+            display: block;
+            text-align: center;
+            margin-top: 2px;
             font-style: italic;
-            margin-left: 4px;
         }
     </style>
 </head>
@@ -1221,7 +1366,7 @@
                     <input type="checkbox" id="regPolicy" />
                     <label for="regPolicy">
                         I agree to the <strong>Loan Policy</strong>: Minimum loan ₱50,000 · Maximum ₱5,000,000 ·
-                        Weekly compound interest at 10% · Late fee +5% after due date · Collateral required for loans ≥ ₱1,000,000
+                        Weekly compound interest · Auto-interest based on loan amount
                     </label>
                 </div>
 
@@ -1240,7 +1385,7 @@
             <!-- Header -->
             <div class="header">
                 <div class="header-left">
-                    <h1>⚡ PokeMMO <span>Loan System</span></h1>
+                    <h1>⚡ PokeMMO <span>Loan</span></h1>
                     <p id="welcomeMsg">Welcome back!</p>
                 </div>
                 <div class="header-right">
@@ -1256,7 +1401,7 @@
                     <div>
                         <div class="policy-title">🏛️ Loan Policy</div>
                         <div class="policy-details">
-                            <strong>₱50,000</strong> min · <strong>₱5,000,000</strong> max · <strong>10%</strong> base weekly interest
+                            <strong>₱50K</strong> min · <strong>₱5M</strong> max · Auto-interest based on loan
                         </div>
                     </div>
                 </div>
@@ -1285,18 +1430,26 @@
                     </div>
                 </div>
                 <div class="profile-actions">
-                    <button class="btn-profile edit" id="editProfileBtn">✏️ Edit Profile</button>
-                    <button class="btn-profile password" id="changePasswordBtn">🔑 Change Password</button>
+                    <button class="btn-profile edit" id="editProfileBtn">✏️ Edit</button>
+                    <button class="btn-profile password" id="changePasswordBtn">🔑 Password</button>
                     <button class="btn-profile users" id="manageUsersBtn" style="display:none;">
-                        👥 Manage Users <span class="user-count-badge" id="userCountBadge">0</span>
+                        👥 Users <span class="user-count-badge" id="userCountBadge">0</span>
                     </button>
                 </div>
             </div>
 
             <!-- Quick Edit Hint -->
-            <div style="color:#8892b0;font-size:12px;margin-bottom:12px;text-align:center;background:rgba(255,215,0,0.04);padding:6px 12px;border-radius:8px;border:1px solid rgba(255,215,0,0.05);">
-                ✏️ <strong style="color:#ffd700;">Quick Edit:</strong> Click any editable field to change it instantly — auto-saves!
-                <span style="color:#8892b0;font-size:11px;margin-left:8px;">(Admin only)</span>
+            <div class="quick-edit-hint">
+                ✏️ <strong>Quick Edit:</strong> Tap any field to edit — auto-saves instantly!
+                <span style="color:#8892b0;font-size:10px;margin-left:4px;">(Admin only)</span>
+            </div>
+
+            <!-- Interest Auto-Set Info -->
+            <div style="background:rgba(255,215,0,0.04);border-radius:8px;padding:6px 12px;margin-bottom:10px;text-align:center;border:1px solid rgba(255,215,0,0.06);">
+                <span style="color:#8892b0;font-size:10px;">📊 Auto-Interest: </span>
+                <span style="color:#ffd700;font-size:10px;font-weight:600;">
+                    ₱50K-99K = 8% &nbsp;|&nbsp; ₱100K-499K = 10% &nbsp;|&nbsp; ₱500K-999K = 12% &nbsp;|&nbsp; ₱1M+ = 15%
+                </span>
             </div>
 
             <!-- Table -->
@@ -1304,15 +1457,15 @@
                 <table id="loanTable">
                     <thead>
                         <tr>
-                            <th style="min-width:90px;">Borrower</th>
-                            <th style="min-width:90px;">Loan (₱)</th>
-                            <th style="min-width:70px;">Interest %</th>
-                            <th style="min-width:60px;">Weeks</th>
-                            <th style="min-width:140px;">📝 Loan Note</th>
-                            <th style="min-width:90px;">Total Owed</th>
-                            <th style="min-width:80px;">Paid (₱)</th>
-                            <th style="min-width:90px;">Balance</th>
-                            <th style="min-width:100px;" id="adminColHead">Actions</th>
+                            <th style="min-width:70px;">Borrower</th>
+                            <th style="min-width:70px;">Loan (₱)</th>
+                            <th style="min-width:55px;">Interest</th>
+                            <th style="min-width:50px;">Weeks</th>
+                            <th style="min-width:90px;">📝 Note</th>
+                            <th style="min-width:65px;">Owed</th>
+                            <th style="min-width:60px;">Paid</th>
+                            <th style="min-width:65px;">Balance</th>
+                            <th style="min-width:50px;">Actions</th>
                         </tr>
                     </thead>
                     <tbody id="tableBody">
@@ -1323,32 +1476,32 @@
 
             <!-- Buttons -->
             <div class="btn-row">
-                <button class="btn btn-gold" id="addRowBtn">➕ Add Borrower</button>
-                <button class="btn btn-outline" id="resetBtn">🔄 Reset Examples</button>
-                <button class="btn btn-danger" id="clearAllBtn">🗑️ Clear All</button>
-                <button class="btn btn-outline" id="saveDataBtn">💾 Save Data</button>
+                <button class="btn btn-gold" id="addRowBtn">➕ Add</button>
+                <button class="btn btn-outline" id="resetBtn">🔄 Reset</button>
+                <button class="btn btn-danger" id="clearAllBtn">🗑️ Clear</button>
+                <button class="btn btn-outline" id="saveDataBtn">💾 Save</button>
             </div>
 
             <!-- Stats -->
             <div class="stats">
                 <div class="stat-card">
-                    <div class="stat-label">💰 Total Lent</div>
+                    <div class="stat-label">Total Lent</div>
                     <div class="stat-value" id="totalLent">₱0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">📈 Total Owed</div>
+                    <div class="stat-label">Total Owed</div>
                     <div class="stat-value" id="totalOwed">₱0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">✅ Total Paid</div>
+                    <div class="stat-label">Total Paid</div>
                     <div class="stat-value green" id="totalPaid">₱0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">⚖️ Total Balance</div>
+                    <div class="stat-label">Total Balance</div>
                     <div class="stat-value" id="totalBalance">₱0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">📊 Active Loans</div>
+                    <div class="stat-label">Active Loans</div>
                     <div class="stat-value blue" id="activeLoans">0</div>
                 </div>
             </div>
@@ -1445,7 +1598,6 @@
         let loanData = [];
         let currentUser = null;
         let isAdmin = false;
-        let editingRow = null;
         let editingUser = null;
 
         const defaultLoans = [{
@@ -1465,18 +1617,41 @@
         }, {
             borrower: 'Brock Slate',
             loan: 1200000,
-            interest: 0.12,
+            interest: 0.15,
             weeks: 6,
             paid: 200000,
             userId: null
         }, {
             borrower: 'Gary Oak',
             loan: 75000,
-            interest: 0.10,
+            interest: 0.08,
             weeks: 2,
             paid: 0,
             userId: null
         }, ];
+
+        // ============================================================
+        //  AUTO-INTEREST FUNCTION
+        // ============================================================
+
+        function getAutoInterest(loanAmount) {
+            if (loanAmount >= 1000000) {
+                return 0.15; // 15% for ₱1M+
+            } else if (loanAmount >= 500000) {
+                return 0.12; // 12% for ₱500K - ₱999K
+            } else if (loanAmount >= 100000) {
+                return 0.10; // 10% for ₱100K - ₱499K
+            } else if (loanAmount >= 50000) {
+                return 0.08; // 8% for ₱50K - ₱99K
+            } else {
+                return 0.08; // Default 8%
+            }
+        }
+
+        function getInterestDisplay(loanAmount) {
+            const rate = getAutoInterest(loanAmount);
+            return (rate * 100) + '%';
+        }
 
         // ============================================================
         //  STORAGE
@@ -1544,19 +1719,19 @@
                 note = '⚪ MICRO · Quick release · ';
             }
             if (weeks <= 2) {
-                note += 'Short-term (≤2w) · Higher risk';
+                note += 'Short-term (≤2w)';
             } else if (weeks <= 4) {
-                note += 'Standard term (3-4w) · Balanced';
+                note += 'Standard term (3-4w)';
             } else if (weeks <= 8) {
-                note += 'Extended term (5-8w) · Interest accrues';
+                note += 'Extended term (5-8w)';
             } else {
-                note += '⚠️ Long-term (>8w) · Significant interest';
+                note += '⚠️ Long-term (>8w)';
             }
             if (loan >= 1000000) {
-                note += ' · 💎 Collateral: Required';
+                note += ' · 💎 Collateral';
             }
             if (weeks > 6) {
-                note += ' · ⏰ Late fee: +5% after due';
+                note += ' · ⏰ Late fee +5%';
             }
             return note;
         }
@@ -1661,12 +1836,12 @@
         }
 
         // ============================================================
-        //  RENDER - IMPROVED WITH DIRECT EDITING
+        //  RENDER
         // ============================================================
 
         function renderApp() {
             document.getElementById('welcomeMsg').textContent =
-                `Welcome${isAdmin ? ' Admin' : ''}, ${currentUser}! ${isAdmin ? '🔑 Full control enabled' : '👤 View your loans'}`;
+                `Welcome${isAdmin ? ' Admin' : ''}, ${currentUser}! ${isAdmin ? '🔑 Full control' : '👤 View your loans'}`;
 
             const badge = document.getElementById('userBadge');
             badge.textContent = isAdmin ? '👑 Admin' : '👤 User';
@@ -1706,11 +1881,11 @@
             if (displayLoans.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="9" style="text-align:center;padding:40px 20px;">
+                        <td colspan="9" style="text-align:center;padding:30px 10px;">
                             <div class="empty-state">
                                 <div class="big-icon">📭</div>
                                 <h3>No Loans Found</h3>
-                                <p>${isAdmin ? 'Click "Add Borrower" to create a loan' : 'You don\'t have any loans yet'}</p>
+                                <p>${isAdmin ? 'Tap "Add" to create a loan' : 'You don\'t have any loans yet'}</p>
                             </div>
                         </td>
                     </tr>
@@ -1722,25 +1897,33 @@
             displayLoans.forEach((item, displayIndex) => {
                 const realIndex = isAdmin ? loanData.indexOf(item) : -1;
 
+                // Auto-set interest based on loan amount
+                const autoInterest = getAutoInterest(item.loan);
+                if (isAdmin && realIndex !== -1) {
+                    // Only update if admin and interest is different
+                    if (Math.abs(item.interest - autoInterest) > 0.001) {
+                        loanData[realIndex].interest = autoInterest;
+                    }
+                }
+
                 const totalOwed = calculateTotalOwed(item.loan, item.interest, item.weeks);
                 const balance = totalOwed - item.paid;
                 const note = generateLoanNote(item.loan, item.weeks);
 
                 const tr = document.createElement('tr');
 
-                // --- Borrower (Editable) ---
+                // --- Borrower ---
                 const td1 = document.createElement('td');
                 const inp1 = document.createElement('input');
                 inp1.type = 'text';
                 inp1.className = 'editable-input';
                 inp1.value = item.borrower;
-                inp1.placeholder = 'Trainer name';
+                inp1.placeholder = 'Name';
                 inp1.disabled = !isAdmin;
-                inp1.title = isAdmin ? 'Click to edit borrower name' : 'Read-only';
+                inp1.title = isAdmin ? 'Tap to edit' : 'Read-only';
                 inp1.addEventListener('input', function(e) {
                     if (isAdmin && realIndex !== -1) {
                         loanData[realIndex].borrower = this.value;
-                        // Auto-save on change
                         saveLoans();
                         updateStats();
                     }
@@ -1751,26 +1934,28 @@
                 td1.appendChild(inp1);
                 tr.appendChild(td1);
 
-                // --- Loan (Editable) ---
+                // --- Loan ---
                 const td2 = document.createElement('td');
                 const inp2 = document.createElement('input');
                 inp2.type = 'number';
                 inp2.className = 'editable-input';
                 inp2.value = item.loan;
-                inp2.placeholder = '50,000 - 5M';
+                inp2.placeholder = '50K-5M';
                 inp2.min = '50000';
                 inp2.max = '5000000';
                 inp2.disabled = !isAdmin;
-                inp2.title = isAdmin ? 'Click to edit loan amount' : 'Read-only';
+                inp2.title = isAdmin ? 'Tap to edit - auto-sets interest' : 'Read-only';
                 inp2.addEventListener('input', function(e) {
                     if (isAdmin && realIndex !== -1) {
                         let val = parseFloat(this.value) || 50000;
                         if (val < 50000) val = 50000;
                         if (val > 5000000) val = 5000000;
                         loanData[realIndex].loan = val;
-                        // Re-render to update calculations
+                        // Auto-set interest
+                        loanData[realIndex].interest = getAutoInterest(val);
                         renderTable();
                         saveLoans();
+                        showToast('💰 Interest auto-set to ' + getInterestDisplay(val));
                     }
                 });
                 inp2.addEventListener('focus', function() {
@@ -1779,32 +1964,18 @@
                 td2.appendChild(inp2);
                 tr.appendChild(td2);
 
-                // --- Interest (Editable) ---
+                // --- Interest (Read-only - auto-set) ---
                 const td3 = document.createElement('td');
-                const inp3 = document.createElement('input');
-                inp3.type = 'number';
-                inp3.className = 'editable-input';
-                inp3.value = item.interest * 100;
-                inp3.placeholder = '%';
-                inp3.step = '0.5';
-                inp3.min = '0';
-                inp3.max = '50';
-                inp3.disabled = !isAdmin;
-                inp3.title = isAdmin ? 'Click to edit interest rate' : 'Read-only';
-                inp3.addEventListener('input', function(e) {
-                    if (isAdmin && realIndex !== -1) {
-                        loanData[realIndex].interest = (parseFloat(this.value) || 0) / 100;
-                        renderTable();
-                        saveLoans();
-                    }
-                });
-                inp3.addEventListener('focus', function() {
-                    this.select();
-                });
-                td3.appendChild(inp3);
+                const span3 = document.createElement('span');
+                span3.className = 'readonly-cell';
+                span3.style.cssText =
+                    'color:#ffd700;background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.05);border-radius:4px;padding:4px 6px;display:block;font-weight:600;font-size:11px;text-align:center;';
+                span3.textContent = (item.interest * 100) + '%';
+                span3.title = 'Auto-set based on loan amount';
+                td3.appendChild(span3);
                 tr.appendChild(td3);
 
-                // --- Weeks (Editable) ---
+                // --- Weeks ---
                 const td4 = document.createElement('td');
                 const inp4 = document.createElement('input');
                 inp4.type = 'number';
@@ -1815,7 +1986,7 @@
                 inp4.max = '12';
                 inp4.step = '1';
                 inp4.disabled = !isAdmin;
-                inp4.title = isAdmin ? 'Click to edit weeks' : 'Read-only';
+                inp4.title = isAdmin ? 'Tap to edit weeks' : 'Read-only';
                 inp4.addEventListener('input', function(e) {
                     if (isAdmin && realIndex !== -1) {
                         let val = parseInt(this.value) || 1;
@@ -1832,7 +2003,7 @@
                 td4.appendChild(inp4);
                 tr.appendChild(td4);
 
-                // --- Note (Read-only) ---
+                // --- Note ---
                 const td5 = document.createElement('td');
                 const span5 = document.createElement('span');
                 span5.className = 'readonly-cell note';
@@ -1840,7 +2011,7 @@
                 td5.appendChild(span5);
                 tr.appendChild(td5);
 
-                // --- Total Owed (Read-only) ---
+                // --- Total Owed ---
                 const td6 = document.createElement('td');
                 const span6 = document.createElement('span');
                 span6.className = 'readonly-cell owed';
@@ -1848,7 +2019,7 @@
                 td6.appendChild(span6);
                 tr.appendChild(td6);
 
-                // --- Paid (Editable) ---
+                // --- Paid ---
                 const td7 = document.createElement('td');
                 const inp7 = document.createElement('input');
                 inp7.type = 'number';
@@ -1857,7 +2028,7 @@
                 inp7.placeholder = '0';
                 inp7.min = '0';
                 inp7.disabled = !isAdmin;
-                inp7.title = isAdmin ? 'Click to edit paid amount' : 'Read-only';
+                inp7.title = isAdmin ? 'Tap to edit paid amount' : 'Read-only';
                 inp7.addEventListener('input', function(e) {
                     if (isAdmin && realIndex !== -1) {
                         loanData[realIndex].paid = parseFloat(this.value) || 0;
@@ -1871,7 +2042,7 @@
                 td7.appendChild(inp7);
                 tr.appendChild(td7);
 
-                // --- Balance (Read-only) ---
+                // --- Balance ---
                 const td8 = document.createElement('td');
                 const span8 = document.createElement('span');
                 span8.className = 'readonly-cell balance';
@@ -1880,7 +2051,7 @@
                 td8.appendChild(span8);
                 tr.appendChild(td8);
 
-                // --- Actions (Admin only) ---
+                // --- Actions ---
                 const td9 = document.createElement('td');
                 td9.style.display = isAdmin ? '' : 'none';
 
@@ -1888,7 +2059,6 @@
                     const actionsDiv = document.createElement('div');
                     actionsDiv.className = 'admin-actions';
 
-                    // Delete button only - editing is now inline
                     const delBtn = document.createElement('button');
                     delBtn.className = 'btn-sm delete';
                     delBtn.textContent = '🗑️';
@@ -1911,14 +2081,6 @@
             });
 
             updateStats();
-            updateButtons();
-
-            // Highlight editable fields for admin
-            if (isAdmin) {
-                document.querySelectorAll('.editable-input:not(:disabled)').forEach(el => {
-                    el.style.transition = 'all 0.3s ease';
-                });
-            }
         }
 
         function updateStats() {
@@ -1946,10 +2108,6 @@
             balEl.className = 'stat-value' + (totalBalance < 0 ? ' red' : '');
 
             document.getElementById('activeLoans').textContent = displayLoans.length;
-        }
-
-        function updateButtons() {
-            // No editing state to manage now - always editable for admin
         }
 
         // ============================================================
@@ -2186,7 +2344,6 @@
         document.getElementById('logoutBtn').addEventListener('click', function() {
             currentUser = null;
             isAdmin = false;
-            editingRow = null;
             showAuthScreen();
             showToast('👋 Logged out');
         });
@@ -2196,24 +2353,24 @@
                 showToast('⚠️ Admin only', true);
                 return;
             }
-            loanData.push({
+            const newLoan = {
                 borrower: 'New Trainer',
                 loan: 100000,
                 interest: 0.10,
                 weeks: 3,
                 paid: 0,
                 userId: null
-            });
+            };
+            loanData.push(newLoan);
             renderTable();
             saveLoans();
-            showToast('✏️ New loan added! Click any field to edit.');
-            // Focus the new row's borrower field
+            showToast('✏️ New loan added! Tap to edit.');
             setTimeout(() => {
                 const inputs = document.querySelectorAll('.editable-input');
                 if (inputs.length > 0) {
-                    inputs[inputs.length - 4].focus(); // Focus borrower of new row
+                    inputs[inputs.length - 4].focus();
                 }
-            }, 100);
+            }, 200);
         });
 
         document.getElementById('resetBtn').addEventListener('click', function() {
@@ -2375,6 +2532,11 @@
             }
         });
 
+        // Touch event handling for mobile
+        document.addEventListener('touchstart', function() {
+            // Small delay to prevent double-tap zoom on inputs
+        }, { passive: true });
+
         // ============================================================
         //  INIT
         // ============================================================
@@ -2387,9 +2549,10 @@
         console.log('👤 ' + users.length + ' users registered');
         console.log('📊 ' + loanData.length + ' loans loaded');
         console.log('👑 Default Admin: Adrayle / p@ssw0rd');
-        console.log('✏️ Quick Edit: Click any editable field to change instantly!');
+        console.log('📊 Auto-Interest: 8% (50K-99K) | 10% (100K-499K) | 12% (500K-999K) | 15% (1M+)');
+        console.log('✏️ Tap any field to edit instantly!');
         console.log('💡 Press Ctrl+S to save | ESC to cancel');
-        console.log('📝 New registrations automatically appear in admin dashboard');
+        console.log('📱 Fully responsive for mobile!');
     </script>
 
 </body>
