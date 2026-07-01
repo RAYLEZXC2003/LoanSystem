@@ -2,169 +2,195 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>PokeMMO Loan Manager</title>
+  <!-- disable inspect / right click / shortcuts -->
+  <script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('keydown', e => {
+      if (e.ctrlKey && (e.key === 'u' || e.key === 'U' || e.key === 's' || e.key === 'S' || e.key === 'i' || e.key === 'I' || e.key === 'j' || e.key === 'J' || e.key === 'c' || e.key === 'C')) {
+        e.preventDefault();
+        return false;
+      }
+      if (e.key === 'F12') { e.preventDefault(); return false; }
+    });
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; }
-    body { background: #0b0e14; color: #e6edf5; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 1rem; }
-    .app { max-width: 1400px; width: 100%; background: #141a24; border-radius: 2.5rem; padding: 1.8rem; box-shadow: 0 20px 40px rgba(0,0,0,0.7); border: 1px solid #2d3a4b; }
-    .bg-dark { background: #0f151e; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background: #0b0e14; color: #e6edf5; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 0.5rem; }
+    .app { max-width: 480px; width: 100%; background: #141a24; border-radius: 2rem; padding: 1rem 1rem 1.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.7); border: 1px solid #2d3a4b; margin: 0 auto; }
     .text-gold { color: #f5c842; }
     .text-blue { color: #4a9eff; }
-    .border-gold { border-color: #f5c842; }
-    .btn-gold { background: #f5c842; color: #0b0e14; border: none; font-weight: 600; padding: 0.6rem 1.2rem; border-radius: 2rem; cursor: pointer; transition: 0.2s; }
-    .btn-gold:hover { background: #e0b032; }
-    .btn-gold:disabled { opacity: 0.6; cursor: not-allowed; }
-    .card { background: #1e2735; border-radius: 1.8rem; padding: 1.5rem; box-shadow: 0 8px 16px rgba(0,0,0,0.5); border: 1px solid #2c394b; transition: 0.2s; }
-    .card:hover { border-color: #4a6a8a; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-    .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
-    .flex { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; }
+    .btn-gold { background: #f5c842; color: #0b0e14; border: none; font-weight: 600; padding: 0.6rem 1.2rem; border-radius: 2rem; cursor: pointer; transition: 0.2s; width: 100%; font-size: 1rem; }
+    .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-outline { background: transparent; border: 1px solid #f5c842; color: #f5c842; padding: 0.5rem 1rem; border-radius: 2rem; cursor: pointer; }
+    .card { background: #1e2735; border-radius: 1.5rem; padding: 1.2rem; border: 1px solid #2c394b; margin-bottom: 1rem; }
+    .flex { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
     .flex-between { display: flex; justify-content: space-between; align-items: center; }
-    .mt-2 { margin-top: 1.5rem; }
-    .mb-1 { margin-bottom: 0.8rem; }
-    .p-1 { padding: 0.8rem; }
     .w-full { width: 100%; }
     .hidden { display: none !important; }
-    input, select, button { background: #101824; border: 1px solid #2d3f55; color: #e6edf5; padding: 0.6rem 1rem; border-radius: 2rem; font-size: 0.95rem; }
+    input, select { background: #101824; border: 1px solid #2d3f55; color: #e6edf5; padding: 0.7rem 1rem; border-radius: 2rem; font-size: 0.95rem; width: 100%; margin-bottom: 0.6rem; }
     input:focus, select:focus { outline: 2px solid #f5c842; border-color: transparent; }
-    table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
-    th { text-align: left; padding: 0.7rem 0.4rem; color: #a0b8d0; border-bottom: 1px solid #2c3d52; }
-    td { padding: 0.6rem 0.4rem; border-bottom: 1px solid #1f2c3d; }
-    .badge { background: #2d4055; padding: 0.2rem 0.9rem; border-radius: 2rem; font-size: 0.75rem; font-weight: 600; }
+    .badge { background: #2d4055; padding: 0.2rem 0.9rem; border-radius: 2rem; font-size: 0.7rem; font-weight: 600; }
     .badge-pending { background: #b8860b; color: #fff; }
     .badge-approved { background: #1f8b4c; }
     .badge-rejected { background: #b33c3c; }
     .badge-paid { background: #2a6b8a; }
     .badge-overdue { background: #a13d3d; }
-    .nav-bar { display: flex; gap: 1.2rem; flex-wrap: wrap; padding: 0.5rem 0; border-bottom: 1px solid #263646; }
-    .nav-bar a { color: #b0c8e0; text-decoration: none; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 2rem; transition: 0.2s; cursor: pointer; }
-    .nav-bar a:hover { background: #283b52; color: #f5c842; }
-    .nav-bar a.active { background: #f5c842; color: #0b0e14; }
-    .stat-card { background: #1a232f; padding: 1rem; border-radius: 1.5rem; border-left: 4px solid #f5c842; }
-    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px,1fr)); gap: 1rem; }
-    @media (max-width: 700px) { .grid-2 { grid-template-columns: 1fr; } .app { padding: 1rem; } }
-    .chart-box { background: #101824; border-radius: 1.5rem; padding: 1rem; height: 180px; display: flex; align-items: flex-end; gap: 0.6rem; justify-content: center; }
-    .bar { background: #f5c842; width: 30px; border-radius: 8px 8px 0 0; transition: 0.3s; }
+    /* bottom navigation */
+    .bottom-nav { display: flex; justify-content: space-around; background: #0f151e; border-radius: 3rem; padding: 0.5rem 0.2rem; margin-top: 1.2rem; border: 1px solid #2c3d55; position: sticky; bottom: 0; }
+    .bottom-nav a { color: #8899aa; text-decoration: none; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; padding: 0.3rem 0.8rem; border-radius: 2rem; transition: 0.2s; cursor: pointer; flex: 1; text-align: center; }
+    .bottom-nav a i { font-size: 1.4rem; margin-bottom: 0.2rem; }
+    .bottom-nav a.active { color: #f5c842; background: #1e2a3a; }
+    .bottom-nav a.admin-only { display: none; }
+    .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-bottom: 0.8rem; }
+    .stat-card { background: #1a232f; padding: 0.8rem; border-radius: 1.2rem; border-left: 3px solid #f5c842; }
+    .stat-card small { opacity: 0.7; font-size: 0.7rem; }
+    .loan-item { background: #101824; border-radius: 1rem; padding: 0.8rem; margin-bottom: 0.6rem; border-left: 3px solid #f5c842; }
+    .loan-item .row { display: flex; justify-content: space-between; font-size: 0.85rem; padding: 0.1rem 0; }
+    .mt-1 { margin-top: 0.8rem; }
+    .mb-1 { margin-bottom: 0.6rem; }
+    .text-center { text-align: center; }
+    .policy-text { background: #101824; padding: 0.6rem; border-radius: 1rem; font-size: 0.75rem; color: #b0c8e0; border: 1px solid #2d3f55; max-height: 80px; overflow-y: auto; }
     .checkbox-group { display: flex; align-items: center; gap: 0.5rem; margin: 0.5rem 0; }
-    .checkbox-group input[type="checkbox"] { width: 1.2rem; height: 1.2rem; accent-color: #f5c842; }
-    .policy-text { background: #101824; padding: 0.8rem; border-radius: 1rem; max-height: 100px; overflow-y: auto; font-size: 0.85rem; color: #b0c8e0; border: 1px solid #2d3f55; }
+    .checkbox-group input { width: 1.2rem; height: 1.2rem; accent-color: #f5c842; margin: 0; }
+    .auth-box { max-width: 400px; margin: 0 auto; background: #141a24; padding: 1.5rem; border-radius: 2rem; border: 1px solid #2c3d55; }
+    .tab-switch { display: flex; background: #0f151e; border-radius: 2rem; padding: 0.2rem; margin-bottom: 1rem; border: 1px solid #2c3d55; }
+    .tab-switch button { flex: 1; background: transparent; border: none; color: #8899aa; padding: 0.5rem; border-radius: 2rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
+    .tab-switch button.active { background: #f5c842; color: #0b0e14; }
+    @media (max-width: 400px) { .app { padding: 0.5rem; } .stat-row { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
 <div class="app" id="app">
-  <!-- AUTH SCREEN -->
+  <!-- AUTH -->
   <div id="authScreen">
-    <div style="max-width: 520px; margin: 0 auto; background: #141a24; padding: 2rem; border-radius: 2.5rem; border: 1px solid #2c3d55;">
-      <h2 style="color:#f5c842; text-align:center;"><i class="fas fa-pokeball"></i> PokeMMO Loan</h2>
-      <div class="flex" style="justify-content:center; margin:1.5rem 0;">
-        <button id="showLoginBtn" class="btn-gold" style="padding:0.5rem 2rem; border-radius: 2rem 0 0 2rem;">Login</button>
-        <button id="showRegisterBtn" style="padding:0.5rem 2rem; border-radius:0 2rem 2rem 0; background:#1e2735; border:1px solid #f5c842; color:#e6edf5;">Register</button>
+    <div class="auth-box">
+      <h2 class="text-center text-gold"><i class="fas fa-pokeball"></i> PokeMMO Loan</h2>
+      <div class="tab-switch" style="margin-top:1rem;">
+        <button id="showLoginBtn" class="active">Login</button>
+        <button id="showRegisterBtn">Register</button>
       </div>
-      <!-- login -->
       <div id="loginForm">
-        <input type="text" id="loginUsername" placeholder="Username" class="w-full mb-1">
-        <input type="password" id="loginPassword" placeholder="Password" class="w-full mb-1">
-        <button id="loginBtn" class="btn-gold w-full" style="padding:0.7rem;">Sign In</button>
-        <p id="loginMsg" style="color:#f5a3a3; font-size:0.9rem; margin-top:0.5rem;"></p>
+        <input type="text" id="loginUsername" placeholder="Username">
+        <input type="password" id="loginPassword" placeholder="Password">
+        <button id="loginBtn" class="btn-gold">Sign In</button>
+        <p id="loginMsg" class="text-center" style="color:#f5a3a3; font-size:0.85rem; margin-top:0.3rem;"></p>
       </div>
-      <!-- register -->
       <div id="registerForm" class="hidden">
-        <input type="text" id="regUsername" placeholder="Username" class="w-full mb-1">
-        <input type="password" id="regPassword" placeholder="Password" class="w-full mb-1">
-        <input type="password" id="regConfirm" placeholder="Confirm Password" class="w-full mb-1">
-        <input type="text" id="regCharName" placeholder="Character Name" class="w-full mb-1">
-        <input type="email" id="regEmail" placeholder="Email" class="w-full mb-1">
-        <!-- Privacy Policy -->
-        <div class="policy-text">
-          <strong>Privacy Policy</strong><br>
-          By registering you agree that your data (username, email, character name) will be stored locally in your browser. We do not share your data with third parties. Loan records are stored locally for demo purposes.
-        </div>
-        <div class="checkbox-group">
-          <input type="checkbox" id="agreePolicy">
-          <label for="agreePolicy">I have read and agree to the Privacy Policy</label>
-        </div>
-        <button id="registerBtn" class="btn-gold w-full" style="padding:0.7rem;">Create Account</button>
-        <p id="regMsg" style="color:#f5a3a3; font-size:0.9rem; margin-top:0.5rem;"></p>
+        <input type="text" id="regUsername" placeholder="Username">
+        <input type="password" id="regPassword" placeholder="Password">
+        <input type="password" id="regConfirm" placeholder="Confirm Password">
+        <input type="text" id="regCharName" placeholder="Character Name">
+        <input type="email" id="regEmail" placeholder="Email">
+        <div class="policy-text"><strong>Privacy Policy</strong> – Data stored locally. We do not share.</div>
+        <div class="checkbox-group"><input type="checkbox" id="agreePolicy"><label>I agree to Privacy Policy</label></div>
+        <button id="registerBtn" class="btn-gold">Create Account</button>
+        <p id="regMsg" class="text-center" style="color:#f5a3a3; font-size:0.85rem; margin-top:0.3rem;"></p>
       </div>
     </div>
   </div>
 
   <!-- DASHBOARD -->
   <div id="dashboardScreen" class="hidden">
-    <div class="flex-between" style="margin-bottom:0.5rem;">
-      <h2 style="color:#f5c842;"><i class="fas fa-pokeball"></i> PokeMMO Loan</h2>
-      <div><span id="userRoleBadge" class="badge" style="background:#2d4055;">User</span> <span id="userDisplayName" style="margin-left:0.8rem;">Trainer</span></div>
-    </div>
-    <div class="nav-bar" id="navBar">
-      <a data-section="dashboard" class="active"><i class="fas fa-th-large"></i> Dashboard</a>
-      <a data-section="loan"><i class="fas fa-hand-holding-usd"></i> Loan</a>
-      <a data-section="profile"><i class="fas fa-user"></i> Profile</a>
-      <a data-section="reports" class="admin-only hidden"><i class="fas fa-chart-pie"></i> Reports</a>
-      <a data-section="users" class="admin-only hidden"><i class="fas fa-users"></i> Users</a>
-      <a data-section="loans" class="admin-only hidden"><i class="fas fa-list"></i> Loans</a>
-      <a data-section="settings" class="admin-only hidden"><i class="fas fa-cog"></i> Settings</a>
-      <a id="logoutBtn" style="margin-left:auto;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    <!-- header -->
+    <div class="flex-between" style="margin-bottom:0.3rem;">
+      <span class="text-gold"><i class="fas fa-pokeball"></i> PokeLoan</span>
+      <div><span class="badge" id="userRoleBadge">User</span> <span id="userDisplayName" style="margin-left:0.4rem;font-size:0.9rem;"></span></div>
     </div>
 
-    <!-- panels -->
+    <!-- main panels -->
     <div id="panelDashboard" class="panel">
-      <div class="flex-between"><h3>Dashboard</h3><span id="welcomeMsg">Welcome, Trainer</span></div>
-      <div class="dashboard-grid mt-2">
-        <div class="stat-card"><i class="fas fa-coins text-gold"></i> Balance <br><strong id="dashBalance">0</strong> Yen</div>
-        <div class="stat-card"><i class="fas fa-star text-gold"></i> Credit <br><strong id="dashCredit">100</strong></div>
-        <div class="stat-card"><i class="fas fa-hand-holding-usd text-blue"></i> Loan Status <br><strong id="dashLoanStatus">None</strong></div>
-        <div class="stat-card"><i class="fas fa-percent text-blue"></i> Interest <br><strong id="dashInterest">0%</strong></div>
+      <div class="flex-between"><h4>Dashboard</h4><span id="welcomeMsg" style="font-size:0.8rem;"></span></div>
+      <div class="stat-row">
+        <div class="stat-card"><small>Balance</small><br><strong id="dashBalance">0</strong> <span style="font-size:0.7rem;">Yen</span></div>
+        <div class="stat-card"><small>Credit Score</small><br><strong id="dashCredit">100</strong></div>
+        <div class="stat-card"><small>Loan Status</small><br><strong id="dashLoanStatus">None</strong></div>
+        <div class="stat-card"><small>Interest</small><br><strong id="dashInterest">0%</strong></div>
       </div>
-      <div class="card mt-2"><h4>Loan Details</h4><p id="loanDetailText">No active loan.</p></div>
-      <div class="card mt-2" id="userLoanPanel">
-        <h4>Apply for Loan</h4>
-        <div class="grid-2">
-          <select id="loanAmountSelect"><option value="50000">50,000</option><option value="100000">100,000</option><option value="250000">250,000</option><option value="500000">500,000</option><option value="1000000">1,000,000</option><option value="2000000">2,000,000</option><option value="5000000">5,000,000</option></select>
-          <select id="loanDurationSelect"><option value="7">7 Days (5%)</option><option value="14">14 Days (8%)</option><option value="30" selected>30 Days (12%)</option><option value="60">60 Days (20%)</option></select>
-        </div>
-        <button id="applyLoanBtn" class="btn-gold w-full mt-2">Apply Loan</button>
-        <p id="loanApplyMsg" style="color:#aad6a0; margin-top:0.5rem;"></p>
+      <div class="card"><h5>Active Loan</h5><p id="loanDetailText">No active loan.</p></div>
+      <!-- apply loan (user only) -->
+      <div id="userLoanPanel" class="card">
+        <h5>Apply for Loan</h5>
+        <select id="loanAmountSelect"><option value="50000">50,000</option><option value="100000">100,000</option><option value="250000">250,000</option><option value="500000">500,000</option><option value="1000000">1,000,000</option><option value="2000000">2,000,000</option><option value="5000000">5,000,000</option></select>
+        <select id="loanDurationSelect"><option value="7">7 Days (5%)</option><option value="14">14 Days (8%)</option><option value="30" selected>30 Days (12%)</option><option value="60">60 Days (20%)</option></select>
+        <button id="applyLoanBtn" class="btn-gold">Apply Loan</button>
+        <p id="loanApplyMsg" style="color:#aad6a0; font-size:0.85rem; margin-top:0.3rem;"></p>
       </div>
-      <div class="card mt-2"><h4>Loan History</h4><div id="loanHistoryContainer"><p>No loans yet.</p></div></div>
+      <!-- loan history -->
+      <div class="card"><h5>Loan History</h5><div id="loanHistoryContainer"><p style="font-size:0.8rem;">No loans yet.</p></div></div>
     </div>
 
     <div id="panelLoan" class="panel hidden">
-      <h3>Loan Management</h3>
-      <div class="card mt-2"><p>Apply for a loan from Dashboard or view history below.</p><div id="loanHistoryFull" class="mt-2"></div></div>
+      <h4>Loan Details & Payments</h4>
+      <div id="activeLoanCard" class="card">
+        <div id="activeLoanInfo"><p>No active loan</p></div>
+        <!-- payment section for user -->
+        <div id="paymentSection" class="hidden mt-1">
+          <input type="number" id="paymentAmount" placeholder="Payment amount (Yen)" min="1">
+          <button id="makePaymentBtn" class="btn-gold">Make Payment</button>
+          <p id="paymentMsg" style="font-size:0.8rem; color:#aad6a0; margin-top:0.3rem;"></p>
+        </div>
+      </div>
+      <div class="card"><h5>All Loans</h5><div id="loanHistoryFull"><p>No loans</p></div></div>
     </div>
 
     <div id="panelProfile" class="panel hidden">
-      <h3>Edit Profile</h3>
-      <div class="card"><input id="profileCharName" placeholder="Character Name" class="w-full mb-1"><input id="profileEmail" placeholder="Email" class="w-full mb-1"><input id="profilePassword" placeholder="New Password" type="password" class="w-full mb-1"><button id="profileSaveBtn" class="btn-gold">Save Profile</button><p id="profileMsg" class="mt-2"></p></div>
+      <h4>Profile</h4>
+      <div class="card">
+        <input id="profileCharName" placeholder="Character Name">
+        <input id="profileEmail" placeholder="Email">
+        <input id="profilePassword" placeholder="New Password" type="password">
+        <button id="profileSaveBtn" class="btn-gold">Save Profile</button>
+        <p id="profileMsg" class="mt-1" style="font-size:0.85rem;"></p>
+      </div>
     </div>
 
     <!-- admin panels -->
     <div id="panelUsers" class="panel hidden admin-only">
-      <h3>User Management</h3>
-      <div class="flex"><input id="userSearch" placeholder="Search username..."><select id="userFilterRole"><option value="">All Roles</option><option value="User">User</option><option value="Admin">Admin</option></select><button id="addUserBtn" class="btn-gold"><i class="fas fa-plus"></i> Add</button></div>
-      <div id="userTableContainer" class="mt-2"></div>
+      <h4>User Management</h4>
+      <div class="flex"><input id="userSearch" placeholder="Search..." style="flex:1;"><select id="userFilterRole" style="flex:0.7;"><option value="">All</option><option value="User">User</option><option value="Admin">Admin</option></select><button id="addUserBtn" class="btn-gold" style="width:auto;padding:0.5rem 1rem;"><i class="fas fa-plus"></i></button></div>
+      <div id="userTableContainer" class="mt-1"></div>
     </div>
     <div id="panelLoans" class="panel hidden admin-only">
-      <h3>Loan Management</h3>
-      <div class="flex"><input id="loanSearch" placeholder="Search loan ID / username"><select id="loanFilterStatus"><option value="">All Status</option><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="Paid">Paid</option><option value="Overdue">Overdue</option></select><button id="createLoanBtn" class="btn-gold"><i class="fas fa-plus"></i> New Loan</button></div>
-      <div id="loanTableContainer" class="mt-2"></div>
+      <h4>Loan Management</h4>
+      <div class="flex"><input id="loanSearch" placeholder="Search..." style="flex:1;"><select id="loanFilterStatus" style="flex:0.7;"><option value="">All</option><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="Paid">Paid</option><option value="Overdue">Overdue</option></select><button id="createLoanBtn" class="btn-gold" style="width:auto;padding:0.5rem 1rem;"><i class="fas fa-plus"></i></button></div>
+      <div id="loanTableContainer" class="mt-1"></div>
     </div>
     <div id="panelReports" class="panel hidden admin-only">
-      <h3>Reports</h3>
-      <div class="dashboard-grid" id="reportStats"></div>
-      <div class="grid-2 mt-2"><div class="card"><h4>Loan Volume</h4><div class="chart-box" id="barChart"></div></div><div class="card"><h4>Status Distribution</h4><div class="chart-box" id="pieChart"></div></div></div>
+      <h4>Reports</h4>
+      <div id="reportStats" class="stat-row"></div>
+      <div class="card"><h5>Loan Volume</h5><div id="barChart" style="display:flex;gap:0.3rem;height:80px;align-items:flex-end;padding:0.5rem 0;"></div></div>
+      <div class="card"><h5>Status Distribution</h5><div id="pieChart" style="display:flex;gap:0.2rem;height:20px;border-radius:1rem;overflow:hidden;"></div></div>
     </div>
     <div id="panelSettings" class="panel hidden admin-only">
-      <h3>Settings</h3>
-      <div class="card"><label>Default Interest (7d/14d/30d/60d) %</label><div class="flex"><input id="setInt7" placeholder="7d"><input id="setInt14" placeholder="14d"><input id="setInt30" placeholder="30d"><input id="setInt60" placeholder="60d"></div><label>Starting Balance</label><input id="setStartBal" class="w-full"><label>System Name</label><input id="setSysName" class="w-full"><button id="saveSettingsBtn" class="btn-gold mt-2">Save Settings</button></div>
+      <h4>Settings</h4>
+      <div class="card">
+        <label>Interest 7d/14d/30d/60d (%)</label>
+        <div class="flex"><input id="setInt7" placeholder="7d" style="flex:1;"><input id="setInt14" placeholder="14d" style="flex:1;"><input id="setInt30" placeholder="30d" style="flex:1;"><input id="setInt60" placeholder="60d" style="flex:1;"></div>
+        <label>Starting Balance</label><input id="setStartBal">
+        <label>System Name</label><input id="setSysName">
+        <button id="saveSettingsBtn" class="btn-gold mt-1">Save Settings</button>
+      </div>
+    </div>
+
+    <!-- bottom navigation -->
+    <div class="bottom-nav" id="bottomNav">
+      <a data-section="dashboard" class="active"><i class="fas fa-home"></i><span>Home</span></a>
+      <a data-section="loan"><i class="fas fa-hand-holding-usd"></i><span>Loan</span></a>
+      <a data-section="profile"><i class="fas fa-user"></i><span>Profile</span></a>
+      <a data-section="reports" class="admin-only"><i class="fas fa-chart-pie"></i><span>Reports</span></a>
+      <a data-section="users" class="admin-only"><i class="fas fa-users"></i><span>Users</span></a>
+      <a data-section="loans" class="admin-only"><i class="fas fa-list"></i><span>Loans</span></a>
+      <a data-section="settings" class="admin-only"><i class="fas fa-cog"></i><span>Settings</span></a>
+      <a id="logoutBtn"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
     </div>
   </div>
 </div>
 <script>
   (function(){
-    // ---------- DATA LAYER ----------
+    // ---------- DATA ----------
     const LS = {
       getUsers(){ return JSON.parse(localStorage.getItem('pokemmo_users')||'[]'); },
       setUsers(u){ localStorage.setItem('pokemmo_users',JSON.stringify(u)); },
@@ -177,48 +203,27 @@
       clearSession(){ localStorage.removeItem('pokemmo_currentUser'); }
     };
 
-    // seed admin: username "Admin", password "p@ssw0rd123"
     function seedAdmin(){
       let users = LS.getUsers();
       if(!users.find(u=>u.username==='Admin')){
-        users.push({ 
-          username:'Admin', 
-          password:'p@ssw0rd123', 
-          charName:'Admin', 
-          email:'admin@pokemmo.com', 
-          balance:0, 
-          creditScore:100, 
-          status:'Active', 
-          role:'Admin', 
-          loanStatus:'No Active Loan' 
-        });
+        users.push({ username:'Admin', password:'p@ssw0rd123', charName:'Admin', email:'admin@pokemmo.com', balance:0, creditScore:100, status:'Active', role:'Admin', loanStatus:'No Active Loan' });
         LS.setUsers(users);
       } else {
-        // ensure password is correct if exists
         let admin = users.find(u=>u.username==='Admin');
-        if(admin) {
-          admin.password = 'p@ssw0rd123';
-          LS.setUsers(users);
-        }
+        if(admin) admin.password = 'p@ssw0rd123';
+        LS.setUsers(users);
       }
     }
     seedAdmin();
 
-    // helpers
     function getUser(username){ return LS.getUsers().find(u=>u.username===username); }
     function updateUser(updated){ let u=LS.getUsers(); let idx=u.findIndex(x=>x.username===updated.username); if(idx>-1){ u[idx]=updated; LS.setUsers(u); } }
     function getLoanById(id){ return LS.getLoans().find(l=>l.id===id); }
     function generateId(){ return Date.now().toString(36)+Math.random().toString(36).substr(2,5); }
+    function getInterestRate(days, settings){ const map={7:settings.int7,14:settings.int14,30:settings.int30,60:settings.int60}; return map[days] || 12; }
 
-    function getInterestRate(days, settings){
-      const map={7:settings.int7,14:settings.int14,30:settings.int30,60:settings.int60};
-      return map[days] || 12;
-    }
-
-    // ---------- UI STATE ----------
     let currentUser = LS.getCurrentUser();
     let currentSection = 'dashboard';
-
     const $ = id=>document.getElementById(id);
     const authScreen = $('authScreen'), dashScreen = $('dashboardScreen');
     const loginForm = $('loginForm'), registerForm = $('registerForm');
@@ -226,11 +231,8 @@
     const loginBtn = $('loginBtn'), registerBtn = $('registerBtn');
     const logoutBtn = $('logoutBtn');
 
-    const panels = {
-      dashboard: $('panelDashboard'), loan: $('panelLoan'), profile: $('panelProfile'),
-      users: $('panelUsers'), loans: $('panelLoans'), reports: $('panelReports'), settings: $('panelSettings')
-    };
-    const navLinks = document.querySelectorAll('.nav-bar a[data-section]');
+    const panels = { dashboard:$('panelDashboard'), loan:$('panelLoan'), profile:$('panelProfile'), users:$('panelUsers'), loans:$('panelLoans'), reports:$('panelReports'), settings:$('panelSettings') };
+    const navLinks = document.querySelectorAll('.bottom-nav a[data-section]');
 
     // ---------- RENDER ----------
     function renderAll(){
@@ -245,6 +247,7 @@
       renderProfile();
       if(isAdmin){ renderUsers(); renderLoans(); renderReports(); renderSettings(); }
       renderLoanHistory();
+      renderActiveLoanDetails();
       Object.keys(panels).forEach(k=>panels[k].classList.toggle('hidden',k!==currentSection));
       navLinks.forEach(a=>a.classList.toggle('active',a.dataset.section===currentSection));
     }
@@ -270,13 +273,49 @@
       $('userLoanPanel').classList.toggle('hidden', currentUser.role==='Admin');
     }
 
+    function renderActiveLoanDetails(){
+      const container = $('activeLoanInfo');
+      const paymentSection = $('paymentSection');
+      const loan = LS.getLoans().find(l=>l.username===currentUser.username && (l.status==='Approved'||l.status==='Overdue'));
+      if(loan && loan.status!=='Paid' && loan.status!=='Rejected'){
+        const remaining = loan.repayment - (loan.paidAmount || 0);
+        container.innerHTML = `
+          <div class="loan-item"><div class="row"><span>Loan ID</span><span>${loan.id}</span></div>
+          <div class="row"><span>Amount</span><span>${loan.amount.toLocaleString()} Yen</span></div>
+          <div class="row"><span>Interest</span><span>${loan.interest}%</span></div>
+          <div class="row"><span>Total Repayment</span><span>${loan.repayment.toLocaleString()} Yen</span></div>
+          <div class="row"><span>Paid</span><span>${(loan.paidAmount||0).toLocaleString()} Yen</span></div>
+          <div class="row"><span>Remaining</span><span style="color:#f5c842;">${remaining.toLocaleString()} Yen</span></div>
+          <div class="row"><span>Due Date</span><span>${loan.dueDate||'N/A'}</span></div>
+          <div class="row"><span>Status</span><span class="badge badge-${loan.status?.toLowerCase()}">${loan.status}</span></div>
+        </div>`;
+        paymentSection.classList.remove('hidden');
+        $('paymentMsg').innerHTML = '';
+        // if remaining <= 0 auto mark paid
+        if(remaining <= 0 && loan.status !== 'Paid'){
+          loan.status = 'Paid';
+          loan.paidAmount = loan.repayment;
+          LS.setLoans(LS.getLoans().map(l=>l.id===loan.id?loan:l));
+          renderAll();
+        }
+      } else {
+        container.innerHTML = '<p>No active loan.</p>';
+        paymentSection.classList.add('hidden');
+      }
+    }
+
     function renderLoanHistory(){
       const loans = LS.getLoans().filter(l=>l.username===currentUser.username);
-      let html = loans.length? `<table><tr><th>ID</th><th>Amount</th><th>Interest</th><th>Repayment</th><th>Status</th><th>Date</th></tr>` : '<p>No loans.</p>';
-      loans.forEach(l=>{
-        html+=`<tr><td>${l.id}</td><td>${l.amount.toLocaleString()}</td><td>${l.interest}%</td><td>${l.repayment.toLocaleString()}</td><td><span class="badge badge-${l.status?.toLowerCase()}">${l.status}</span></td><td>${l.loanDate||''}</td></tr>`;
+      let html = loans.length? '' : '<p style="font-size:0.8rem;">No loans.</p>';
+      loans.slice().reverse().forEach(l=>{
+        const remaining = l.repayment - (l.paidAmount||0);
+        html+=`<div class="loan-item"><div class="row"><span>${l.id}</span><span class="badge badge-${l.status?.toLowerCase()}">${l.status}</span></div>
+        <div class="row"><span>Amount</span><span>${l.amount.toLocaleString()} Yen</span></div>
+        <div class="row"><span>Repayment</span><span>${l.repayment.toLocaleString()} Yen</span></div>
+        <div class="row"><span>Paid</span><span>${(l.paidAmount||0).toLocaleString()} Yen</span></div>
+        <div class="row"><span>Remaining</span><span>${remaining.toLocaleString()} Yen</span></div>
+        <div class="row"><span>Due</span><span>${l.dueDate||'N/A'}</span></div></div>`;
       });
-      if(loans.length) html+='</table>';
       $('loanHistoryContainer').innerHTML = html;
       $('loanHistoryFull').innerHTML = html;
     }
@@ -287,18 +326,18 @@
       $('profilePassword').value = '';
     }
 
-    // ---------- USER CRUD ADMIN ----------
+    // ---------- ADMIN CRUD ----------
     function renderUsers(){
       let users = LS.getUsers();
       const search = $('userSearch').value.toLowerCase();
       const filter = $('userFilterRole').value;
       if(search) users = users.filter(u=>u.username.toLowerCase().includes(search)||u.charName?.toLowerCase().includes(search));
       if(filter) users = users.filter(u=>u.role===filter);
-      let html = `<table><tr><th>Username</th><th>Character</th><th>Email</th><th>Balance</th><th>Credit</th><th>Status</th><th>Role</th><th>Actions</th></tr>`;
+      let html = `<table style="width:100%;font-size:0.75rem;"><tr><th>User</th><th>Balance</th><th>Role</th><th>Action</th></tr>`;
       users.forEach(u=>{
-        html+=`<tr><td>${u.username}</td><td>${u.charName||''}</td><td>${u.email||''}</td><td>${u.balance?.toLocaleString()}</td><td>${u.creditScore}</td><td>${u.status}</td><td>${u.role}</td>
-        <td><button class="editUserBtn" data-uname="${u.username}" style="background:#2a6b8a;border:none;padding:0.2rem 0.7rem;border-radius:1rem;"><i class="fas fa-edit"></i></button>
-        <button class="delUserBtn" data-uname="${u.username}" style="background:#a13d3d;border:none;padding:0.2rem 0.7rem;border-radius:1rem;"><i class="fas fa-trash"></i></button></td></tr>`;
+        html+=`<tr><td>${u.username}</td><td>${u.balance?.toLocaleString()}</td><td>${u.role}</td>
+        <td><button class="editUserBtn" data-uname="${u.username}" style="background:#2a6b8a;border:none;padding:0.2rem 0.6rem;border-radius:1rem;font-size:0.7rem;"><i class="fas fa-edit"></i></button>
+        <button class="delUserBtn" data-uname="${u.username}" style="background:#a13d3d;border:none;padding:0.2rem 0.6rem;border-radius:1rem;font-size:0.7rem;"><i class="fas fa-trash"></i></button></td></tr>`;
       });
       html+='</table>';
       $('userTableContainer').innerHTML = html;
@@ -306,10 +345,9 @@
         const uname = this.dataset.uname; const u = getUser(uname); if(!u) return;
         const newChar = prompt('Character Name', u.charName); if(newChar!==null) u.charName = newChar;
         const newEmail = prompt('Email', u.email); if(newEmail!==null) u.email = newEmail;
-        const newPass = prompt('New Password (leave blank to keep)', ''); if(newPass!==null && newPass.trim()) u.password = newPass;
+        const newPass = prompt('Password (blank keep)', ''); if(newPass!==null && newPass.trim()) u.password = newPass;
         const newBal = prompt('Balance', u.balance); if(newBal!==null && !isNaN(newBal)) u.balance = Number(newBal);
         const newCredit = prompt('Credit Score', u.creditScore); if(newCredit!==null && !isNaN(newCredit)) u.creditScore = Number(newCredit);
-        const newStatus = prompt('Status (Active/Inactive)', u.status); if(newStatus!==null) u.status = newStatus;
         const newRole = prompt('Role (User/Admin)', u.role); if(newRole!==null && ['User','Admin'].includes(newRole)) u.role = newRole;
         updateUser(u); if(currentUser.username===u.username) currentUser = getUser(u.username); LS.setCurrentUser(currentUser); renderAll();
       }));
@@ -319,22 +357,20 @@
       }));
     }
 
-    // ---------- LOAN CRUD ADMIN ----------
     function renderLoans(){
       let loans = LS.getLoans();
       const search = $('loanSearch').value.toLowerCase();
       const filter = $('loanFilterStatus').value;
       if(search) loans = loans.filter(l=>l.id.toLowerCase().includes(search)||l.username.toLowerCase().includes(search));
       if(filter) loans = loans.filter(l=>l.status===filter);
-      let html = `<table><tr><th>ID</th><th>Username</th><th>Amount</th><th>Interest</th><th>Repayment</th><th>Due</th><th>Status</th><th>Notes</th><th>Actions</th></tr>`;
+      let html = `<table style="width:100%;font-size:0.7rem;"><tr><th>User</th><th>Amount</th><th>Status</th><th>Action</th></tr>`;
       loans.forEach(l=>{
-        html+=`<tr><td>${l.id}</td><td>${l.username}</td><td>${l.amount.toLocaleString()}</td><td>${l.interest}%</td><td>${l.repayment.toLocaleString()}</td><td>${l.dueDate||''}</td>
-        <td><span class="badge badge-${l.status?.toLowerCase()}">${l.status}</span></td><td>${l.adminNotes||''}</td>
+        html+=`<tr><td>${l.username}</td><td>${l.amount.toLocaleString()}</td><td><span class="badge badge-${l.status?.toLowerCase()}">${l.status}</span></td>
         <td>
-          <button class="approveLoan" data-id="${l.id}" style="background:#1f8b4c;border:none;padding:0.2rem 0.7rem;border-radius:1rem;"><i class="fas fa-check"></i></button>
-          <button class="rejectLoan" data-id="${l.id}" style="background:#b33c3c;border:none;padding:0.2rem 0.7rem;border-radius:1rem;"><i class="fas fa-times"></i></button>
-          <button class="editLoan" data-id="${l.id}" style="background:#2a6b8a;border:none;padding:0.2rem 0.7rem;border-radius:1rem;"><i class="fas fa-edit"></i></button>
-          <button class="delLoan" data-id="${l.id}" style="background:#a13d3d;border:none;padding:0.2rem 0.7rem;border-radius:1rem;"><i class="fas fa-trash"></i></button>
+          <button class="approveLoan" data-id="${l.id}" style="background:#1f8b4c;border:none;padding:0.2rem 0.5rem;border-radius:1rem;"><i class="fas fa-check"></i></button>
+          <button class="rejectLoan" data-id="${l.id}" style="background:#b33c3c;border:none;padding:0.2rem 0.5rem;border-radius:1rem;"><i class="fas fa-times"></i></button>
+          <button class="editLoan" data-id="${l.id}" style="background:#2a6b8a;border:none;padding:0.2rem 0.5rem;border-radius:1rem;"><i class="fas fa-edit"></i></button>
+          <button class="delLoan" data-id="${l.id}" style="background:#a13d3d;border:none;padding:0.2rem 0.5rem;border-radius:1rem;"><i class="fas fa-trash"></i></button>
         </td></tr>`;
       });
       html+='</table>';
@@ -345,6 +381,7 @@
         loan.status = 'Approved'; loan.loanDate = new Date().toISOString().slice(0,10);
         const dur = loan.durationDays || 30; const due = new Date(); due.setDate(due.getDate()+dur); loan.dueDate = due.toISOString().slice(0,10);
         loan.repayment = Math.round(loan.amount * (1 + loan.interest/100));
+        loan.paidAmount = 0;
         user.balance = (user.balance || 0) + loan.amount;
         updateUser(user); LS.setLoans(LS.getLoans().map(l=>l.id===loan.id?loan:l));
         if(currentUser.username===user.username) currentUser = getUser(user.username); LS.setCurrentUser(currentUser);
@@ -366,36 +403,33 @@
       }));
     }
 
-    // ---------- REPORTS ----------
     function renderReports(){
       const loans = LS.getLoans(); const users = LS.getUsers();
       const totalUsers = users.length;
       const totalLoans = loans.length;
       const totalInterest = loans.reduce((s,l)=>s+(l.interest/100*l.amount||0),0);
-      const outstanding = loans.filter(l=>l.status==='Approved'||l.status==='Overdue').reduce((s,l)=>s+l.repayment,0);
+      const outstanding = loans.filter(l=>l.status==='Approved'||l.status==='Overdue').reduce((s,l)=>s+(l.repayment-(l.paidAmount||0)),0);
       const paid = loans.filter(l=>l.status==='Paid').length;
       const rejected = loans.filter(l=>l.status==='Rejected').length;
       const pending = loans.filter(l=>l.status==='Pending').length;
       const overdue = loans.filter(l=>l.status==='Overdue').length;
       $('reportStats').innerHTML = `
-        <div class="stat-card">👥 Users ${totalUsers}</div>
-        <div class="stat-card">📋 Loans ${totalLoans}</div>
-        <div class="stat-card">💰 Interest ${Math.round(totalInterest).toLocaleString()} Yen</div>
-        <div class="stat-card">📤 Outstanding ${Math.round(outstanding).toLocaleString()}</div>
-        <div class="stat-card">✅ Paid ${paid}</div>
-        <div class="stat-card">❌ Rejected ${rejected}</div>
-        <div class="stat-card">⏳ Pending ${pending}</div>
-        <div class="stat-card">⚠️ Overdue ${overdue}</div>
+        <div class="stat-card"><small>Users</small><br>${totalUsers}</div>
+        <div class="stat-card"><small>Loans</small><br>${totalLoans}</div>
+        <div class="stat-card"><small>Interest</small><br>${Math.round(totalInterest).toLocaleString()}</div>
+        <div class="stat-card"><small>Outstanding</small><br>${Math.round(outstanding).toLocaleString()}</div>
+        <div class="stat-card"><small>Paid</small><br>${paid}</div>
+        <div class="stat-card"><small>Rejected</small><br>${rejected}</div>
+        <div class="stat-card"><small>Pending</small><br>${pending}</div>
+        <div class="stat-card"><small>Overdue</small><br>${overdue}</div>
       `;
       function approvedCount(){ return loans.filter(l=>l.status==='Approved').length; }
       const barData = [pending, approvedCount(), rejected, paid, overdue];
       const max = Math.max(...barData,1);
-      const barHtml = barData.map(v=>`<div class="bar" style="height:${(v/max)*140+10}px; background:${v===pending?'#b8860b':v===rejected?'#b33c3c':v===paid?'#2a6b8a':v===overdue?'#a13d3d':'#f5c842'}"></div>`).join('');
-      $('barChart').innerHTML = barHtml+'<div style="display:flex;gap:0.5rem;font-size:0.6rem;margin-top:0.5rem;"><span>Pend</span><span>Appr</span><span>Rej</span><span>Paid</span><span>Over</span></div>';
-      const pieData = [pending, approvedCount(), rejected, paid, overdue];
       const colors = ['#b8860b','#f5c842','#b33c3c','#2a6b8a','#a13d3d'];
-      const total = pieData.reduce((a,b)=>a+b,0)||1;
-      $('pieChart').innerHTML = pieData.map((v,i)=>`<div style="width:${(v/total)*100}%;height:20px;background:${colors[i]};border-radius:0.5rem;display:inline-block;"></div>`).join('');
+      $('barChart').innerHTML = barData.map((v,i)=>`<div style="height:${(v/max)*70+10}px;background:${colors[i]};flex:1;border-radius:4px 4px 0 0;text-align:center;font-size:0.6rem;">${v}</div>`).join('');
+      const total = barData.reduce((a,b)=>a+b,0)||1;
+      $('pieChart').innerHTML = barData.map((v,i)=>`<div style="width:${(v/total)*100}%;background:${colors[i]};height:100%;"></div>`).join('');
     }
 
     function renderSettings(){
@@ -403,8 +437,8 @@
     }
 
     // ---------- EVENTS ----------
-    showLogin.onclick=()=>{ loginForm.classList.remove('hidden'); registerForm.classList.add('hidden'); };
-    showRegister.onclick=()=>{ registerForm.classList.remove('hidden'); loginForm.classList.add('hidden'); };
+    showLogin.onclick=()=>{ loginForm.classList.remove('hidden'); registerForm.classList.add('hidden'); showLogin.classList.add('active'); showRegister.classList.remove('active'); };
+    showRegister.onclick=()=>{ registerForm.classList.remove('hidden'); loginForm.classList.add('hidden'); showRegister.classList.add('active'); showLogin.classList.remove('active'); };
     loginBtn.onclick=()=>{
       const uname = $('loginUsername').value.trim(), pass = $('loginPassword').value.trim();
       const user = getUser(uname);
@@ -417,7 +451,7 @@
       const agree = $('agreePolicy').checked;
       if(!uname||!pass||!confirm) return $('regMsg').innerText='Fill all fields';
       if(pass!==confirm) return $('regMsg').innerText='Passwords do not match';
-      if(!agree) return $('regMsg').innerText='You must agree to the Privacy Policy';
+      if(!agree) return $('regMsg').innerText='Agree to Privacy Policy';
       if(getUser(uname)) return $('regMsg').innerText='Username taken';
       const settings = LS.getSettings();
       const newUser = { username:uname, password:pass, charName, email, balance:settings.startBalance||100000, creditScore:100, status:'Active', role:'User', loanStatus:'No Active Loan' };
@@ -431,15 +465,43 @@
       currentSection = sec; renderAll();
     }));
 
+    // Apply loan
     $('applyLoanBtn').onclick=function(){
-      if(currentUser.role==='Admin') return alert('Admin cannot apply for loan.');
+      if(currentUser.role==='Admin') return alert('Admin cannot apply.');
       const amount = Number($('loanAmountSelect').value);
       const days = Number($('loanDurationSelect').value);
       const settings = LS.getSettings(); const rate = getInterestRate(days, settings);
       const repayment = Math.round(amount * (1 + rate/100));
-      const loan = { id:generateId(), username:currentUser.username, amount, interest:rate, durationDays:days, repayment, loanDate:new Date().toISOString().slice(0,10), dueDate:'', status:'Pending', adminNotes:'' };
+      const loan = { id:generateId(), username:currentUser.username, amount, interest:rate, durationDays:days, repayment, paidAmount:0, loanDate:new Date().toISOString().slice(0,10), dueDate:'', status:'Pending', adminNotes:'' };
       let loans=LS.getLoans(); loans.push(loan); LS.setLoans(loans);
-      $('loanApplyMsg').innerHTML = `✅ Loan applied! ${amount.toLocaleString()} Yen @ ${rate}%`;
+      $('loanApplyMsg').innerHTML = `✅ Applied! ${amount.toLocaleString()} Yen @ ${rate}%`;
+      renderAll();
+    };
+
+    // Make payment
+    $('makePaymentBtn').onclick=function(){
+      const loan = LS.getLoans().find(l=>l.username===currentUser.username && (l.status==='Approved'||l.status==='Overdue'));
+      if(!loan) return alert('No active loan');
+      const amount = Number($('paymentAmount').value);
+      if(!amount || amount<=0) return alert('Enter valid amount');
+      const remaining = loan.repayment - (loan.paidAmount||0);
+      if(amount > remaining) return alert(`Amount exceeds remaining balance (${remaining.toLocaleString()})`);
+      // deduct from user balance
+      const user = getUser(currentUser.username);
+      if(!user) return;
+      if(user.balance < amount) return alert('Insufficient balance');
+      user.balance = user.balance - amount;
+      loan.paidAmount = (loan.paidAmount||0) + amount;
+      if(loan.paidAmount >= loan.repayment){
+        loan.status = 'Paid';
+        loan.paidAmount = loan.repayment;
+        $('paymentMsg').innerHTML = '✅ Loan fully paid!';
+      } else {
+        $('paymentMsg').innerHTML = `✅ Payment of ${amount.toLocaleString()} received. Remaining: ${(loan.repayment - loan.paidAmount).toLocaleString()}`;
+      }
+      updateUser(user);
+      LS.setLoans(LS.getLoans().map(l=>l.id===loan.id?loan:l));
+      if(currentUser.username===user.username) currentUser = getUser(user.username); LS.setCurrentUser(currentUser);
       renderAll();
     };
 
@@ -453,7 +515,7 @@
 
     $('addUserBtn').onclick=function(){
       const uname = prompt('Username'); if(!uname) return;
-      if(getUser(uname)) return alert('Username exists');
+      if(getUser(uname)) return alert('Exists');
       const charName = prompt('Character Name')||'';
       const email = prompt('Email')||'';
       const pass = prompt('Password')||'123';
@@ -469,7 +531,7 @@
       const days = Number(prompt('Duration (7/14/30/60)'))||30;
       const settings = LS.getSettings(); const rate = getInterestRate(days, settings);
       const repayment = Math.round(amount*(1+rate/100));
-      const loan = { id:generateId(), username, amount, interest:rate, durationDays:days, repayment, loanDate:new Date().toISOString().slice(0,10), dueDate:'', status:'Pending', adminNotes:'' };
+      const loan = { id:generateId(), username, amount, interest:rate, durationDays:days, repayment, paidAmount:0, loanDate:new Date().toISOString().slice(0,10), dueDate:'', status:'Pending', adminNotes:'' };
       let loans=LS.getLoans(); loans.push(loan); LS.setLoans(loans); renderAll();
     };
 
