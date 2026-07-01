@@ -9,7 +9,6 @@
     <script>
         // ============================================================
         //  ANTI-INSPECT / ANTI-DEVTOOLS
-        //  Note: This is a deterrent, not 100% secure
         // ============================================================
 
         // 1. Disable right-click
@@ -21,31 +20,26 @@
 
         // 2. Disable keyboard shortcuts for DevTools
         document.addEventListener('keydown', function(e) {
-            // F12
             if (e.key === 'F12') {
                 e.preventDefault();
                 showToast('🔒 DevTools disabled', true);
                 return false;
             }
-            // Ctrl+Shift+I (Inspect)
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i')) {
                 e.preventDefault();
                 showToast('🔒 Inspect disabled', true);
                 return false;
             }
-            // Ctrl+Shift+J (Console)
             if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j')) {
                 e.preventDefault();
                 showToast('🔒 Console disabled', true);
                 return false;
             }
-            // Ctrl+U (View Source)
             if (e.ctrlKey && (e.key === 'U' || e.key === 'u')) {
                 e.preventDefault();
                 showToast('🔒 View source disabled', true);
                 return false;
             }
-            // Ctrl+Shift+C (Inspect Element)
             if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c')) {
                 e.preventDefault();
                 showToast('🔒 Inspect disabled', true);
@@ -53,9 +47,8 @@
             }
         });
 
-        // 3. Detect DevTools opening (F12 / right-click inspect)
+        // 3. Detect DevTools opening
         let devtoolsOpen = false;
-        const devtoolsCheck = new Date();
 
         function checkDevTools() {
             const threshold = 160;
@@ -74,7 +67,7 @@
 
         setInterval(checkDevTools, 2000);
 
-        // 4. Override console methods to prevent logging sensitive data
+        // 4. Override console methods
         const originalConsole = {
             log: console.log,
             warn: console.warn,
@@ -92,7 +85,7 @@
             originalConsole.log.apply(console, args);
         };
 
-        // 5. Prevent selection and copy (basic deterrent)
+        // 5. Prevent selection and copy
         document.addEventListener('selectstart', function(e) {
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
                 return;
@@ -100,7 +93,6 @@
             e.preventDefault();
         });
 
-        // Toast function for security messages
         function showToast(msg, isError = false) {
             if (typeof window.showToast === 'function') {
                 window.showToast(msg, isError);
@@ -109,7 +101,6 @@
             }
         }
 
-        // 6. Disable source map loading
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('script[src*=".map"]').forEach(el => el.remove());
             document.querySelectorAll('link[href*=".map"]').forEach(el => el.remove());
@@ -1034,6 +1025,16 @@
             font-weight: 700;
         }
 
+        /* ===== USER COUNT BADGE ===== */
+        .user-count-badge {
+            background: rgba(255, 215, 0, 0.15);
+            color: #ffd700;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
             .auth-screen {
@@ -1248,7 +1249,9 @@
                 <div class="profile-actions">
                     <button class="btn-profile edit" id="editProfileBtn">✏️ Edit Profile</button>
                     <button class="btn-profile password" id="changePasswordBtn">🔑 Change Password</button>
-                    <button class="btn-profile users" id="manageUsersBtn" style="display:none;">👥 Manage Users</button>
+                    <button class="btn-profile users" id="manageUsersBtn" style="display:none;">
+                        👥 Manage Users <span class="user-count-badge" id="userCountBadge">0</span>
+                    </button>
                 </div>
             </div>
 
@@ -1349,7 +1352,7 @@
         <div class="modal-overlay" id="manageUsersModal">
             <div class="modal">
                 <h2>👥 Manage Users</h2>
-                <p>View, edit, or delete user accounts</p>
+                <p>View, edit, or delete user accounts. <span id="totalUsersDisplay" style="color:#ffd700;"></span></p>
                 <div id="userListContainer">
                     <!-- User list rendered by JavaScript -->
                 </div>
@@ -1462,6 +1465,7 @@
 
         function saveUsers() {
             localStorage.setItem('pokemmo_users', JSON.stringify(users));
+            updateUserCountBadge();
         }
 
         function saveLoans() {
@@ -1544,6 +1548,14 @@
             return loanData.filter(l => l.userId === username);
         }
 
+        function updateUserCountBadge() {
+            const badge = document.getElementById('userCountBadge');
+            if (badge) {
+                const count = users.length;
+                badge.textContent = count;
+            }
+        }
+
         // ============================================================
         //  AUTH
         // ============================================================
@@ -1595,6 +1607,7 @@
                 return false;
             }
 
+            // Add new user (non-admin by default)
             users.push({
                 username: username,
                 password: password,
@@ -1632,7 +1645,12 @@
             document.getElementById('addRowBtn').style.display = isAdminUser ? '' : 'none';
             document.getElementById('resetBtn').style.display = isAdminUser ? '' : 'none';
             document.getElementById('clearAllBtn').style.display = isAdminUser ? '' : 'none';
-            document.getElementById('manageUsersBtn').style.display = isAdminUser ? '' : 'none';
+
+            const manageUsersBtn = document.getElementById('manageUsersBtn');
+            manageUsersBtn.style.display = isAdminUser ? '' : 'none';
+            if (isAdminUser) {
+                updateUserCountBadge();
+            }
 
             renderTable();
         }
@@ -1892,6 +1910,18 @@
             const container = document.getElementById('userListContainer');
             container.innerHTML = '';
 
+            // Update total users display
+            document.getElementById('totalUsersDisplay').textContent = `(${users.length} total users)`;
+
+            if (users.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center;padding:20px;color:#8892b0;">
+                        <p>No users registered yet</p>
+                    </div>
+                `;
+                return;
+            }
+
             users.forEach((user, index) => {
                 const div = document.createElement('div');
                 div.className = 'user-list-item';
@@ -1948,6 +1978,7 @@
                         saveUsers();
                         renderUserList();
                         showToast(`🗑️ User "${user.username}" deleted`);
+                        updateUserCountBadge();
                     }
                 });
                 actionsDiv.appendChild(delBtn);
@@ -1955,14 +1986,6 @@
                 div.appendChild(actionsDiv);
                 container.appendChild(div);
             });
-
-            if (users.length === 0) {
-                container.innerHTML = `
-                    <div style="text-align:center;padding:20px;color:#8892b0;">
-                        <p>No users found</p>
-                    </div>
-                `;
-            }
         }
 
         function openEditUserModal(index) {
@@ -2072,6 +2095,8 @@
                 document.getElementById('regPolicy').checked = false;
                 document.getElementById('registerBtn').disabled = true;
                 document.querySelector('[data-tab="login"]').click();
+                // Update user count badge after registration
+                updateUserCountBadge();
             }
         });
 
@@ -2330,6 +2355,7 @@
 
         loadData();
         showAuthScreen();
+        updateUserCountBadge();
 
         console.log('⚡ PokeMMO Loan System loaded!');
         console.log('👤 ' + users.length + ' users registered');
@@ -2337,6 +2363,7 @@
         console.log('👑 Default Admin: Adrayle / p@ssw0rd');
         console.log('🔒 Security measures active');
         console.log('💡 Press Ctrl+S to save | ESC to cancel');
+        console.log('📝 New registrations automatically appear in admin dashboard');
     </script>
 
 </body>
